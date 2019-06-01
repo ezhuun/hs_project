@@ -1,0 +1,122 @@
+DROP TABLE member_connect CASCADE CONSTRAINTS;
+
+CREATE TABLE member_connect (
+       c_code               VARCHAR(8) NOT NULL,
+       u1                   VARCHAR(100) NOT NULL,
+       u2                   VARCHAR(100) NULL,
+       d_status             NUMBER(1) NULL,
+       d_limit              TIMESTAMP NULL,
+       d_uuid               VARCHAR(100) NULL,
+       c_no                 NUMBER NOT NULL,
+       PRIMARY KEY (c_code)
+);
+
+
+DROP TABLE member CASCADE CONSTRAINTS;
+
+CREATE TABLE member (
+       uuid                 VARCHAR(100) NOT NULL,
+       no                   NUMBER NOT NULL,
+       email                VARCHAR(50) NOT NULL,
+       c_code               VARCHAR(8) NULL,
+       temp_code            VARCHAR(8) NOT NULL,
+       passwd               VARCHAR(100) NOT NULL,
+       name                 VARCHAR(20) NULL,
+       gender               CHAR(1) NULL,
+       birth                VARCHAR(20) NULL,
+       begin_date           VARCHAR(20) NULL,
+       regdate              DATE NOT NULL,
+       last_login           DATE NULL,
+       session_key          VARCHAR(50) NULL,
+       session_limit        TIMESTAMP NULL,
+       profile              VARCHAR(255) NULL,
+       lev                  NUMBER(1) NOT NULL,
+       PRIMARY KEY (uuid), 
+       FOREIGN KEY (c_code)
+                             REFERENCES member_connect
+);
+
+--------------------------------------------------------------------------------------------
+--관리자계정생성
+--#1(코드생성)
+insert into member_connect (c_no, c_code, u1)
+values(
+   (SELECT NVL(MAX(c_no+1), 0) FROM member_connect),
+   '00000000',
+   'developer'
+);
+--#2(회원등록)
+insert into member (no, uuid, name, email, passwd, regdate, last_login, temp_code, c_code, lev)
+values(
+    (SELECT NVL(MAX(no+1), 0) FROM member)
+    , 'developer'
+    , 'developer'
+    , 'dev'
+    , '$2a$10$a40sP2IsjHIC0/E/fQ/7cOympZruRX1J4MAAQPTuKQjc4CP33xf1y'
+    , sysdate
+    , sysdate
+    , '00000000'
+    , '00000000'
+    , 1
+);
+
+--------------------------------------------------------------------------------------------
+--일반계정생성 및 계정연결
+
+
+--#1
+insert into member_connect (c_no, c_code, u1)
+values(
+   (SELECT NVL(MAX(c_no+1), 0) FROM member_connect),
+   '12345678',
+   'uuid'
+);
+--#2
+insert into member (no, uuid, email, passwd, regdate, last_login,  temp_code)
+values(
+    (SELECT NVL(MAX(no+1), 0) FROM member),
+    'uuid',
+    'ljhadf@naver.com',
+    'passwd',
+    sysdate,
+    sysdate,
+    '12345678'
+);
+--#3
+insert into member_connect (c_no, c_code, u1)
+values(
+   (SELECT NVL(MAX(c_no+1), 0) FROM member_connect),
+   '87654321',
+   'uuid2'
+);
+--#4
+insert into member (no, uuid, email, passwd, regdate, last_login,  temp_code)
+values(
+    (SELECT NVL(MAX(no+1), 0) FROM member),
+    'uuid2',
+    'ljhadf2@naver.com',
+    'passwd2',
+    sysdate,
+    sysdate,
+    '87654321'
+);
+--#계정 연결5
+update member_connect set u2='uuid2' where c_code='12345678';
+
+--#계정 연결6
+update member set c_code='12345678' where temp_code='12345678' or uuid='uuid2';
+
+--연결된 계정정보 select
+SELECT * 
+FROM member 
+WHERE
+    c_code = (SELECT c_code FROM MEMBER WHERE uuid='408b484556544f3c9290ae0de99fa8b2')
+    AND uuid!='408b484556544f3c9290ae0de99fa8b2';
+
+
+
+------------------------------------------------------------------------------------
+
+select * from member;
+select uuid, email, profile, temp_code, c_code from member;
+select * from member_connect;
