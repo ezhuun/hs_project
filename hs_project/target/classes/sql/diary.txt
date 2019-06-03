@@ -1,0 +1,29 @@
+DROP TABLE diary CASCADE CONSTRAINTS;
+
+CREATE TABLE diary (
+       diary_num            NUMBER NOT NULL,
+       uuid                 VARCHAR(100) NOT NULL,
+       content              VARCHAR(1000) NOT NULL,
+       regdate              DATE NOT NULL,
+       title                VARCHAR(50) NOT NULL,
+       c_code               VARCHAR(8) NOT NULL,
+       PRIMARY KEY (diary_num), 
+       FOREIGN KEY (uuid)
+                             REFERENCES member
+);
+
+
+DROP TABLE diary_reply CASCADE CONSTRAINTS;
+
+CREATE TABLE diary_reply (
+       r_num                NUMBER NOT NULL,
+       uuid                 VARCHAR(100) NOT NULL,
+       content              VARCHAR(1000) NOT NULL,
+       diary_num            NUMBER NOT NULL,
+       regdate              DATE NOT NULL,
+       PRIMARY KEY (r_num), 
+       FOREIGN KEY (uuid)
+                             REFERENCES member, 
+       FOREIGN KEY (diary_num)
+                             REFERENCES diary
+);

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.DiaryMapperInter">
+	<!-- create -->
+	<insert id="create" parameterType="DiaryDTO">
+		<selectKey keyProperty="diary_num" resultType="int"
+			order="BEFORE">
+			select nvl(max(diary_num),0)+1 from diary
+		</selectKey>
+		insert into diary(diary_num,title,content,regdate,c_code,uuid)
+		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid})
+	</insert>
+
+	<!-- read -->
+	<select id="read" parameterType="int" resultType="DiaryDTO">
+		select diary_num, uuid,content, regdate , title
+		from diary
+		where
+		diary_num = #{diary_num}
+	</select>
+
+	<!-- update -->
+	<update id="update" parameterType="DiaryDTO">
+		update diary
+		set title=#{title},
+		content=#{content}
+		where diary_num=#{diary_num}
+	</update>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete
+		from diary
+		where
+		diary_num=#{diary_num}
+	</delete>
+
+	<!-- list -->
+	<select id="list" parameterType="Map" resultType="DiaryDTO">
+		select diary_num,uuid,content,regdate,title,c_code,r
+		from (  
+				select diary_num,uuid,content,regdate,title,c_code,rownum as r
+				from(
+					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,c_code
+					from diary
+					where diary_num=#{diary_num}
+					order by diary_num
+				)
+			)
+		<![CDATA[
+		where r >= #{sno} and r <= #{eno}
+		]]>
+	</select>
+	
+	<!-- total -->
+	<select id="total" parameterType="int" resultType="int">
+		SELECT count(*) 
+    	FROM diary
+    	WHERE diary_num=#{diary_num}
+	</select>
+	
+	
+</mapper>
