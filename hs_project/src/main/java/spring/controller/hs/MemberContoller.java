@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
+import spring.mapper.hs.MemberMapperInter;
 import spring.model.member.MemberConnectDTO;
 import spring.model.member.MemberDTO;
 import spring.model.member.MemberService;
