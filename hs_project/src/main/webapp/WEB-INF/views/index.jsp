@@ -149,11 +149,13 @@
 	<span class="headerLine">+</span>
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
-<!-- 			<li> -->
-<!-- 				<div class="today-pick-card"> -->
-<!-- 					<div class="pick-card-container">1</div> -->
-<!-- 				</div> -->
-<!-- 			</li> -->
+		
+			<li>
+				<div class="today-pick-card">
+					<div class="pick-card-container">1</div>
+				</div>
+			</li>
+			
 		</ul>
 	</div>
 	
@@ -175,6 +177,13 @@
 	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
 	<script>
+	
+	//오늘여기어때요 클릭 이벤트... bxslider option 확인 필요..
+	const pickBox = document.querySelector(".today-pick-box");
+	pickBox.addEventListener('click', function(e){
+		//console.log(e.target);
+	})
+	
 	//scroll header
 	document.addEventListener('scroll', debounce(headerScrolling, 10));
 	function headerScrolling(){
@@ -205,6 +214,7 @@
 			slideMargin: 50,
 			pager:false,
 			controls: false,
+			touchEnabled: true
 		});
 	}else{
 		slider =$('.today-pick-slider').bxSlider({
@@ -216,6 +226,7 @@
 			slideMargin: 50,
 			pager:false,
 			controls: false,
+			touchEnabled: true
 		});
 	}
 
@@ -231,6 +242,7 @@
 				slideMargin: 50,
 				pager:false,
 				controls: false,
+				touchEnabled: true
 			});
 		}else{
 			slider.reloadSlider({
@@ -242,6 +254,7 @@
 				slideMargin: 50,
 				pager:false,
 				controls: false,
+				touchEnabled: true
 			});
 		}
 	});
@@ -281,7 +294,7 @@
 		var html="";
 		arr.forEach(function(item, i){
 			html += "<li>";
-			html += "<div class='today-pick-card'>";
+			html += "<div class='today-pick-card' data-id='"+item.contentid+"'>";
 			html += "<div class='pick-card-container'>";
 			html += "<div class='pick-img'><img src='"+item.firstimage2+"'></div>";
 			html += "<span>"+item.title+"</span>";
