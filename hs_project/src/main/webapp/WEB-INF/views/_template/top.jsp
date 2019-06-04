@@ -9,7 +9,7 @@
 			<div class="left-menu-items">
 				<div class="nav-bar">
 					<ul class="nav-menu">
-						<li><a href="#">D-day</a></li>
+						<li><a href="${pageContext.request.contextPath}/d_day/create">D-day</a></li>
 						<li><a href="#">체크리스트</a>
 							<ul>
 								<li>서브메뉴1</li>
@@ -51,7 +51,7 @@
 						<div class="section-logo"><a href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/images/h_logo.png" /></a></div>
 						<div class="nav-bar">
 							<ul class="nav-menu">
-								<li><a href="#">D-day</a></li>
+								<li><a href="${pageContext.request.contextPath}/d_day/create">D-day</a></li>
 								<li><a href="#">체크리스트</a>
 									<ul>
 										<li>서브메뉴1</li>
@@ -76,3 +76,6 @@
 				</div>
 			</div>
 		</div>
+		
+		<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+		<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>

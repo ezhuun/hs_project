@@ -82,7 +82,7 @@ public class D_dayInterTest {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testTotal() {
 		int d_num = 1;
 		int cnt = inter.total(d_num);

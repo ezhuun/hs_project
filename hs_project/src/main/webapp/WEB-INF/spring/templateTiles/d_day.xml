@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>	
+	<definition name="/d_day/create" extends="index">
+		<put-attribute name="title" value="D-day 생성"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/d_day/create.jsp" />
+	</definition>
+
+	<definition name="/d_day/update" extends="index">
+		<put-attribute name="title" value="D-day 수정"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/d_day/update.jsp" />
+	</definition>
+	
+	<definition name="/d_day/delete" extends="index">
+		<put-attribute name="title" value="D-day 삭제"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/d_day/delete.jsp" />
+	</definition>
+	
+	<definition name="/d_day/list" extends="index">
+		<put-attribute name="title" value="D-day 리스트"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/d_day/list.jsp" />
+	</definition>
+	
+</tiles-definitions>
