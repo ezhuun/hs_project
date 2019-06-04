@@ -76,3 +76,7 @@
 				</div>
 			</div>
 		</div>
+		
+	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
+	

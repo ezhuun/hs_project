@@ -74,7 +74,7 @@
 	height: 100%;
 	border-bottom: 1px solid #b7b2b2;
 	top: 0;
-	z-index: 2;
+	z-index: 0;
 }
 
 .wrap .header-top,
@@ -489,8 +489,7 @@ ul.nav-menu li ul li:hover::after {
 	justify-content: center;
 	align-items: center;
 	height: 17rem;
-	border-bottom: 1px solid #efefef;
-	‬
+	border-bottom: 1px solid #efefef;‬
 }
 
 ul.today-pick-slider {
@@ -499,12 +498,8 @@ ul.today-pick-slider {
 	padding: 0;
 }
 
-.today-pick-card {
-	height: 10.775rem;
-}
-
-.pick-card-container {
-	height: 99%;
+.pick-card {
+	height: 10.3125rem;
 	border-radius: 3px;
 	box-sizing: border-box;
 	overflow: hidden;
@@ -515,30 +510,41 @@ ul.today-pick-slider {
 	padding: 0.5rem 0.5rem 0;
 	cursor: pointer;
 	background: #f5f5f5;
+	margin-left: 0.125rem;
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	user-select:none;
 }
 
-.pick-card-container span {
+.pick-card span {
 	font-size: 0.8125rem;
 	margin-top: 0.1875rem;
 }
 
-.pick-card-container .pick-img {
+.pick-card .pick-img {
 	width: 12.5rem;
 	height: 8.3125rem;
 	overflow: hidden;
 	border-radius: 3px;
 }
 
-.pick-card-container .pick-img img {
+.pick-card .pick-img img {
 	width: 100%;
 	height: 100%;
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	user-select:none;
 }
 
-.pick-card-container:hover .pick-img img {
-	-webkit-transform: scale(1.1);
-	-moz-transform: scale(1.1);
-	-o-transform: scale(1.1);
-	transform: scale(1.1);
+.pick-card:hover .pick-img img {
+	-webkit-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-o-transform: scale(1.05);
+	transform: scale(1.05);
 	transition: transform .5s ease-in;
 	-o-transition: transform .5s ease-in;
 	-moz-transition: transform .5s ease-in;
