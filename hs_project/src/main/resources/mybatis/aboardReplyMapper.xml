@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.AboardReplyMapperInter">
+	<select id="list" parameterType="Map" resultType="AboardReplyDTO">
+		SELECT r_num, r_name, content, regdate, r
+		FROM ( 
+			  SELECT r_num, r_name, content, regdate, rownum r
+			  FROM (
+			  		SELECT r_num, r_name, content, regdate
+			  		FROM a_board_reply
+                  	order by r_num
+        	  )
+		)
+		<![CDATA[WHERE r>=#{sno} and r<=#{eno}]]>    
+		
+	</select>
+	
+	<insert id="create" parameterType="AboardReplyDTO">
+		<selectKey keyProperty="r_num" resultType="int" order="BEFORE">
+		SELECT nvl(max(a_num),0)+1
+		FROM a_board_reply	
+		</selectKey>	
+		INSERT INTO a_board_reply(r_num, r_name, a_num, uuid, content, regdate) 
+		VALUES (#{r_num},#{r_name},#{a_num},#{uuid},#{content},sysdate)	
+	</insert>
+	
+	<select id="read" parameterType="int" resultType="AboardReplyDTO">
+		SELECT *
+		FROM a_board_reply
+		WHERE r_num = #{r_num}
+	</select>
+	
+
+	<update id="update" parameterType="AboardReplyDTO">
+		UPDATE a_board_reply
+		SET	content = #{content}
+		WHERE r_num = #{r_num}	
+	</update>	
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM a_board_reply
+		WHERE r_num = #{r_num}	
+	</delete>
+	
+	<select id="total" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM a_board_reply
+		WHERE r_num = #{r_num}
+	
+	</select>
+</mapper>
+	

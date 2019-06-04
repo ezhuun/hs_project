@@ -64,7 +64,7 @@
 										<li>서브메뉴1</li>
 									</ul>
 								</li>
-								<li><a href="#">익명게시판</a>
+								<li><a href="${pageContext.request.contextPath}/aboard/create">익명게시판</a>
 									<ul>
 										<li>서브메뉴1</li>
 										<li>서브메뉴1</li>
@@ -76,3 +76,6 @@
 				</div>
 			</div>
 		</div>
+			
+	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>

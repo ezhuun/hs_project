@@ -4,18 +4,7 @@
 	<!-- 여기부터 -->
 	
 	<div class="container-inner sideBorder boxsing">
-		
-		<b>!!템플릿 등록 후 작성해주세요</b><br>
-		1. spring/templateTiles/*.xml 작성 (main.xml 참고)<br>
-		2. contoller에서 return url을 *.xml 작성한 name값으로 작성<br><br>
-
-		
-		<b># 파일 다운로드 방법</b><br>
-		경로설정 = ${root}/download?dir=/resources/upload/profile&filename=test.jpg<br>
-		<a href="${root}/download?dir=/resources/upload/profile&filename=test.jpg">다운로드</a>
-		<br><br>
-		
-		
+			
 		<b># ckeditor 사용</b><br>
 		<script src="${root}/ckeditor/ckeditor.js"></script>
 		<script>
@@ -33,12 +22,8 @@
 		</div>
 		
 	</div>
-	
-	
-	<!-- 반드시 하단에 추가바람.. alert, toggle 등등 처리..  -->
-	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
-	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
-	
+
+
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
 	<script>
 		function test(){
@@ -48,3 +33,4 @@
 	</script>
 	
 	<!-- 여기까지 -->
+	
