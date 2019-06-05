@@ -14,7 +14,7 @@
 		position: relative;
 		clear: both;
 		float: left;
-		width: 1170px;
+		width: 100%;
 		margin-top: 30px;
 		padding-top: 10px;
 		border-top: 1px solid #ebebeb;
@@ -29,6 +29,7 @@
 	    overflow: hidden;
 	    background-position:0 -253px;
 	    background-position: 0 -253px;
+	        padding: 0 !important;
 	}	
 		
 	.btn-wrap button.list {
@@ -55,6 +56,7 @@
 		<div class="bootstrap">
 			<h4 class="talk"><span>글쓰기</span></h4>
 			<form class="form-horizontal" action="create" method="post" >
+			<input type="hidden" name ="uuid" id="uuid" value=${member.uuid}>
 				<div class="write">
 					<label for="a_name">닉네임</label>
 					<input type="text" name="a_name" id="a_name" class="form-control">
@@ -69,14 +71,16 @@
 					<label for="content">내용</label>
 					<textarea class="form-control" rows="5" id="content" name='content'></textarea>
 				</div> 
+
+				<br>		
+				<div class="btn-wrap">
+					<button class="btn btn-default" id="list" onclick="location.href='./list'">목록</button>
+					<button class="btn btn-default" id="ok" type="submit">확인</button>
+					<button class="btn btn-default" id="cancle" type="reset">취소</button>
+				</div>
 		
 			</form>
-			<br>		
-			<div class="btn-wrap">
-				<button class="btn btn-default" id="list">목록</button>
-				<button class="btn btn-default" id="ok" type="submit">확인</button>
-				<button class="btn btn-default" id="cancle" type="reset">취소</button>
-			</div>
+
 						
 		</div>
 	</div>
