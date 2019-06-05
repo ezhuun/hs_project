@@ -7,12 +7,34 @@ public class DiaryDTO {
     private String regdate    ;
     private String title      ;
     private String c_code     ;
-	public DiaryDTO() {
+    private String d_date	  ;
+	
+    
+    public DiaryDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DiaryDTO(int diary_num, String uuid, String content, String regdate, String title, String c_code) {
+	
+	public String getD_date() {
+		return d_date;
+	}
+
+
+	public void setD_date(String d_date) {
+		this.d_date = d_date;
+	}
+
+
+	@Override
+	public String toString() {
+		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
+				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + "]";
+	}
+
+
+	public DiaryDTO(int diary_num, String uuid, String content, String regdate, String title, String c_code,
+			String d_date) {
 		super();
 		this.diary_num = diary_num;
 		this.uuid = uuid;
@@ -20,13 +42,10 @@ public class DiaryDTO {
 		this.regdate = regdate;
 		this.title = title;
 		this.c_code = c_code;
+		this.d_date = d_date;
 	}
-	
-	@Override
-	public String toString() {
-		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
-				+ ", title=" + title + ", c_code=" + c_code + "]";
-	}
+
+
 	public int getDiary_num() {
 		return diary_num;
 	}

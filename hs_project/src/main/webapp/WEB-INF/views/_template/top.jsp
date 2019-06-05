@@ -59,7 +59,7 @@
 										<li>서브메뉴2</li>
 									</ul>
 								</li>
-								<li><a href="#">발자취</a>
+								<li><a href="${pageContext.request.contextPath}/diary/list">다이어리</a>
 									<ul>
 										<li>서브메뉴1</li>
 									</ul>
@@ -76,3 +76,7 @@
 				</div>
 			</div>
 		</div>
+		
+	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
+	

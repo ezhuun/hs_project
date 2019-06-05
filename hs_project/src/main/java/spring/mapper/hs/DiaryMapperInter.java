@@ -12,6 +12,6 @@ public interface DiaryMapperInter {
 	int update(DiaryDTO diarydto);
 	int delete(int diary_num);
 	List<DiaryDTO> list(Map map);
-	int total(int diary_num);
+	int total();
 	
 }

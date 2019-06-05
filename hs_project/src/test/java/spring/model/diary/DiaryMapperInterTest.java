@@ -34,7 +34,7 @@ public class DiaryMapperInterTest {
 	DiaryMapperInter diaryinter;
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void testCreate() {
 		DiaryDTO diarydto = new DiaryDTO();
 		diarydto.setDiary_num(3);
@@ -42,6 +42,7 @@ public class DiaryMapperInterTest {
 		diarydto.setContent("물꼬끼들 넘 기요웡");
 		diarydto.setC_code("00000001");
 		diarydto.setUuid("test2");
+		diarydto.setD_date("2019-04-01");
 		
 		assertTrue(diaryinter.create(diarydto)>0);
 	}
@@ -60,13 +61,14 @@ public class DiaryMapperInterTest {
 		DiaryDTO diarydto = new DiaryDTO();
 		diarydto.setTitle("아쿠아리움에 갔다왔음(수정");
 		diarydto.setContent("수달 짱 기여웡");
+		diarydto.setD_date("2019-06-06");
 		diarydto.setDiary_num(1);;
 		
 		assertTrue(diaryinter.update(diarydto) > 0);
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testDelete() {
 		int diary_num = 1;
 		assertTrue(diaryinter.delete(diary_num) > 0);
@@ -94,7 +96,7 @@ public class DiaryMapperInterTest {
 	@Ignore
 	public void testTotal() {
 		int diary_num = 1;
-		int cnt = diaryinter.total(diary_num);
+		int cnt = diaryinter.total();
 		logger.info("total: " + cnt);
 	}
 

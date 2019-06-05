@@ -10,13 +10,13 @@
 			order="BEFORE">
 			select nvl(max(diary_num),0)+1 from diary
 		</selectKey>
-		insert into diary(diary_num,title,content,regdate,c_code,uuid)
-		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid})
+		insert into diary(diary_num,title,content,regdate,c_code,uuid,d_date)
+		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid},#{d_date})
 	</insert>
 
 	<!-- read -->
 	<select id="read" parameterType="int" resultType="DiaryDTO">
-		select diary_num, uuid,content, regdate , title
+		select diary_num, uuid,content, regdate , title, d_date
 		from diary
 		where
 		diary_num = #{diary_num}
@@ -26,7 +26,8 @@
 	<update id="update" parameterType="DiaryDTO">
 		update diary
 		set title=#{title},
-		content=#{content}
+		content=#{content},
+		d_date=#{d_date}
 		where diary_num=#{diary_num}
 	</update>
 
@@ -40,14 +41,13 @@
 
 	<!-- list -->
 	<select id="list" parameterType="Map" resultType="DiaryDTO">
-		select diary_num,uuid,content,regdate,title,c_code,r
+		select diary_num,uuid,content,regdate,title,c_code,d_date,r
 		from (  
-				select diary_num,uuid,content,regdate,title,c_code,rownum as r
+				select diary_num,uuid,content,regdate,title,c_code,d_date,rownum as r
 				from(
-					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,c_code
+					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,d_date,c_code
 					from diary
-					where diary_num=#{diary_num}
-					order by diary_num
+					order by d_date
 				)
 			)
 		<![CDATA[
@@ -56,10 +56,9 @@
 	</select>
 	
 	<!-- total -->
-	<select id="total" parameterType="int" resultType="int">
+	<select id="total"  resultType="int">
 		SELECT count(*) 
     	FROM diary
-    	WHERE diary_num=#{diary_num}
 	</select>
 	
 	
