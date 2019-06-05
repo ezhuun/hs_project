@@ -33,11 +33,8 @@
 		</div>
 		
 	</div>
-	
-	
-	<!-- 반드시 하단에 추가바람.. alert, toggle 등등 처리..  -->
-	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
-	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
+
+
 	
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
 	<script>

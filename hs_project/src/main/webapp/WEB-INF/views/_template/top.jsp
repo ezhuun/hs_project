@@ -54,9 +54,8 @@
 								<li><a href="#">D-day</a></li>
 								<li><a href="#">체크리스트</a>
 									<ul>
-										<li>서브메뉴1</li>
-										<li>서브메뉴2</li>
-										<li>서브메뉴2</li>
+										<li onclick="location.href='${pageContext.request.contextPath}/c_list/create';">리스트 생성</li>
+										<li onclick="location.href='${pageContext.request.contextPath}/c_list/list';">리스트 모음</li>
 									</ul>
 								</li>
 								<li><a href="#">발자취</a>
@@ -76,3 +75,7 @@
 				</div>
 			</div>
 		</div>
+
+		
+	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
