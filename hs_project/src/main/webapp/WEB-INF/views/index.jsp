@@ -150,39 +150,25 @@
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
 		
-			<li>
-				<div class="today-pick-card">
-					<div class="pick-card-container">1</div>
-				</div>
-			</li>
+<!-- 			<li> -->
+<!-- 				<div class="today-pick-card"> -->
+<!-- 					<div class="pick-card-container">1</div> -->
+<!-- 				</div> -->
+<!-- 			</li> -->
 			
 		</ul>
 	</div>
 	
 </div>
 
-	
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
-	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
-	<script>
+<div class='pick-viewer-layout'>
+	<div class='viewer-container'>하하</div>
+	<div class='viewer-btn'>하하하</div>
+</div>
+
 	
-	//오늘여기어때요 클릭 이벤트... bxslider option 확인 필요..
-	const pickBox = document.querySelector(".today-pick-box");
-	pickBox.addEventListener('click', function(e){
-		//console.log(e.target);
-	})
+	<script>
 	
 	//scroll header
 	document.addEventListener('scroll', debounce(headerScrolling, 10));
@@ -203,108 +189,103 @@
 	}
 	
 	//slider script config
+	const bop = {
+			auto: true,
+			slideWidth: 374,
+			moveSlides: 1,
+			slideMargin: 50,
+			pager:false,
+			controls: false,
+			touchEnabled: false,
+			autoHover: true,
+	}
 	let slider;
 	if(document.body.scrollWidth < 768){
-		slider =$('.today-pick-slider').bxSlider({
-			auto: true,
-			slideWidth: 374,
-			minSlides: 1,
-			maxSlides: 1,
-			moveSlides: 1,
-			slideMargin: 50,
-			pager:false,
-			controls: false,
-			touchEnabled: true
-		});
+		slider = $('.today-pick-slider').bxSlider(Object.assign(bop, {minSlides: 1, maxSlides: 1}));
 	}else{
-		slider =$('.today-pick-slider').bxSlider({
-			auto: true,
-			slideWidth: 374,
-			minSlides: 3,
-			maxSlides: 3,
-			moveSlides: 1,
-			slideMargin: 50,
-			pager:false,
-			controls: false,
-			touchEnabled: true
-		});
+		slider = $('.today-pick-slider').bxSlider(Object.assign(bop, {minSlides: 3, maxSlides: 3}));
 	}
-
 	let media = window.matchMedia("screen and (max-width: 768px)");
 	media.addListener(function(e) {
 		if(e.matches){
-			slider.reloadSlider({
-				auto: true,
-				slideWidth: 374,
-				minSlides: 1,
-				maxSlides: 1,
-				moveSlides: 1,
-				slideMargin: 50,
-				pager:false,
-				controls: false,
-				touchEnabled: true
-			});
+			slider.reloadSlider(Object.assign(bop, {minSlides: 1, maxSlides: 1}));
 		}else{
-			slider.reloadSlider({
-				auto: true,
-				slideWidth: 374,
-				minSlides: 3,
-				maxSlides: 3,
-				moveSlides: 1,
-				slideMargin: 50,
-				pager:false,
-				controls: false,
-				touchEnabled: true
-			});
+			slider.reloadSlider(Object.assign(bop, {minSlides: 3, maxSlides: 3}));
 		}
 	});
+	
+	
+	
+	const getData = function(url){
+		return new Promise(resolve => {
+			$.get(url, function(data){
+				resolve(data);
+			});
+		});
+	}
+	
+	const serviceKey = "0165%2B411e%2FgQnKNGRQg%2BLDx3RvUEyydBouP2dSw1kt7oznhaPXAx6SEXBjjZSnXlWWw8rdxjb8pW%2BhIws3LOiQ%3D%3D";
+	const pickViewer = async function(id){
+		//공통정보
+		let common_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey="+serviceKey+"&contentTypeId=25&contentId="+id+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json";
+		const common = await getData(common_url);
+		
+		//코스정보
+		let course_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey="+serviceKey+"&contentTypeId=25&contentId="+id+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y&_type=json";
+		const course = await getData(course_url);
+		
+		utils.alert(JSON.stringify(common)+JSON.stringify(course));
+	}
+	
+	
+	//bxslider item click event(detail viewer)
+	const pickBox = document.querySelector(".today-pick-box");
+	pickBox.addEventListener('click', function(e){
+		const contentId = e.target.dataset.id
+			| e.target.parentElement.dataset.id
+			| e.target.parentElement.parentElement.dataset.id;
+		
+		if(contentId){
+			pickViewer(contentId);
+		}
+	})
 
 	
 	//api 호출
-	const apiCall = async function(lati, longi, temp) {
-		let code = "locationBasedList";
-		let api_uri = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/"+code+"?ServiceKey=0165%2B411e%2FgQnKNGRQg%2BLDx3RvUEyydBouP2dSw1kt7oznhaPXAx6SEXBjjZSnXlWWw8rdxjb8pW%2BhIws3LOiQ%3D%3D&_type=json&MobileOS=ETC&MobileApp=AppTest";
-		api_uri = api_uri + "&listYN=Y";
-		api_uri = api_uri + "&arrange=B";
-		api_uri = api_uri + "&contentTypeId=25";
-		api_uri = api_uri + "&mapY=" + lati;
-		api_uri = api_uri + "&mapX=" + longi;
-		api_uri = api_uri + "&radius=2000";
-		api_uri = api_uri + "&numOfRows=30";
-		api_uri = api_uri + "&pageNo=1";
+	const apiCall = async function(lati, longi) {
+		let list_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?ServiceKey="+serviceKey+"&MobileOS=ETC&MobileApp=AppTest&listYN=Y&arrange=B&contentTypeId=25&radius=2000&numOfRows=30&pageNo=1&_type=json";
+		list_url = list_url + "&mapY=" + lati;
+		list_url = list_url + "&mapX=" + longi;
 		
-		console.log(api_uri);
-		
-		var arr;
-		await $.get(api_uri, function(data){
-			arr = data.response.body.items.item;
-		});
-		
-		if(!arr){
+		const data = await getData(list_url);
+		if(!data){
 			apiCall(37.568477, 126.981611);
 			return;
 		}
-      	for(let i=arr.length-1; i>0; i--){
+		const items = data.response.body.items.item;
+		
+		//api로 받은 데이터(배열)을 순서를 무작위로 바꾼다
+      	for(let i=items.length-1; i>0; i--){
             let j = Math.floor(Math.random() * (i+1));
-            let temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            let temp = items[i];
+            items[i] = items[j];
+            items[j] = temp;
         }
       	
+		//html코드 작성
 		var html="";
-		arr.forEach(function(item, i){
+		items.forEach(function(item, i){
 			html += "<li>";
-			html += "<div class='today-pick-card' data-id='"+item.contentid+"'>";
-			html += "<div class='pick-card-container'>";
-			html += "<div class='pick-img'><img src='"+item.firstimage2+"'></div>";
+			html += "<div class='pick-card' data-id='"+item.contentid+"'>";
+			html += "<div class='pick-img'><img src='"+item.firstimage2+"' ondragstart='return false'></div>";
 			html += "<span>"+item.title+"</span>";
-			html += "</div>";
 			html += "</div>";
 			html += "</li>";
 		});
 		document.querySelector(".today-pick-slider").innerHTML = html;
 		slider.reloadSlider();
 	}
+	
 	apiCall(37.568477, 126.981611);
 	
 	
