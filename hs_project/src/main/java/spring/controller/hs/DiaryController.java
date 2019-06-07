@@ -36,38 +36,38 @@ public class DiaryController {
 		int flag = diaryinter.create(diarydto);
 		
 		if(flag>0) {
-			redi.addFlashAttribute("msg","등록성공");
+			redi.addFlashAttribute("msg","글 생성 성공");
 			return "redirect:/diary/list";
 		}
 		else {
-			model.addAttribute("msg", "등록실패");
-			return "/diary/create";//현재페이지에 계속 있음
+			model.addAttribute("msg", "글 생성 실패");
+			return "/diary/create";//�쁽�옱�럹�씠吏��뿉 怨꾩냽 �엳�쓬
 		}
 	}
 	
 	//read
 	@GetMapping("/diary/read")
-	public String read(int nowPage,int diary_num,HttpServletRequest request,Model model) {
-		//조회수증가 추가
+	public String read(int diary_num,HttpServletRequest request,Model model) {
+		//議고쉶�닔利앷� 異붽�
 		DiaryDTO diarydto = diaryinter.read(diary_num);
-		model.addAttribute("diarydto", diarydto);
+		model.addAttribute("diarydto", diarydto);//title,content,d_date등은 jsp에서 사용시 diarydto를 붙이고 사용가능
 		
-		//댓글관련 추가
+		//�뙎湲�愿��젴 異붽�
 		int nPage = 1;
 		
 		if(request.getParameter("nPage")!=null) {
 			nPage = Integer.parseInt(request.getParameter("nPage"));
 		}
 		
-		int recordPerPage = 3; // 한페이지당 출력할 레코드 갯수
+		int recordPerPage = 3; // �븳�럹�씠吏��떦 異쒕젰�븷 �젅肄붾뱶 媛��닔
 		int sno = ((nPage - 1) * recordPerPage) + 1; //
 		int eno = nPage * recordPerPage;
 		
 		Map map = new HashMap();
-		map.put("diary_num", diary_num);
+		map.put("diary_num", diary_num);//diarydto를 붙이지 않고 diary_num사용가능
 		map.put("sno", sno);
 		map.put("eno", eno);
-		map.put("nowPage", nowPage);
+		//map.put("nowPage", nowPage);
 		
 		model.addAttribute("map",map);
 		
@@ -79,7 +79,7 @@ public class DiaryController {
 	//list
 	@RequestMapping("/diary/list")
 	public String list(HttpServletRequest request) {
-		//페이지 설정
+		//�럹�씠吏� �꽕�젙
 		int nowPage = 1;
 		if(request.getParameter("nowPage")!=null) {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -98,7 +98,7 @@ public class DiaryController {
 		String url = "list";
 		String paging = Utility.paging(total, nowPage, recordPerPage,url);
 		
-		//list담기
+		//list�떞湲�
 		List<DiaryDTO>list = diaryinter.list(map);
 		
 		request.setAttribute("list", list);

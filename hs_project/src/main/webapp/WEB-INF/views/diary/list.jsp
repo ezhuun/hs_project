@@ -88,18 +88,25 @@
 }
 </style>
 <!-- 여기부터 -->
-<!-- dgsggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg -->
+<script type="text/javascript">
+	function read(diary_num){
+		var url = "read";
+		url += "?diary_num="+diary_num;
+		location.href = url;
+	}
+</script>
 <div class="container-inner sideBorder boxsing">
 
 	<div class="bootstrap">
 		<h1>Diary List</h1>
 		<!-- 목록에 보여질 데이터들을 for문을 이용하여 다 보이도록 -->
 		<!-- 이미지 등을 담는 컨테이너 역할 -->
-		<%-- <div id="gallery" style="display: none;">
-		
+		<div id="gallery">
+		<input type="hidden" id="diary_num" name="diary_num" value="${diarydto.diary_num }">
+		<input type="hidden" id="nowPage" name="nowPage" value="${nowPage }">
+		<%-- <img alt="Image 1 Title" src="${root }/images/diary/Tulips.jpg" data-image="images/image1.jpg" data-description="Image 1 Description">
 		<img alt="Image 1 Title" src="${root }/images/diary/Tulips.jpg" data-image="images/image1.jpg" data-description="Image 1 Description">
-		<img alt="Image 1 Title" src="${root }/images/diary/Tulips.jpg" data-image="images/image1.jpg" data-description="Image 1 Description">
-		<img alt="Image 1 Title" src="${root }/images/diary/Tulips.jpg" data-image="images/image1.jpg" data-description="Image 1 Description"> --%>
+		<img alt="Image 1 Title" src="${root }/images/diary/Tulips.jpg" data-image="images/image1.jpg" data-description="Image 1 Description">  --%>
 			<c:choose>
 				<c:when test="${empty list }">
 					<!-- controller request한 list -->
@@ -110,6 +117,7 @@
 				<c:otherwise>
 					<c:forEach var="diarydto" items="${list}">
 						<figure class="snip1361">
+						<!-- 생성시 메인에 사용할 사진을 설정 or 내용에 적은 사진 중에서 첫번째 사진을 사용 -->
 							<img src="${root }/images/diary/Tulips.jpg" alt="sample45" />
 							<figcaption>
 								<!-- 이에 대한 설명을하는 문구를 담는 태그 -->
@@ -117,13 +125,14 @@
 								<p>${diarydto.d_date }</p>
 							</figcaption>
 							<!-- read(조회)로 이동 --> 
-							<a href="#"></a>
+							<a href="javascript:read('${diarydto.diary_num }')"></a>
+							
 						</figure>
 						<br>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
-
+		</div>
 
 
 
@@ -148,7 +157,8 @@
 				<a href="#"></a>
 				read(조회)로 이동
 			</figure> -->
-
+		
+		<button type="button" onclick="location.href='./create'">생성</button>
 		</div>
 	</div>
 

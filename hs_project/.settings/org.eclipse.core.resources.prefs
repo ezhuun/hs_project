@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/spring/controller/hs/DiaryController.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/auth/login.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/auth/register.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/auth/register_connect.jsp=UTF-8
