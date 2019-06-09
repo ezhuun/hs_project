@@ -22,14 +22,22 @@
     margin: 0 0 20px;
 }
 </style>
+<script>
+	function update(){
+		var url = "update";
+		url += "?diary_num=${diarydto.diary_num}";
+		location.href = url;
+	}
+</script>
 <!-- 여기부터 -->
 <div class="container-inner sideBorder boxsing">
 	<%-- <b># 파일 다운로드 방법</b><br>
 		경로설정 = ${root}/download?dir=/resources/upload/profile&filename=test.jpg<br>
 		<a href="${root}/downloadr?dir=/resources/upload/profile&filename=test.jpg">다운로드</a>
 		<br><br> --%>
-
 	<div class="bootstrap">
+	<input type="hidden" name="diary_num" id="diary_num" value="${diarydto.diary_num }">
+	<input type="hidden" name="title" id="title" value="${diarydto.title }">
 		<div class="se-section-content">
 			<p class="title">${diarydto.title }</p>
 			<div class="container">
@@ -53,7 +61,9 @@
 	</div>
 
 <button type="button" onclick="location.href='./list'">목록</button>
+<button type="button" onclick="update()">수정</button>
 <button type="button" onclick="location.href='./create'">생성</button>
+<button type="button" onclick="location.href='history.back()'">취소</button>
 </div>
 
 
