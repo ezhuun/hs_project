@@ -493,7 +493,6 @@ ul.nav-menu li ul li:hover::after {
 	justify-content: center;
 	align-items: center;
 	height: 17rem;
-	border-bottom: 1px solid #efefef;‬
 }
 
 ul.today-pick-slider {
@@ -533,7 +532,7 @@ ul.today-pick-slider {
 	height: 9.3125rem;
 	overflow: hidden;
 	border-radius: 3px;
-	box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.8);
+	box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.4);
 }
 
 .pick-card .pick-img img {
