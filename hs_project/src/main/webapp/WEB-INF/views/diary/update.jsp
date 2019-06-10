@@ -13,6 +13,7 @@
 		<form class="form-horizontal" method="post" action="update">
 			<input type="hidden" id="uuid" name="uuid" value="${member.uuid}">
 			<input type="hidden" id="c_code" name="c_code" value="${member.c_code}">
+			<input type="hidden" id="diary_num" name="diary_num" value="${diarydto.diary_num }">
 			
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="title" >제목</label>

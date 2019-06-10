@@ -37,7 +37,7 @@
 		<br><br> --%>
 	<div class="bootstrap">
 	<input type="hidden" name="diary_num" id="diary_num" value="${diarydto.diary_num }">
-	<input type="hidden" name="title" id="title" value="${diarydto.title }">
+	<%-- <input type="hidden" name="title" id="title" value="${diarydto.title }"> --%>
 		<div class="se-section-content">
 			<p class="title">${diarydto.title }</p>
 			<div class="container">

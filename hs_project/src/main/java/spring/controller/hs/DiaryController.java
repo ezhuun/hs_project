@@ -76,18 +76,23 @@ public class DiaryController {
 
 	// update
 	@GetMapping("/diary/update")
-	public String update() {
-		System.out.println("segegsggsegegegegegege");
+	public String update(int diary_num, Model model) {//컨트롤러에 접근하기 전 read.jsp에서 넘겨받은 데이터가 들어갈 수 있음(hidden)
+		DiaryDTO diarydto = diaryinter.read(diary_num);
+		model.addAttribute("diarydto", diarydto);
+		
 		return "/diary/update";
 	}
 
 	@PostMapping("/diary/update")
-	public String update(DiaryDTO diarydto, RedirectAttributes redi, Model model) {
+	public String update(DiaryDTO diarydto,RedirectAttributes redi, Model model,HttpServletRequest request) {
+		
+		int diary_num = Integer.parseInt(request.getParameter("diary_num"));
 		int flag = diaryinter.update(diarydto);
 		System.out.println(diarydto+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(flag);
 		if(flag>0) {
 			redi.addFlashAttribute("msg","글수정 성공");
+			redi.addFlashAttribute("diary_num",diary_num);
 			return "redirect:/diary/list";//redirect
 		}else {
 			model.addAttribute("msg","글수정 실패");
@@ -96,6 +101,7 @@ public class DiaryController {
 	}
 
 	// delete
+	
 	// list
 	@RequestMapping("/diary/list")
 	public String list(HttpServletRequest request) {
