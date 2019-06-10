@@ -23,7 +23,11 @@ public class DiaryController {
 
 	@Autowired
 	private DiaryMapperInter diaryinter;
-
+	
+	//댓글과 글 삭제 service
+	
+	
+	
 	// create
 	@GetMapping("/diary/create")
 	public String create() {
@@ -88,7 +92,7 @@ public class DiaryController {
 		
 		int diary_num = Integer.parseInt(request.getParameter("diary_num"));
 		int flag = diaryinter.update(diarydto);
-		System.out.println(diarydto+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
 		System.out.println(flag);
 		if(flag>0) {
 			redi.addFlashAttribute("msg","글수정 성공");
@@ -101,6 +105,20 @@ public class DiaryController {
 	}
 
 	// delete
+	@GetMapping("/diary/delete")
+	public String delete() {
+		return "/diary/delete";
+	}
+	
+	@PostMapping("/diary/delete")
+	public String delete(int diary_num, RedirectAttributes redi) {
+		int flag = diaryinter.delete(diary_num);
+		if(flag>0) {
+			return "redirect:/diary/list";
+		}else {
+			return "/diary/delete";
+		}
+	}
 	
 	// list
 	@RequestMapping("/diary/list")

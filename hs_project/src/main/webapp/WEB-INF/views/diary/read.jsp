@@ -28,6 +28,13 @@
 		url += "?diary_num=${diarydto.diary_num}";
 		location.href = url;
 	}
+	function deleteCheck(){
+		var url ="delete";
+		url +="?diary_num=${diarydto.diary_num}";
+		
+		wr = window.open(url, "삭제확인","width=500,height=500");
+		wr.moveTo((window.screen.width-500)/2,(window.screen.height-500)/2);
+	}
 </script>
 <!-- 여기부터 -->
 <div class="container-inner sideBorder boxsing">
@@ -63,7 +70,7 @@
 <button type="button" onclick="location.href='./list'">목록</button>
 <button type="button" onclick="update()">수정</button>
 <button type="button" onclick="location.href='./create'">생성</button>
-<button type="button" onclick="location.href='history.back()'">취소</button>
+<button type="button" onclick="deleteCheck()">삭제</button>
 </div>
 
 
