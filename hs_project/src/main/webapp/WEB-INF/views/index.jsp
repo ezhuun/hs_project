@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 
+<style>
+	.pick-viewer{position: relative; z-index:3;}
+	.pick-viewer-layout{position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); display:flex; justify-content: center; align-items: center;}
+	.pick-viewer-container{position: relative; background: rgba(255,255,255,1); border-radius: 4px; width:80%; height:80%; box-sizing: border-box; padding: 1rem; display:flex; justify-content: center; align-content: center; flex-direction: column; animation: fadeIn-upDown .3s linear; outline:none;}
+	.pick-viewer-content{position:relative; flex:1; box-sizing:border-box; overflow-y: auto; word-break: break-word;}
+	.pick-viewer-btn{position:relative; padding-top:0.5rem; justify-content: flex-end; display: flex;}
+	.pick-viewer-btn button{background:#34495E; border:none; color:#fff; padding:0.875rem 2rem; cursor:pointer;}
+</style>
+
 <div class="banner-overlay"></div>
 <div class="container-inner">
 
@@ -108,7 +117,9 @@
 				</table>
 			</div>
 		</div>
-
+		<div class="tb-container responsiveNone">
+			<img src="${root}/images/common/banner_date_trouble.gif" />
+		</div>
 		<div class="tb-container">
 			<div class="tb-top">
 				<span class="tb-title">추천 고민</span>
@@ -136,12 +147,8 @@
 				</table>
 			</div>
 		</div>
-		<div class="tb-container">
-			<img src="${root}/images/banner/banner_date_trouble.png" />
-		</div>
+
 	</div>
-	
-	
 	
 	
 	<br/>
@@ -149,24 +156,11 @@
 	<span class="headerLine">+</span>
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
-		
-<!-- 			<li> -->
-<!-- 				<div class="today-pick-card"> -->
-<!-- 					<div class="pick-card-container">1</div> -->
-<!-- 				</div> -->
-<!-- 			</li> -->
-			
+			<img id="slide-loading" src="${root}/images/common/loading2.gif"/>
 		</ul>
 	</div>
 	
 </div>
-
-
-<div class='pick-viewer-layout'>
-	<div class='viewer-container'>하하</div>
-	<div class='viewer-btn'>하하하</div>
-</div>
-
 	
 	<script>
 	
@@ -198,6 +192,15 @@
 			controls: false,
 			touchEnabled: false,
 			autoHover: true,
+			onSliderLoad: function() {
+
+			}
+	}
+	const slideOnload = function() {
+		const f = document.querySelector("#slide-loading");
+		if(f){
+			f.remove();
+		}
 	}
 	let slider;
 	if(document.body.scrollWidth < 768){
@@ -215,6 +218,57 @@
 	});
 	
 	
+	
+	const pickViewerOpen = function(data){
+		const __div = document.createElement("div");
+		__div.setAttribute("class", "pick-viewer");
+		
+		const __div_layout = document.createElement("div");
+		__div_layout.setAttribute("class", "pick-viewer-layout");
+		
+		const __div_container = document.createElement("div");
+		__div_container.setAttribute("class", "pick-viewer-container");
+		__div_container.setAttribute("tabindex", "0");
+		
+		const __div_content = document.createElement("div");
+		__div_content.setAttribute("class", "pick-viewer-content");
+		__div_content.innerHTML = data;
+
+		const __div_btn = document.createElement("div");
+		__div_btn.setAttribute("class", "pick-viewer-btn");
+		
+		const closeBtn = document.createElement("button");
+		closeBtn.innerText = "닫기";
+		closeBtn.onclick = function(){
+			pickViewerClose();
+		}
+
+		__div_layout.addEventListener("click", function (e) {
+			e.preventDefault();
+			__div_container.focus();
+			if(e.target.className == "pick-viewer-layout"){
+				pickViewerClose();
+			}
+		});
+		__div_container.addEventListener("keyup", function (e) {
+			if (["Enter","Escape","Space"].includes(e.code)) {
+				pickViewerClose();
+			}
+		});
+		
+		__div_btn.appendChild(closeBtn);
+		__div_container.appendChild(__div_content);
+		__div_container.appendChild(__div_btn);
+		__div_layout.appendChild(__div_container);
+		__div.appendChild(__div_layout);
+		document.body.prepend(__div);
+		__div_container.focus();
+	}
+	
+	const pickViewerClose = function(){
+		const pickViewer = document.querySelector(".pick-viewer");
+		pickViewer.remove();
+	}
 	
 	const getData = function(url){
 		return new Promise(resolve => {
@@ -234,9 +288,9 @@
 		let course_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey="+serviceKey+"&contentTypeId=25&contentId="+id+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y&_type=json";
 		const course = await getData(course_url);
 		
-		utils.alert(JSON.stringify(common)+JSON.stringify(course));
+		pickViewerOpen("==================================common==================================<br>"+JSON.stringify(common)
+				+"<br><br>==================================course==================================<br>"+JSON.stringify(course));
 	}
-	
 	
 	//bxslider item click event(detail viewer)
 	const pickBox = document.querySelector(".today-pick-box");
@@ -283,7 +337,8 @@
 			html += "</li>";
 		});
 		document.querySelector(".today-pick-slider").innerHTML = html;
-		slider.reloadSlider();
+		
+		slider.reloadSlider(Object.assign(bop, {onSliderLoad: slideOnload}));
 	}
 	
 	apiCall(37.568477, 126.981611);
