@@ -6,19 +6,26 @@
 <mapper namespace="spring.mapper.hs.D_dayMapperInter">
 	<insert id="create" parameterType="D_dayDTO">
 		insert into
-		d_day (d_num, regdate, title, uuid)
+		d_day (d_num, regdate, title, d_date, uuid)
 		values(
 		    (select nvl(max(d_num),0)+1 from d_day),
-		    #{regdate},
+		    sysdate,
 		    #{title},
+		    #{d_date},
 		    #{uuid}
 		)
 	</insert>
+	
+	<select id="read" parameterType="int" resultType="D_dayDTO">
+		select *
+		from d_day
+		where d_num = #{d_num}
+	</select>
 
 	<update id="update" parameterType="D_dayDTO">
 		update d_day set
 			title = #{title},
-			regdate = #{regdate}
+			d_date = #{d_date}
 		where d_num = #{d_num}
 	</update>
 	
@@ -28,11 +35,11 @@
 	</delete>
 	
 	<select id="list" parameterType="Map" resultType="D_dayDTO">
-		select d_num, title, regdate, r
+		select d_num, title, d_date, regdate, r
 		from (
-		    select d_num, title, regdate, rownum r
+		    select d_num, title, d_date, regdate, rownum r
 		    from(
-		        select d_num, title, regdate
+		        select d_num, title, d_date, regdate
 		        from d_day
 		        <where>
 					<choose>
@@ -52,6 +59,12 @@
 	<select id="total" parameterType="int" resultType="int">
 		select
 		count(*) from d_day
-		where d_num = #{d_num}
+        <where>
+			<choose>
+				<when test="col=='title'">
+					title like '%'||#{word}||'%'		
+				</when>
+			</choose>
+		</where>
 	</select>
 </mapper>

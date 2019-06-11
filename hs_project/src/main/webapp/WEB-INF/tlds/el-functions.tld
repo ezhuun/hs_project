@@ -30,5 +30,10 @@
 			int rcount(int,spring.model.reply.ReplyInter )
 		</function-signature>
 	</function> -->
-
+	<function>
+		<description>d-day 구하기</description>
+		<name>diffDay</name>
+		<function-class>spring.utility.hs.Utility</function-class>
+		<function-signature>long validDiffTime(java.lang.String)</function-signature>
+	</function>
 </taglib>

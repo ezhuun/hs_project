@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import spring.mapper.hs.D_dayMapperInter;
 import spring.model.d_day.D_dayDTO;
+import spring.utility.hs.Utility;
 
 
 @WebAppConfiguration
@@ -34,6 +35,15 @@ public class D_dayInterTest {
 	private D_dayMapperInter inter;
 	
 	@Test
+	public void testValidDays() {
+		String date = "2019-06-05 01:01:01"; //db에서 가져온데이터
+		
+		long diffDay = Utility.validDiffTime(date);
+		
+		System.out.println(diffDay+"일 경과됬습니다");
+	}
+	
+	@Test
 	@Ignore
 	public void testMapper() {
 		logger.info("mapper : " + inter.getClass().getName());
@@ -44,19 +54,19 @@ public class D_dayInterTest {
 	public void testCreate() {
 		D_dayDTO dto = new D_dayDTO();
 		dto.setTitle("100일");
-		dto.setRegdate("2019-08-08");
+		dto.setD_date("2019-08-08");
 		dto.setUuid("uuid");
 		
 		assertTrue(inter.create(dto)>0);
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testUpdate() {
 		D_dayDTO dto = new D_dayDTO();
 		dto.setTitle("변경 기념일");
-		dto.setRegdate("2019=10=10");
-		dto.setD_num(2);
+		dto.setD_date("2019=10=10");
+		dto.setD_num(3);
 		
 		assertTrue(inter.update(dto)>0);
 	}
@@ -84,8 +94,8 @@ public class D_dayInterTest {
 	@Test
 	@Ignore
 	public void testTotal() {
-		int d_num = 1;
-		int cnt = inter.total(d_num);
+		Map map = new HashMap();
+		int cnt = inter.total(map);
 		logger.info("total: " + cnt);
 	}
 }

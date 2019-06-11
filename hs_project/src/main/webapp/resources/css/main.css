@@ -74,7 +74,7 @@
 	height: 100%;
 	border-bottom: 1px solid #b7b2b2;
 	top: 0;
-	z-index: 0;
+	z-index: 2;
 }
 
 .wrap .header-top,
@@ -669,4 +669,11 @@ ul.today-pick-slider {
 	width: 50px;
 	height: 1px;
 	background-color: #999;
+}
+
+.c-datepicker--open{
+	z-index: 3;
+}
+.c-scrim {
+	z-index: 2;
 }
