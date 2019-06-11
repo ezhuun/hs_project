@@ -98,6 +98,12 @@
 		location.href = url;
 	}
 </script>
+<script type="text/javascript">
+	function deleteM(){
+	window.opener.location.reload();    //부모창 reload
+	window.close();    //현재 팝업창 Close
+	}
+</script>
 <div class="container-inner sideBorder boxsing">
 
 	<div class="bootstrap">
@@ -122,7 +128,7 @@
 					<c:forEach var="diarydto" items="${list}">
 						<figure class="snip1361">
 							<!-- 생성시 메인에 사용할 사진을 설정 or 내용에 적은 사진 중에서 첫번째 사진을 사용 -->
-							<img src="${root }/images/diary/Tulips.jpg" alt="sample45" />
+							<img src="${root }/images/diary/storage/${diarydto.filename}" alt="sample45" />
 							<figcaption>
 								<!-- 이에 대한 설명을하는 문구를 담는 태그 -->
 								<h3>${diarydto.title }</h3>
@@ -166,22 +172,22 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">알림 메세지!</h4>
-				</div>
-				<div class="modal-body">
-					<p>This is a small modal.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- 	<div class="modal fade" id="myModal" role="dialog"> -->
+<!-- 		<div class="modal-dialog modal-sm"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!-- 					<h4 class="modal-title">알림 메세지!</h4> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<p>This is a small modal.</p> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 </div>
 
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
@@ -197,7 +203,7 @@
 		});
 	</script>
 	<script>
-		$(document).ready(function() {
+		/* $(document).ready(function() {
 			var modal = '${msg}'; //Controller에서 가져온 데이터
 			checkModal(modal); //modal생성
 
@@ -212,6 +218,6 @@
 					$("#myModal").modal("show");
 				}
 			}
-		});
+		}); */
 	</script>
 	<!-- 여기까지 -->

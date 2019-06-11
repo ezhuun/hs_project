@@ -10,33 +10,47 @@
 	<div class="bootstrap">
 
 		<h1>Diary</h1>
-		<form class="form-horizontal" method="post" action="update">
+		<form class="form-horizontal" method="post" action="update" enctype="multipart/form-data">
 			<input type="hidden" id="uuid" name="uuid" value="${member.uuid}">
-			<input type="hidden" id="c_code" name="c_code" value="${member.c_code}">
-			<input type="hidden" id="diary_num" name="diary_num" value="${diarydto.diary_num }">
-			
+			<input type="hidden" id="c_code" name="c_code"
+				value="${member.c_code}"> 
+			<input type="hidden"
+				id="diary_num" name="diary_num" value="${diarydto.diary_num }">
+			<input type="hidden" id="oldfile" name="oldfile"
+				value="${diarydto.filename }"> <!-- 변경전 파일 -->
+
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="title" >제목</label>
+				<label class="control-label col-sm-2" for="title">제목</label>
 				<div class="col-sm-3">
-					<input  class="form-control" id="title" name="title" value="${diarydto.title}" />
+					<input class="form-control" id="title" name="title"
+						value="${diarydto.title}" />
 				</div>
 			</div>
-			
-			
+
+
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="d_date">날짜</label>
 				<div class="col-sm-8">
-					<input type="text" id="d_date" name="d_date" value="${diarydto.d_date }" readonly required />
+					<input type="text" id="d_date" name="d_date"
+						value="${diarydto.d_date }" readonly required />
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="content">내용</label>
 				<div class="col-sm-8">
-					
+
 					<textarea class="form-control" id="content" name="content"
 						rows="10">${diarydto.content }</textarea>
+				</div>
+			</div>
+
+			<!-- 변경파일 -->
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="content">썸네일</label>
+				<div class="col-sm-8">
+					<input  class="form-control" type="file" name="filenameMF" id="filename" accept=".jpg,.gif,.png"  value="${diarydto.filename}">
 				</div>
 			</div>
 
@@ -63,12 +77,14 @@
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-defulat">수정</button>
-					<button type="reset" class="btn btn-defulat">취소</button><!-- histroy.back() -->
-					<button type="button" class="btn btn-defulat" onclick="location.href='./list'">목록</button>
+					<button type="reset" class="btn btn-defulat">취소</button>
+					<!-- histroy.back() -->
+					<button type="button" class="btn btn-defulat"
+						onclick="location.href='./list'">목록</button>
 				</div>
 			</div>
 		</form>
-	
+
 	</div>
 
 </div>

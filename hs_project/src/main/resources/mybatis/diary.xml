@@ -10,13 +10,13 @@
 			order="BEFORE">
 			select nvl(max(diary_num),0)+1 from diary
 		</selectKey>
-		insert into diary(diary_num,title,content,regdate,c_code,uuid,d_date)
-		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid},#{d_date})
+		insert into diary(diary_num,title,content,regdate,c_code,uuid,d_date, filename)
+		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid},#{d_date},#{filename})
 	</insert>
 
 	<!-- read -->
 	<select id="read" parameterType="int" resultType="DiaryDTO">
-		select diary_num, uuid,content, regdate , title, d_date
+		select diary_num, uuid,content, regdate , title, d_date,filename
 		from diary
 		where
 		diary_num = #{diary_num}
@@ -27,7 +27,8 @@
 		update diary
 		set title=#{title},
 		content=#{content},
-		d_date=#{d_date}
+		d_date=#{d_date},
+		filename=#{filename}
 		where diary_num=#{diary_num}
 	</update>
 
@@ -41,11 +42,11 @@
 
 	<!-- list -->
 	<select id="list" parameterType="Map" resultType="DiaryDTO">
-		select diary_num,uuid,content,regdate,title,c_code,d_date,r
+		select diary_num,uuid,content,regdate,title,c_code,d_date,filename,r
 		from (  
-				select diary_num,uuid,content,regdate,title,c_code,d_date,rownum as r
+				select diary_num,uuid,content,regdate,title,c_code,d_date,filename,rownum  r
 				from(
-					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,d_date,c_code
+					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,d_date,c_code,filename
 					from diary
 					order by d_date
 				)

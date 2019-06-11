@@ -10,7 +10,7 @@
 	<div class="bootstrap">
 
 		<h1>Diary</h1>
-		<form class="form-horizontal" method="post" action="create">
+		<form class="form-horizontal" method="post" action="create" enctype="multipart/form-data">
 			<input type="hidden" id="uuid" name="uuid" value="${member.uuid}">
 			<input type="hidden" id="c_code" name="c_code" value="${member.c_code}">
 			
@@ -38,27 +38,14 @@
 						rows="10"></textarea>
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="content">썸네일</label>
+				<div class="col-sm-8">
+					<input type="file" name="filenameMF" id="filename" accept=".jpg,.gif,.png">
+				</div>
+			</div>
 
-			<!-- <table>
-			<tbody>
-				<tr>
-					<th>Date</th>
-					<td><input type="date" id="userdate" name="userdate" value=""></td>
-				</tr>
-				<tr>
-					<th>Title</th>
-					<td><input type="text"></td>
-				</tr>
-				<tr>
-					<th>Content</th>
-					<td><img height="150" src=""><br> <textarea>
-							튤립	
-						</textarea></td>
-				</tr>
-
-
-			</tbody>
-		</table> -->
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-defulat">등록</button>

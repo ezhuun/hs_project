@@ -1,5 +1,7 @@
 package spring.model.diary;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DiaryDTO {
 	private int diary_num     ;
     private String uuid       ;
@@ -8,6 +10,39 @@ public class DiaryDTO {
     private String title      ;
     private String c_code     ;
     private String d_date	  ;
+    private String  filename; // 파일명  
+    private int    filesize; // 파일 사이즈 
+    private MultipartFile filenameMF; 
+    
+    public String getFilename() {
+		return filename;
+	}
+
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
+	public int getFilesize() {
+		return filesize;
+	}
+
+
+	public void setFilesize(int filesize) {
+		this.filesize = filesize;
+	}
+
+
+	public MultipartFile getFilenameMF() {
+		return filenameMF;
+	}
+
+
+	public void setFilenameMF(MultipartFile filenameMF) {
+		this.filenameMF = filenameMF;
+	}
+
 	
     
     public DiaryDTO() {
@@ -26,15 +61,19 @@ public class DiaryDTO {
 	}
 
 
+	
+
+
 	@Override
 	public String toString() {
 		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
-				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + "]";
+				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + ", filename=" + filename
+				+ ", filesize=" + filesize + ", filenameMF=" + filenameMF + "]";
 	}
 
 
 	public DiaryDTO(int diary_num, String uuid, String content, String regdate, String title, String c_code,
-			String d_date) {
+			String d_date, String filename, int filesize, MultipartFile filenameMF) {
 		super();
 		this.diary_num = diary_num;
 		this.uuid = uuid;
@@ -43,6 +82,9 @@ public class DiaryDTO {
 		this.title = title;
 		this.c_code = c_code;
 		this.d_date = d_date;
+		this.filename = filename;
+		this.filesize = filesize;
+		this.filenameMF = filenameMF;
 	}
 
 
