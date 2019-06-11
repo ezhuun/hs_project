@@ -8,7 +8,7 @@ public class ClistDTO {
 	private String content;
 	private String regdate;
 	private String c_code;
-
+	private int checked;
 	
 	
 	public ClistDTO() {
@@ -70,6 +70,16 @@ public class ClistDTO {
 	}
 	public void setC_code(String c_code) {
 		this.c_code = c_code;
+	}
+
+
+	public int getChecked() {
+		return checked;
+	}
+
+
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 	
 		

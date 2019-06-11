@@ -26,11 +26,10 @@
 	</select>
 
 
-	<update id="update" parameterType="ClistDTO">
+	<update id="update" parameterType="Map">
 		update c_list
 		set
-		title=#{title},
-		content=#{content}
+		checked=#{checked}
 		where c_num=#{c_num}
 
 	</update>
@@ -46,26 +45,24 @@
 	<select id="list" parameterType="Map" resultType="ClistDTO">
 
 		select c_num, uuid, title, content, sysdate, c_code, checked, r
-		from(
-		select c_num, uuid, title, content, sysdate, c_code, checked, rownum r
-		from(
-		select c_num, uuid, title, content, sysdate, c_code, checked from
-		c_list
-		order by rownum asc
-		)
-		)
-<![CDATA[
-where r>=#{sno} and r<=#{eno}
-]]>
+			from(
+				select c_num, uuid, title, content, sysdate, c_code, checked, rownum r
+				from(
+					select c_num, uuid, title, content, sysdate, c_code, checked
+					from c_list
+					where c_code=#{c_code}
+					order by rownum asc
+				)
+			)
 
 	</select>
 
 	<select id="total" parameterType="Map" resultType="int">
 
 		select count(*) from c_list
-		<!-- where c_code=#{c_code} -->
-		<!-- where content=#{content} -->
-		<!-- where title=#{title} -->
+		 where c_code=#{c_code} 
+		 where content=#{content}
+		 where title=#{title} 
 		<where>
 			<choose>
 				<when test="col=='title'">
@@ -77,8 +74,7 @@ where r>=#{sno} and r<=#{eno}
 			</choose>
 		</where>
 
-	</select>
-
+	</select> 
 
 
 </mapper>

@@ -3,8 +3,25 @@
 
 	<!-- 여기부터 -->
 	
+	<style>
+	#todo-list{
+width:500px;
+margin:0 auto 50px auto;
+padding:50px;
+background:white;
+position:relative;
+/*box-shadow*/
+-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+   -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+/*border-radius*/
+-webkit-border-radius:5px;
+   -moz-border-radius:5px;
+        border-radius:5px;
+}
+</style>
 	<div class="container-inner sideBorder boxsing">
-		
+	
 		<h2>리스트 등록</h2>
 		<form name="frm" method="post" action="create"
 			onsubmit="return incheck(this);">
@@ -13,12 +30,12 @@
 			
 			<table class="table">
 				<tr>
-					<th>제목</th>
+					<th>to do</th>
 					<td><input type="text" class="form-control" id="title"
 						name="title" /></td> 
 				</tr>
 				<tr>
-					<th>내용</th>
+					<th>파일</th>
 					<td><textarea class="form-control" id="content" name="content"
 							rows="20"></textarea></td>
 				</tr>
