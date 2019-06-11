@@ -178,5 +178,56 @@ public class Utility {
 		}
 		return key;
 	}
+	
+	
+	public static String paging(int totalRecord, int nowPage, int recordPerPage, String col, String word, String url) {
+
+		int pagePerBlock = 5; // 블럭당 페이지 수 , rownum을 한번에 몇개까지 보여줄건지(1~5가 나오고 다음을 눌러야 6~10이 나옴)
+		int totalPage = (int) (Math.ceil((double) totalRecord / recordPerPage)); // 전체 페이지 = 전체레코드/페이지 당 보여줄 레코드,
+																					// 안나누어떨어지면 올림으로 함(ceil)
+		int totalGrp = (int) (Math.ceil((double) totalPage / pagePerBlock));// 전체 그룹 전체페이지/한페이지당 보여줄 rownum ,안나누어 떨어져도
+																			// 올림 123 456 78 (3블럭)
+		int nowGrp = (int) (Math.ceil((double) nowPage / pagePerBlock)); // 현재 그룹 현재페이지/한페이당보여줄 rounum, 2페이지/3블럭 = 1번째
+																			// 블럭에 있음(올림) 6페이지/2블럭 = 3
+		int startPage = ((nowGrp - 1) * pagePerBlock) + 1; // 특정 그룹의 페이지 목록 시작
+		int endPage = (nowGrp * pagePerBlock); // 특정 그룹의 페이지 목록 종료
+
+		StringBuffer str = new StringBuffer();
+		str.append("<div style='text-align:center'>");
+		str.append("<ul class='pagination'> ");// 페이지하단 번호의 모양을 사각형으로 지정
+
+		int _nowPage = (nowGrp - 1) * pagePerBlock; // 10개 이전 페이지로 이동 pagePerBlock=5일때 1그룹은 1~5의 rownum을 가짐,
+		// 2그룹(6~10)-1 * 5 = 5 = > 2그룹에서 이전을 눌렀을때 이동하는곳(현재그룹에서 이전그룹의 맨 마지막 페이지를 가리킴)
+		if (nowGrp >= 2) { // 내가 보고 있는 그룹이 2그룹이면(6~10)
+			str.append(
+					"<li><a href='" + url + "?col=" + col + "&word=" + word + "&nowPage=" + _nowPage + "'>이전</A></li>");
+		}
+
+		for (int i = startPage; i <= endPage; i++) {
+			if (i > totalPage) { // endPage가 전체페이지보다 커지면 반복을 끝냄
+				break;
+			}
+			if (nowPage == i) {
+				str.append("<li class='active'><a href=#>" + i + "</a></li>");
+			} else {
+				// 현재페이지가 아닌곳에서 col과 word를 가지고 감
+				str.append("<li><a href='" + url + "?col=" + col + "&word=" + word + "&nowPage=" + i + "'>" + i
+						+ "</A></li>");
+			}
+		}
+		// 2그룹 (6~10)* 5 = 10+1 =>11페이지로 이동(2그룹에서 다음을 눌렀을때 이동하는 곳, 현재그룹에서 다음그룹의 첫번째 페이지를
+		// 가리킴)
+		_nowPage = (nowGrp * pagePerBlock) + 1; // 10개 다음 페이지로 이동
+		if (nowGrp < totalGrp) {
+			str.append(
+					"<li><A href='" + url + "?col=" + col + "&word=" + word + "&nowPage=" + _nowPage + "'>다음</A></li>");
+		}
+		str.append("</ul>");
+		str.append("</div>");
+		return str.toString();
+	}
+
+	
+	
 
 }

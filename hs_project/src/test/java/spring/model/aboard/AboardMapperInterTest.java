@@ -86,10 +86,23 @@ public class AboardMapperInterTest {
 	}
 
 	@Test
-	@Ignore
+	
 	public void testTotal() {
-		int a_num = 3;
-		int cnt = inter.total(a_num);
+		Map map = new HashMap();
+		
+		String col = "제목";
+		String word = "수정중";
+		int sno = 1;
+		int eno = 10;
+		
+		
+		map.put("col", col);
+		map.put("word", word);
+		map.put("sno", sno);
+		map.put("eno", eno);
+		
+		
+		int cnt = inter.total(map);
 		logger.info("total: " + cnt);
 	}
 

@@ -5,11 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="spring.mapper.hs.AboardMapperInter">
 	<select id="list" parameterType="Map" resultType="AboardDTO">
-		SELECT a_num, a_name, title, regdate, r
+		SELECT a_num, a_name, title, regdate, viewcnt, r
 		FROM ( 
-			  SELECT a_num, a_name, title, regdate, rownum r
+			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
 			  FROM (
-			  		SELECT a_num, a_name, title, regdate
+			  		SELECT a_num, a_name, title, regdate, viewcnt
 			  		FROM a_board
                   	order by a_num
         	  )
@@ -47,11 +47,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE a_num = #{a_num}	
 	</delete>
 	
-	<select id="total" parameterType="int" resultType="int">
+	<select id="total" parameterType="Map" resultType="int">
 		SELECT count(*)
 		FROM a_board
-		WHERE a_num = #{a_num}
-	
+		<where>
+		<choose>
+			<when test="col=='col1'">
+				col1 like '%'||#{word}||'%'
+			</when>	
+ 			<when test="col=='col2'">
+ 				col2 like '%'||#{word}||'%'
+ 			</when>
+ 			<when test="col=='col3'">
+ 				col3 like '%'||#{word}||'%'
+ 			</when>
+ 			<when test="col=='col4'">
+				col4 like '%'||#{word}||'%'
+			</when>	
+ 			<when test="col=='col5'">
+				col5 like '%'||#{word}||'%'
+			</when>	
+ 			<when test="col=='col6'">
+				col6 like '%'||#{word}||'%'
+			</when>				
+ 			
+ 			<when test="col=='colA'">
+ 				col1 like '%'||#{word}||'%'
+ 				or
+ 				col2 like '%'||#{word}||'%'
+ 				or
+ 				col3 like '%'||#{word}||'%'
+ 				or
+ 				col4 like '%'||#{word}||'%'
+ 				or
+ 				col5 like '%'||#{word}||'%'
+ 				or
+ 				col6 like '%'||#{word}||'%'
+ 			</when>
+ 		</choose>
+ 		</where>                          	
 	</select>
+	
+		
+	<update id="upViewcnt" parameterType="int">
+	<!-- 조회수 증가. read와 연관 -->
+		UPDATE a_board
+		SET viewcnt = viewcnt+1
+		WHERE a_num= #{a_num}	
+	</update>	
 </mapper>
 	

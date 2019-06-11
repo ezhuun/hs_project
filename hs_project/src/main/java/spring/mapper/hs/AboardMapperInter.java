@@ -13,6 +13,7 @@ public interface AboardMapperInter {
 	AboardDTO read(int a_num);
 	int update(AboardDTO dto);
 	int delete(int a_num);
-	int total(int a_num);
+	int total(Map map);
+	int upViewcnt(int a_num);
 	
 }

@@ -8,13 +8,15 @@ public class AboardReplyDTO {
 	private String content;
 	private String uuid;
 	private int a_num;
+	private int viewcnt;
 	
 	public AboardReplyDTO() {
 		super();
-		
+		// TODO Auto-generated constructor stub
 	}
 
-	public AboardReplyDTO(int r_num, String r_name, String regdate, String content, String uuid, int a_num) {
+	public AboardReplyDTO(int r_num, String r_name, String regdate, String content, String uuid, int a_num,
+			int viewcnt) {
 		super();
 		this.r_num = r_num;
 		this.r_name = r_name;
@@ -22,12 +24,13 @@ public class AboardReplyDTO {
 		this.content = content;
 		this.uuid = uuid;
 		this.a_num = a_num;
+		this.viewcnt = viewcnt;
 	}
 
 	@Override
 	public String toString() {
 		return "AboardReplyDTO [r_num=" + r_num + ", r_name=" + r_name + ", regdate=" + regdate + ", content=" + content
-				+ ", uuid=" + uuid + ", a_num=" + a_num + "]";
+				+ ", uuid=" + uuid + ", a_num=" + a_num + ", viewcnt=" + viewcnt + "]";
 	}
 
 	public int getR_num() {
@@ -77,6 +80,18 @@ public class AboardReplyDTO {
 	public void setA_num(int a_num) {
 		this.a_num = a_num;
 	}
+
+	public int getViewcnt() {
+		return viewcnt;
+	}
+
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
+	
+	
+	
+	
 	
 	
 	
