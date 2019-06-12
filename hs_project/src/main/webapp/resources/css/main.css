@@ -70,6 +70,14 @@
 	.trav-inner-container{
 		flex-direction: column !important;
 	}
+	
+	.common-details{
+		padding: 0 !important;
+	}
+	
+	.trav-inner-details{
+		padding: 0 !important;
+	}
 }
 
 .wrap {
@@ -766,6 +774,7 @@ ul.today-pick-slider {
 .common-details {
 	width: 100%;
 	padding: 0 1rem;
+	box-sizing: border-box;
 }
 
 .common-details ul {
@@ -823,6 +832,7 @@ ul.today-pick-slider {
 .trav-inner-details {
 	width: 100%;
 	padding: 0 1rem;
+	box-sizing: border-box;
 }
 
 .trav-inner-details span {

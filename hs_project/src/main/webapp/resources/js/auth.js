@@ -641,7 +641,7 @@ const onDisconnect = function(uuid){
     form.submit();
 }
 const handleDisconnect = function(uuid){
-	utils.alert('상대방과의 연결을 끊으시면 본 사이트에서 제공하는 서비스를 더 이상 이용하실 수 없습니다. <span style=\"color:#f7394f;\">그래도 연결해제를 원하시면 아래 회원탈퇴 버튼을 눌러주세요.</span> <span class=\"textSmall\"><br/>(이 메시지를 무시하려면 확인버튼을 눌러주세요)</span>',
+	utils.alert('상대방과의 연결을 끊으시면 본 사이트에서 제공하는 서비스를 더 이상 이용하실 수 없습니다. <span style=\"color:#f7394f;\">그래도 연결해제를 원하시면 아래 연결끊기 버튼을 눌러주세요.</span> <span class=\"textSmall\"><br/>(이 메시지를 무시하려면 확인버튼을 눌러주세요)</span>',
 			'',
 			'<button onclick=\"onDisconnect(\''+uuid+'\');\" style=\"background-color:#f7394f;\">연결끊기</button>');
 }

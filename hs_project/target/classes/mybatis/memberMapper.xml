@@ -6,6 +6,18 @@
 <mapper namespace="spring.mapper.hs.MemberMapperInter">
 
 
+	<update id="changeName" parameterType="map">
+	<![CDATA[
+		UPDATE
+			member
+		SET
+			name = #{name}
+		WHERE
+			uuid = #{uuid}
+	]]>
+	</update>
+
+
 	<delete id="deleteMember">
 	<![CDATA[
 		DELETE

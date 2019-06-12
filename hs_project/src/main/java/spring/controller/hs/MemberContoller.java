@@ -39,6 +39,36 @@ public class MemberContoller {
 	private int amount = (60 * 60 * 24) * 3;
 	//private int amount = 10;
 
+	@ResponseBody
+	@PostMapping(value="/changeName", produces="application/text; charset=utf8")
+	public String changeName(MemberDTO dto){
+		String result = "0";
+		
+		boolean flag = service.changeName(dto.getUuid(), dto.getName());
+		if(flag == true) {
+			result = dto.getName();
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deletePhoto")
+	public String deletePhoto(HttpServletRequest request, String uuid){
+		String result = "0";
+		String basePath = request.getRealPath("/resources/upload/profile");
+		
+		MemberDTO dto = service.getMemberByUuid(uuid);
+		if(service.updatePhoto(uuid, "")) {
+			if(dto.getProfile() != null) {
+				Utility.deleteFile(basePath, dto.getProfile());
+			}
+			result = "1";
+		}
+		
+		return result;
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/deleteMember")
