@@ -8,6 +8,7 @@
 		<h1 class="col-sm-offset-2 col-sm-10">D-day 수정</h1>
 		<form class="form-horizontal" method="post" action="update">
 			<input type="hidden" name="uuid" value="${member.uuid}">
+			<input type="hidden" name="d_num" value="${dto.d_num}"/>
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="title">Title</label>

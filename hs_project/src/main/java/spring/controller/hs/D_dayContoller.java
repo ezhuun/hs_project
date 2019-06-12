@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import spring.mapper.hs.D_dayMapperInter;
 import spring.model.d_day.D_dayDTO;
+import spring.model.member.MemberDTO;
 import spring.utility.hs.Utility;
 
 @Controller
@@ -45,48 +46,20 @@ public class D_dayContoller {
 	}
 	
 	@GetMapping("/d_day/read")
-	public String read(int d_num, Model model,
-			int nowPage, String col, String word,
-			HttpServletRequest request) {
-
-		inter.Viewcnt(d_num);
+	public String read(int d_num, Model model) {
 
 		D_dayDTO dto = inter.read(d_num);
 
-		dto.setContent(dto.getContent().replaceAll("\r\n", "<br>"));
-
 		model.addAttribute("dto", dto);
 		
-	    /* 댓글 관련  시작 */
-		int nPage= 1; //시작 페이지 번호는 1부터 
-		 
-		if (request.getParameter("nPage") != null) { 
-		nPage= Integer.parseInt(request.getParameter("nPage"));  
-		}
-		int recordPerPage = 3; // 한페이지당 출력할 레코드 갯수
-		 
-		int sno = ((nPage-1) * recordPerPage) + 1; // 
-		int eno = nPage * recordPerPage;
-		 
-		Map map = new HashMap();
-		map.put("sno", sno);
-		map.put("eno", eno);
-		map.put("d_num", d_num);
-		map.put("nPage", nPage);
-		map.put("nowPage", nowPage);
-		map.put("col", col);
-		map.put("word", word);
-		 
-		model.addAllAttributes(map);
-		 
-		/* 댓글 관련 끝 */  
-
 		return "/d_day/read";
 	}
 	
 	@GetMapping("/d_day/update")
-	public String update(int d_num) {
-//		D_dayDTO dto = mapper.read
+	public String update(int d_num, Model model) {
+
+		model.addAttribute("dto", inter.read(d_num));
+		
 		return "/d_day/update";
 	}
 	
@@ -105,13 +78,15 @@ public class D_dayContoller {
 	}
 	
 	@GetMapping("/d_day/delete")
-	public String delete() {
+	public String delete(Model model, int d_num) {
+		
+		model.addAttribute("dto", inter.read(d_num));
 		
 		return "/d_day/delete";
 	}
 
 	@PostMapping("/d_day/delete")
-	public String delete(RedirectAttributes redi, int d_num, Model model, D_dayDTO dto) {
+	public String delete(RedirectAttributes redi, int d_num, Model model) {
 
 		int flag = inter.delete(d_num);
 
@@ -126,6 +101,9 @@ public class D_dayContoller {
 	
 	@GetMapping("/d_day/list")
 	public String list(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		MemberDTO dto = (MemberDTO)session.getAttribute("member");
 
 		// 검색 관련 ------------------
 		String col = Utility.checkNull(request.getParameter("col"));
@@ -150,6 +128,7 @@ public class D_dayContoller {
 		int eno = nowPage * recordPerPage;
 
 		Map map = new HashMap();
+		map.put("uuid", dto.getUuid());
 		map.put("col", col);
 		map.put("word", word);
 		map.put("sno", sno);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
+
 <style type="text/css">
 #red {
 	color: red;
@@ -28,5 +29,4 @@
 			</div>
 		</form>
 	</div>
-
 </div>

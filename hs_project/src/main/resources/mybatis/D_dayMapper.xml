@@ -17,9 +17,7 @@
 	</insert>
 	
 	<select id="read" parameterType="int" resultType="D_dayDTO">
-		select *
-		from d_day
-		where d_num = #{d_num}
+		select * from d_day where d_num=#{d_num}
 	</select>
 
 	<update id="update" parameterType="D_dayDTO">
@@ -46,9 +44,12 @@
 						<when test="col=='title'">
 							title like '%'||#{word}||'%'		
 						</when>
+						<otherwise>
+							and uuid=#{uuid}
+						</otherwise>
 					</choose>
 				</where>
-		        order by d_num asc
+		        order by d_date asc
 		        )
 		)
 		<![CDATA[
@@ -64,6 +65,9 @@
 				<when test="col=='title'">
 					title like '%'||#{word}||'%'		
 				</when>
+				<otherwise>
+					and uuid=#{uuid}
+				</otherwise>
 			</choose>
 		</where>
 	</select>

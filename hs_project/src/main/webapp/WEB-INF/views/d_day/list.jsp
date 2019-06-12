@@ -2,13 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp"%>
 
-
-<!-- 여기부터 -->
-
 <div class="container-inner sideBorder boxsing">
 <div class="bootstrap">
 	<h2>D-day 목록</h2>
 	<form class="form-inline" action="list">
+	<input type="hidden" name="uuid" value="${member.uuid}">
+	
 		<div class="form-group">
 			<select class="form-control" name="col">
 				<c:if test="${col=='title'}">selected</c:if>
@@ -32,7 +31,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>번호</th>
 					<th>기념일</th>
 					<th>제목</th>
 					<th>D-day</th>
@@ -53,17 +51,15 @@
 					<c:otherwise>
 						<c:forEach var="dto" items="${list}">
 							<tr>
-								<td>${dto.d_num}</td>
 								<td>${dto.d_date}</td>
 								<td>${dto.title}</td>
-								<td><a>
+								<td><a href="javascript:read('${dto.d_num}')">
 									<c:set var="ddate" value="${dto.d_date} 00:00:00" />
-									${util:diffDay(ddate)+1}일 지났습니다.
+									${util:diffDay(ddate)+1}일
 								</a></td>
 								<td>${dto.regdate}</td>
-								<td><a href="${pageContext.request.contextPath}/d_day/update"
-								>수정</a>/
-								<a href="${pageContext.request.contextPath}/d_day/delete">삭제</a>
+								<td><a href="javascript:update('${dto.d_num}')">수정</a>/
+								<a href="javascript:deleteM('${dto.d_num}')">삭제</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -75,3 +71,33 @@
 	</form>
 </div>
 </div>
+
+<script>
+function read(d_num) {
+	var url = "read";
+	url = url + "?d_num=" + d_num;
+	url += "&col=${col}";
+	url += "&word=${word}";
+	url += "&nowPage=${nowPage}";
+
+	location.href = url;
+}
+function update(d_num) {
+	var url = "update";
+	url = url + "?d_num=" + d_num;
+	url += "&col=${col}";
+	url += "&word=${word}";
+	url += "&nowPage=${nowPage}";
+
+	location.href = url;
+}
+function deleteM(d_num) {
+	var url = "delete";
+	url = url + "?d_num=" + d_num;
+	url += "&col=${col}";
+	url += "&word=${word}";
+	url += "&nowPage=${nowPage}";
+
+	location.href = url;
+}
+</script>

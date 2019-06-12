@@ -19,6 +19,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/d_day/delete.jsp" />
 	</definition>
 	
+	<definition name="/d_day/read" extends="index">
+		<put-attribute name="title" value="D-day 읽기"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/d_day/read.jsp" />
+	</definition>
+	
 	<definition name="/d_day/list" extends="index">
 		<put-attribute name="title" value="D-day 리스트"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/d_day/list.jsp" />
