@@ -19,8 +19,8 @@
 		<function-signature>boolean compareDay(java.lang.String)</function-signature>
 	</function>
 
-	<!-- bbs댓글갯수 -->
-	<!-- <function>
+
+	<function>
 		<description>댓글수 보여주기</description>
 		<name>rcount</name>
 		<function-class>
@@ -29,6 +29,6 @@
 		<function-signature>
 			int rcount(int,spring.model.reply.ReplyInter )
 		</function-signature>
-	</function> -->
-
+	</function>
+	
 </taglib>

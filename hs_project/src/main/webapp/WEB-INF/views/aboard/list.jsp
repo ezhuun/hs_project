@@ -5,9 +5,13 @@
 	div.notice{
 	    border-top: 2px solid #000 ;
 	    border-bottom: 2px solid #000;
-	    width: 80%;
+	    width: 82%;
 	    padding: 15px 10px 10px 10px;
 	    margin-left: 10%;
+	}
+	
+	div.notice .title{
+		margin: 20px 0;
 	}
 	.bridge_talk{
 		padding-left: 10%;
@@ -33,6 +37,7 @@
 	.reply-num {
     	font-size: 11px;
     	padding-left: 6px;
+    	padding-top: 3px;
     	color: #e9281d;
     	float:right;
 	}
@@ -55,7 +60,7 @@
 	.posting_wrap {
 	    clear: both;
 	    float: left;
-	    width: 80%;
+	    width: 82%;
 	    margin-left: 10%;
 	    padding: 0 10px;
 		
@@ -74,7 +79,7 @@
 </style>
 
 	<!-- 여기부터 -->
-	<div class="container-inner sideBorder">
+	<div class="container-inner sideBorder bootstrap">
 		<div id="header" class="notice"><!-- talk -->
 			<h3 class="title"> 한줄 공지사항 입니다</h3>
 		</div>	
@@ -88,7 +93,7 @@
 					<c:otherwise>
 						<c:forEach var = "dto" items="${list }">
 							<li>
-								<a href="#">${dto.title}</a>
+								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
 								<span class="name">${dto.a_name}</span>
 								<span class="reply-num">(20)</span>
 							</li>
@@ -107,7 +112,7 @@
 					<c:otherwise>
 						<c:forEach var = "dto" items="${list }">
 							<li>
-								<a href="#">${dto.title}</a>
+								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
 								<span class="name">${dto.a_name}</span>
 								<span class="reply-num">(20)</span>
 							</li>
@@ -121,10 +126,10 @@
 		<div class="posting_wrap">
 			<table class="talk_list" summary="톡톡 카테고리 최신글 목록">
 				<colgroup>
-					<col width="1000">
-					<col width="140">
-					<col width="115">
-					<col width="130">
+					<col width="700">
+					<col width="240">
+					<col width="215">
+					<col width="230">
 				</colgroup>
 				<thead>
 					<tr>
@@ -143,12 +148,12 @@
 							<c:forEach var="dto" items="${list }">
 								<tr>
 									<td class="subject">
-										<strong id="${col}"></strong><a href="#">${dto.title}</a>
+										<strong id="${col}"></strong><a href="javascript:read('${dto.a_num}')">${dto.title}</a>
 									</td>
 									<td class="writer">
 										<span class="name">${dto.a_name}</span>
 									</td>
-									<td>조회수</td>
+									<td>${dto.viewcnt }</td>
 									<td>${dto.regdate }</td>
 							</c:forEach>
 						
@@ -156,9 +161,13 @@
 					
 					</c:choose>				
 				</tbody>
-			</table>						
+			</table>
+			<div>${paging }</div>						
 		</div>
-
+		<br>
+		
+		
+	
 	</div>
 	
 
@@ -174,6 +183,18 @@
 			console.log('g');
 		}
 		test();
+	</script>
+	
+	<script type="text/javascript">
+
+		function read(a_num){	
+		 	var url = "read"; 
+		 	url += "?a_num="+a_num;
+		 	url += "&col=${col}";
+		 	url += "&word=${word}";
+		 	url += "&nowPage=${nowPage}";
+		 	location.href=url; 	
+		} 	
 	</script>
 	
 	<!-- 여기까지 -->

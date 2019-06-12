@@ -15,5 +15,6 @@ public interface AboardMapperInter {
 	int delete(int a_num);
 	int total(Map map);
 	int upViewcnt(int a_num);
+	List<AboardDTO> notice_list(Map map);
 	
 }

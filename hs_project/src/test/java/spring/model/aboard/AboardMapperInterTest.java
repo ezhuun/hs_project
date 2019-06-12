@@ -35,8 +35,8 @@ public class AboardMapperInterTest {
 	@Ignore
 	public void testCreate() {
 		AboardDTO dto = new AboardDTO();
-		dto.seta_num(3);
-		dto.seta_name("궁그미");
+		dto.setA_num(3);
+		dto.setA_name("궁그미");
 		dto.setTitle("이번주말에 데이트 장소로..");
 		dto.setContent("휴일인데 어디를 가야할까요?");
 		dto.setUuid("guest1");
@@ -58,7 +58,7 @@ public class AboardMapperInterTest {
 		AboardDTO dto = new AboardDTO();
 		dto.setTitle("수정중입니다");
 		dto.setContent("-----댓글수정--------");
-		dto.seta_num(1);
+		dto.setA_num(1);
 
 		assertTrue(inter.update(dto)>0);
 	}

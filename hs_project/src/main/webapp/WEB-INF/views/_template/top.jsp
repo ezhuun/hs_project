@@ -64,7 +64,7 @@
 										<li>서브메뉴1</li>
 									</ul>
 								</li>
-								<li><a href="${pageContext.request.contextPath}/aboard/create">익명게시판</a>
+								<li><a href="${pageContext.request.contextPath}/aboard/list">익명게시판</a>
 									<ul>
 										<li>서브메뉴1</li>
 										<li>서브메뉴1</li>
