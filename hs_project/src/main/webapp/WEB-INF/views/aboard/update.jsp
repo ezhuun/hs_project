@@ -57,9 +57,10 @@
 			<h4 class="talk"><span>글쓰기</span></h4>
 			<form class="form-horizontal" action="update" method="post" >
 			<input type="hidden" name ="uuid" id="uuid" value=${member.uuid}>
+			<input type="hidden" name ="a_num" id="a_num" value=${dto.a_num}>
 				<div class="write">
 					<label for="a_name">닉네임</label>
-					<input value=${dto.a_name} name="a_name" id="a_name" class="form-control">
+					<span id="a_name" class="form-control">${dto.a_name}</span> 			
 				</div>
 				
 				<div class="write">		

@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="spring.mapper.hs.AboardMapperInter">
 	<select id="notice_list" parameterType="Map" resultType="AboardDTO">
-		SELECT a_num, a_name, title, regdate, viewcnt, r
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd hh24:mi')regdate, viewcnt, r
 		FROM ( 
 			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
 			  FROM (
 			  		SELECT a_num, a_name, title, regdate, viewcnt
 			  		FROM a_board
-                  	order by a_num
+                  	order by viewcnt desc
         	  )
 		)
 		<![CDATA[WHERE r>=1 and r<=10]]>    
@@ -19,13 +19,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="list" parameterType="Map" resultType="AboardDTO">
-		SELECT a_num, a_name, title, regdate, viewcnt, r
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd hh24:mi')regdate, viewcnt, r
 		FROM ( 
 			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
 			  FROM (
 			  		SELECT a_num, a_name, title, regdate, viewcnt
 			  		FROM a_board
-                  	order by a_num
+                  	order by a_num desc
         	  )
 		)
 		<![CDATA[WHERE r>=#{sno} and r<=#{eno}]]>    
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT nvl(max(a_num),0)+1
 		FROM a_board	
 		</selectKey>	
-		INSERT INTO a_board(a_num, a_name, uuid, title, content, regdate) 
+		INSERT INTO a_board(a_num, a_name, uuid, title, content, to_char(regdate,'yy/mm/dd hh24:mi')regdate) 
 		VALUES (#{a_num},#{a_name},#{uuid},#{title},#{content},sysdate)	
 	</insert>
 	
@@ -107,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 조회수 증가. read와 연관 -->
 		UPDATE a_board
 		SET viewcnt = viewcnt+1
-		WHERE a_num= #{a_num}	
+		WHERE a_num = #{a_num}	
 	</update>	
 </mapper>
 	

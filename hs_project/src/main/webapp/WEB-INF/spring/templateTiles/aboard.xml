@@ -32,6 +32,6 @@
         <put-attribute name="title" value="게시글삭제" ></put-attribute> 
         <put-attribute name="body" value="/WEB-INF/views/aboard/delete.jsp" /> 
     </definition>
-
+    
     
 </tiles-definitions> 

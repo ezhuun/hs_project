@@ -42,7 +42,7 @@ public class AboardController {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
 		
-		int recordPerPage = 7;
+		int recordPerPage = 10;
 		
 		//db페이징
 		int sno = ((nowPage - 1) * recordPerPage) + 1;
@@ -101,6 +101,7 @@ public class AboardController {
 	//read
 	@GetMapping("/aboard/read")	
 	public String read(int a_num, Model model, int nowPage, String col, String word,HttpServletRequest request) {
+		
 		ainter.upViewcnt(a_num);
 		
 		AboardDTO dto = ainter.read(a_num);
@@ -159,35 +160,21 @@ public class AboardController {
 	}
 	
 	
-	//delete
-
-		
-	@PostMapping("/bbs/delete")
+	//delete		
+	@PostMapping("/aboard/delete")
 	public String delete(@RequestParam Map<String, String>map, int a_num, Model model, RedirectAttributes redi) {
 		
-		boolean pflag = binter.passCheck(map)>0;
+		boolean flag = ainter.delete(a_num)>0;
 
-		try {
-			if (pflag) {
-				service.delete(bbsno);
-				redi.addFlashAttribute("msg", "게시글이 삭제되었습니다");
-				return "redirect:/bbs/list";
-			} else {
-				model.addAttribute("pflag", pflag);
+		if(flag==true) {
+			redi.addFlashAttribute("msg", "게시글이 삭제되었습니다");
+			return "redirect:/aboard/list";
+		} else {
+				model.addAttribute("flag", flag);
 				return "error/error";
-			}
-			
-		} catch(Exception e){
-			model.addAttribute("flag", false);
-			return "error/error";
 		}
-		
+
 	}
 		
-	
-	
-	
-	
-	
 
 }

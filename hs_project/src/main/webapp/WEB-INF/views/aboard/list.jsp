@@ -87,15 +87,15 @@
 		<div class="bridge_talk">
 			<ul class="talk-list">
 				<c:choose>
-					<c:when test="${empty list}">
+					<c:when test="${empty notice_list}">
 						등록된 게시글이 없습니다.
 					</c:when>
 					<c:otherwise>
-						<c:forEach var = "dto" items="${list }">
+						<c:forEach var = "dto" items="${notice_list }" begin="0" end ="4" step="1">
 							<li>
 								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
 								<span class="name">${dto.a_name}</span>
-								<span class="reply-num">(20)</span>
+								<span class="reply-num">${dto.viewcnt }</span>
 							</li>
 						</c:forEach>
 					</c:otherwise>
@@ -106,15 +106,15 @@
 		<div class="bridge_talk even">
 			<ul class="talk-list">
 				<c:choose>
-					<c:when test="${empty list}">
+					<c:when test="${empty notice_list}">
 						등록된 게시글이 없습니다.
 					</c:when>
 					<c:otherwise>
-						<c:forEach var = "dto" items="${list }">
+						<c:forEach var = "dto" items="${notice_list }" begin="5" end="9" step="1">
 							<li>
 								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
 								<span class="name">${dto.a_name}</span>
-								<span class="reply-num">(20)</span>
+								<span class="reply-num">${dto.viewcnt }</span>
 							</li>
 						</c:forEach>
 					</c:otherwise>
