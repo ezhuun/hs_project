@@ -32,8 +32,9 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 				MemberDTO dto = service.checkMemberWithSessionKey(session_key);
 
 				if(dto != null) {
-					dto.setLover(service.getConnectedAccount(dto.getUuid()));
-					dto.setConnect(service.getCode(dto.getC_code()));
+					dto = service.getJoinMemberByUuid(dto.getUuid());
+//					dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//					dto.setConnect(service.getCode(dto.getC_code()));
 					session.setAttribute("member", dto);
 					
 					return true;
@@ -46,9 +47,10 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}else {
 			MemberDTO _dto = (MemberDTO)obj;
-			MemberDTO dto = service.getMemberByUuid(_dto.getUuid());
-			dto.setLover(service.getConnectedAccount(dto.getUuid()));
-			dto.setConnect(service.getCode(dto.getC_code()));
+			MemberDTO dto = service.getJoinMemberByUuid(_dto.getUuid());
+//			MemberDTO dto = service.getMemberByUuid(_dto.getUuid());
+//			dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//			dto.setConnect(service.getCode(dto.getC_code()));
 			try {
 				session.setAttribute("member", dto);
 			} catch (Exception e) {}

@@ -36,8 +36,18 @@ public class MemberServiceImplTest {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
+	
 	@Test
 	// @Ignore
+	public void testJoinMember() {
+		String uuid = "9b7f8b2471754c6183564e9998d74f44";
+		//String uuid = "e9f8202fec5046159ead4a61ee1c9690";
+		MemberDTO dto = service.getJoinMemberByUuid(uuid);
+		System.out.println(dto);
+	}
+	
+	@Test
+	@Ignore
 	public void testDiffDay() {
 		long day = Utility.validDiffTime("2019-06-12" + " 00:00:00");
 		System.out.println(day);
@@ -256,6 +266,7 @@ public class MemberServiceImplTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDuplicateEmail() {
 		boolean flag = false;
 		flag = service.duplicateEmail("b@b.b");

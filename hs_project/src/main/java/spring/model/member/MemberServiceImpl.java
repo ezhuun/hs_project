@@ -32,6 +32,11 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	@Override
+	public MemberDTO getJoinMemberByUuid(String uuid) {
+		return mapper.getJoinMemberByUuid(uuid);
+	}
+
+	@Override
 	public boolean changeName(String uuid, String name) {
 		boolean flag = false;
 		Map<String, String> map = new HashMap<String, String>();

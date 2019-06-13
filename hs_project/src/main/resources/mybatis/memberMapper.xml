@@ -5,6 +5,81 @@
 
 <mapper namespace="spring.mapper.hs.MemberMapperInter">
 
+	<resultMap type="MemberDTO" id="connectMemberMap">
+		<result property="no" column="no"/>
+		<result property="uuid" column="uuid"/>
+		<result property="email" column="email"/>
+		<result property="c_code" column="c_code"/>
+		<result property="temp_code" column="temp_code"/>
+		<result property="passwd" column="passwd"/>
+		<result property="name" column="name"/>
+		<result property="gender" column="gender"/>
+		<result property="birth" column="birth"/>
+		<result property="begin_date" column="begin_date"/>
+		<result property="regdate" column="regdate"/>
+		<result property="session_key" column="session_key"/>
+		<result property="session_limit" column="session_limit"/>
+		<result property="profile" column="profile"/>
+		<result property="lev" column="lev"/>
+		<result property="lover.no" column="no_1"/>
+		<result property="lover.uuid" column="uuid_1"/>
+		<result property="lover.email" column="email_1"/>
+		<result property="lover.c_code" column="c_code_1"/>
+		<result property="lover.temp_code" column="temp_code_1"/>
+		<result property="lover.passwd" column="passwd_1"/>
+		<result property="lover.name" column="name_1"/>
+		<result property="lover.gender" column="gender_1"/>
+		<result property="lover.birth" column="birth_1"/>
+		<result property="lover.begin_date" column="begin_date_1"/>
+		<result property="lover.regdate" column="regdate_1"/>
+		<result property="lover.session_key" column="session_key_1"/>
+		<result property="lover.session_limit" column="session_limit_1"/>
+		<result property="lover.profile" column="profile_1"/>
+		<result property="lover.lev" column="lev_1"/>
+		<result property="connect.c_no" column="c_no_2"/>
+		<result property="connect.c_code" column="c_code_2"/>
+		<result property="connect.d_limit" column="d_limit_2"/>
+		<result property="connect.d_status" column="d_status_2"/>
+		<result property="connect.d_uuid" column="d_uuid_2"/>
+		<result property="connect.u1" column="u1"/>
+		<result property="connect.u2" column="u2"/>
+	</resultMap>
+	<select id="getJoinMemberByUuid" parameterType="string" resultMap="connectMemberMap">
+	<![CDATA[
+		select 
+		    a.*,
+		
+		    b.no as no_1,
+		    b.uuid as uuid_1,
+		    b.email as email_1,
+		    b.c_code as c_code_1,
+		    b.temp_code as temp_code_1,
+		    b.passwd as passwd_1,
+		    b.name as name_1,
+		    b.gender as gender_1,
+		    b.birth as birth_1,
+		    b.begin_date as begin_date_1,
+		    b.regdate as regdate_1,
+		    b.last_login as last_login_1,
+		    b.session_key as session_key_1,
+		    b.session_limit as session_limit_1,
+		    b.profile as profile_1,
+		    b.lev as lev_1,
+		    
+		    c.c_no as c_no_2,
+		    c.c_code as c_code_2,
+		    c.d_limit as d_limit_2,
+		    c.d_status as d_status_2,
+		    c.d_uuid as d_uuid_2,
+		    c.u1 as u1_2,
+		    c.u2 as u2_2 
+		from member a
+		    left join member b on b.uuid in (select uuid from member where c_code=a.c_code and uuid!=a.uuid)
+		    left join member_connect c on a.c_code = c.c_code
+		where
+		    a.uuid = #{uuid}
+	]]>
+	</select>
 
 	<update id="changeName" parameterType="map">
 	<![CDATA[
@@ -221,6 +296,9 @@
 		WHERE uuid = #{uuid}
 	]]>
 	</update>
+
+
+
 
 	<!-- member recoard return by uuid -->
 	<select id="getMemberByEmail" resultType="MemberDTO">

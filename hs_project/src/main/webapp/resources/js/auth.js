@@ -1,4 +1,4 @@
-const allInput = document.querySelectorAll("input[type=email], input[type=text], input[type=password], input[type=number]");
+const allInput = document.querySelectorAll("input[type=email], input[type=text], input[type=password], input[type=number], input[type=file]");
 let inputValues = [];
 Array.prototype.slice.call(allInput).forEach(function (input, i) {;
 	inputValues[i] = input.value;
@@ -520,6 +520,9 @@ const handleChangePhoto = function (e) {
 		success: function (data) {
 			if (data != "0") {
 				document.querySelector("#profileImage").src = contextPath + "/upload/profile/" + data;
+				if(document.querySelector("#delProfilePhoto")){
+					document.querySelector("#delProfilePhoto").innerText = "사진 삭제";
+				}
 			} else {
 				utils.alert('이미지 등록 실패');
 			}
@@ -585,6 +588,14 @@ const handleChangePasswd = function () {
 }
 
 
+//=============================================
+//---------------------------------------------
+// logined
+// accountSetting page
+//---------------------------------------------
+//=============================================
+
+
 //==============================================
 //delete memeber
 //----------------------------------------------
@@ -645,3 +656,130 @@ const handleDisconnect = function(uuid){
 			'',
 			'<button onclick=\"onDisconnect(\''+uuid+'\');\" style=\"background-color:#f7394f;\">연결끊기</button>');
 }
+
+//==============================================
+//delete photo
+//----------------------------------------------
+const popupDeletePhoto = function(){
+	const uuid = document.querySelector("#uuid").value;
+	$.ajax({
+		url: contextPath + "/deletePhoto",
+		method: "post",
+		type: "json",
+		data: {uuid: uuid},
+		success: function (data) {
+			if(data == "1"){
+				utils.alert('삭제되었습니다', contextPath+'/accountSetting');
+			}else{
+				utils.alert('삭제 실패', contextPath+'/accountSetting');
+			}
+		}
+	});
+}
+
+//==============================================
+//change name
+//----------------------------------------------
+const handleClickChangeName = function(){
+	utils.popupFormInitHelp();
+	const uuid = document.querySelector("#uuid").value;
+	const newName = document.querySelector("#newName").value;
+	
+	if(newName == ''){
+		utils.popupFormCreateHelp(0, "- 이름을 입력해주세요");
+		return;
+	}else if(newName.length < 2){
+		utils.popupFormCreateHelp(0, " - 최소 2자리 이상 입력해주세요");
+		return;
+	}
+	
+	const param = {uuid: uuid, name: newName}
+	$.ajax({
+		url: contextPath + "/changeName",
+		method: "post",
+		type: "json",
+		data: param,
+		success: function (data) {
+			if(data != "0"){
+				document.querySelector("#currentName").innerText = data;
+				utils.popupFormClose();
+			}
+		}
+	});
+	
+}
+const popupChangeName = function(){
+	const currentName = document.querySelector("#currentName").innerText;
+	const title = '이름 변경';
+	let form = '<div>변경할 이름<input type="text" id="newName" name="newName" value="'+currentName+'" onkeypress="if(event.keyCode==13)handleClickChangeName();"></div>';
+	const button = '<button onclick="handleClickChangeName();">확인</button>';
+	
+	utils.popupForm(title, form, button);
+}
+
+//==============================================
+//change password
+//----------------------------------------------
+const handleClickChangePasswd = function(){
+	utils.popupFormInitHelp();
+	
+	const uuid = document.querySelector("#uuid").value;
+	const currentPasswdCheck = document.querySelector("#currentPasswdCheck").value;
+	const newPasswd = document.querySelector("#newPasswd").value;
+	const newPasswdCheck = document.querySelector("#newPasswdCheck").value;
+	
+	if(currentPasswdCheck == ""){
+		utils.popupFormCreateHelp(0, "- 비밀번호를 입력해주세요");
+		return;
+	}
+	if(newPasswd == ""){
+		utils.popupFormCreateHelp(1, "- 비밀번호를 입력해주세요");
+		return;
+	}
+	if(newPasswdCheck == ""){
+		utils.popupFormCreateHelp(2, "- 비밀번호를 입력해주세요");
+		return;
+	}
+	if(newPasswd.length < 4){
+		utils.popupFormCreateHelp(1, "- 최소 4자리 이상 입력해주세요");
+		return;
+	}
+	if (newPasswd != newPasswdCheck) {
+		utils.popupFormCreateHelp(1, " - 비밀번호가 일치하지 않습니다");
+		return;
+	}
+	
+	const param = {
+			"uuid": uuid,
+			"currentPasswd": currentPasswdCheck,
+			"newPasswd": newPasswd
+	};
+	$.ajax({
+		url: contextPath + "/changePasswd",
+		method: "post",
+		type: "json",
+		data: param,
+		success: function (data) {
+			if(data == "0"){
+				utils.popupFormCreateHelp(0, " - 비밀번호가 일치하지 않습니다");
+				return;
+			}else if(data == "2"){
+				utils.alert("변경실패");
+			}else{
+				utils.alert('비밀번호를 변경했습니다');
+				utils.popupFormClose();
+			}
+		}
+	});
+}
+
+const popupChangePasswd = function(){
+	const title = '비밀번호 변경';
+	let form = '';
+	form += '<div>현재 비밀번호<input type="password" id="currentPasswdCheck" name="currentPasswdCheck"></div>';
+	form += '<div>비밀번호<input type="password" id="newPasswd" name="newPasswd"></div>';
+	form += '<div>비밀번호 확인<input type="password" id="newPasswdCheck" name="newPasswdCheck"></div>';
+	const button = '<button onclick="handleClickChangePasswd();">확인</button>';
+	
+	utils.popupForm(title, form, button);
+} 

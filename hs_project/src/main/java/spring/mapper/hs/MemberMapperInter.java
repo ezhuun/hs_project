@@ -36,4 +36,5 @@ public interface MemberMapperInter {
 	int duplicateEmail(String email);
 	List<String> getAllcode();
 	int changeName(Map<String, String> map);
+	MemberDTO getJoinMemberByUuid(String uuid);
 }

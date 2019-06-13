@@ -119,6 +119,30 @@ public class MemberContoller {
 	}
 	
 	@ResponseBody
+	@PostMapping("/changePasswd")
+	public String changePasswd(String uuid, String currentPasswd, String newPasswd) {
+		String result = "0";
+		MemberDTO dto = service.getMemberByUuid(uuid);
+		
+		boolean flag = false;
+		boolean pflag = service.passwdCheck(currentPasswd, dto.getPasswd());
+		if(pflag == true) {
+			flag = service.changePasswd(uuid, newPasswd);
+			if(flag) {
+				result = "1";
+			}else {
+				result = "2";
+			}
+		}
+		
+		//result 
+		//0 => 비밀번호 불일치
+		//1 => 비밀번호 변경성공
+		//2 => 비밀번호 변경실패
+		return result;
+	}
+	
+	@ResponseBody
 	@PostMapping("/reRegisterPasswd")
 	public String reRegisterPasswd(String uuid, String passwd) {
 		String result = "0";
@@ -272,8 +296,9 @@ public class MemberContoller {
 						service.lastLoginUpdate(dto.getUuid());
 						
 						//연결된 계정정보를 가져온다..
-						dto.setLover(service.getConnectedAccount(dto.getUuid()));
-						dto.setConnect(service.getCode(dto.getC_code()));
+						//dto.setLover(service.getConnectedAccount(dto.getUuid()));
+						//dto.setConnect(service.getCode(dto.getC_code()));
+						dto = service.getJoinMemberByUuid(dto.getUuid());
 						
 
 						//유저 uuid 세션 기록
@@ -331,11 +356,12 @@ public class MemberContoller {
 			}
 			
 			//dto의 getuuid로 dto를 다시 가져온다
-			dto = service.getMemberByUuid(dto.getUuid());
-			dto.setPasswd(null);
+//			dto = service.getMemberByUuid(dto.getUuid());
+//			dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//			dto.setConnect(service.getCode(dto.getC_code()));
+			dto = service.getJoinMemberByUuid(dto.getUuid());
 			service.lastLoginUpdate(dto.getUuid());
-			dto.setLover(service.getConnectedAccount(dto.getUuid()));
-			dto.setConnect(service.getCode(dto.getC_code()));
+			dto.setPasswd(null);
 
 			session.setMaxInactiveInterval(amount);
 			session.setAttribute("member", dto);

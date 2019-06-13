@@ -26,5 +26,5 @@ public interface MemberService {
 	Map<String, String> registerMember(String email, String passwd);
 	boolean duplicateEmail(String email);
 	boolean changeName(String uuid, String name);
-	
+	MemberDTO getJoinMemberByUuid(String uuid);
 }

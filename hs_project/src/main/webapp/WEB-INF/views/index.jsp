@@ -152,7 +152,7 @@
 	
 	
 	<br/>
-	<span class="h2">오늘 여기 어때요?</span>
+	<span class="h2">이런 곳 어때요?</span>
 	<span class="headerLine">+</span>
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
