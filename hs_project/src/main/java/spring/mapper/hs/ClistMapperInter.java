@@ -13,5 +13,6 @@ public interface ClistMapperInter {
 	List<ClistDTO> list(Map map);
 	int total(Map map);
 	void update(Map map);
+	void delete(Map map);
 	
 }

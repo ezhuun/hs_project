@@ -34,11 +34,7 @@ position:relative;
 					<td><input type="text" class="form-control" id="title"
 						name="title" /></td> 
 				</tr>
-				<tr>
-					<th>파일</th>
-					<td><textarea class="form-control" id="content" name="content"
-							rows="20"></textarea></td>
-				</tr>
+				
 			</table>
 			<div class="col-sm-offset-4 col-sm-4 col-sm-offset-4">
 				<button type="submit" class="btn btn-default">등록</button>
@@ -58,12 +54,6 @@ position:relative;
 			if (f.title.value == '') {
 				alert('제목을 입력해주세요');
 				f.title.focus();
-				return false;
-			}
-	
-			if (f.content.value == '') {
-				alert('내용을 입력하세요');
-				f.content.focus();
 				return false;
 			}
 		}

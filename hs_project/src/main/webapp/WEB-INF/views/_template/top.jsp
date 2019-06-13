@@ -52,12 +52,8 @@
 						<div class="nav-bar">
 							<ul class="nav-menu">
 								<li><a href="#">D-day</a></li>
-								<li><a href="#">체크리스트</a>
-									<ul>
-										<li onclick="location.href='${pageContext.request.contextPath}/c_list/create';">리스트 생성</li>
-										<li onclick="location.href='${pageContext.request.contextPath}/c_list/list';">리스트 모음</li>
-									</ul>
-								</li>
+								<li><a href="/hs_project/c_list/list">체크리스트</a>
+									</li>
 								<li><a href="#">발자취</a>
 									<ul>
 										<li>서브메뉴1</li>

@@ -46,7 +46,6 @@ public class ClistInterTest {
 		dto.setC_num(2);
 		dto.setUuid("user1");
 		dto.setTitle("얍");
-		dto.setContent("content");
 		dto.setC_code("00000004");
 
 		assertTrue(inter.create(dto)>0);
@@ -66,11 +65,11 @@ public class ClistInterTest {
 	public void testupdate() {
 		
 		ClistDTO dto=new ClistDTO();
-		dto.setC_num(1);
-		dto.setTitle("이얍이얍");
-		dto.setContent("이얍이얍이얍");
+		Map map = new HashMap();
+		map.put("c_num", 1);
+		map.put("checked", 1);
 		
-		assertTrue(inter.update(dto)>0);
+		inter.update(map);
 //		logger.info("mapper:" + inter.getClass().getName());
 	}
 	

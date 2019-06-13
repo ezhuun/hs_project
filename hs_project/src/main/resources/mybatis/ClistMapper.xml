@@ -6,14 +6,16 @@
 <mapper namespace="spring.mapper.hs.ClistMapperInter">
 
 	<insert id="create" parameterType="ClistDTO">
-		insert into c_list(c_num,
-		uuid, title, content, regdate, c_code)
+		<selectKey resultType="integer" keyProperty="c_num" order="BEFORE">
+			select nvl(max(c_num+1), 0) as c_num from c_list
+		</selectKey>
+	
+	
+		insert into c_list(c_num, uuid, title, regdate, c_code)
 		values(
-		(select nvl(max(c_num+1),
-		0) from c_list)
+		(select nvl(max(c_num+1),0) from c_list)
 		, #{uuid}
 		, #{title}
-		, #{content}
 		, sysdate
 		, #{c_code}
 		)
@@ -44,32 +46,28 @@
 
 	<select id="list" parameterType="Map" resultType="ClistDTO">
 
-		select c_num, uuid, title, content, sysdate, c_code, checked, r
+		select c_num, uuid, title,  regdate, c_code, checked, r
 			from(
-				select c_num, uuid, title, content, sysdate, c_code, checked, rownum r
+				select c_num, uuid, title,  regdate, c_code, checked, rownum r
 				from(
-					select c_num, uuid, title, content, sysdate, c_code, checked
+					select c_num, uuid, title, to_char(regdate, 'YYYY-MM-DD') regdate, c_code, checked
 					from c_list
 					where c_code=#{c_code}
-					order by rownum asc
+					order by c_num
 				)
 			)
-
+		
 	</select>
 
 	<select id="total" parameterType="Map" resultType="int">
 
 		select count(*) from c_list
 		 where c_code=#{c_code} 
-		 where content=#{content}
 		 where title=#{title} 
 		<where>
 			<choose>
 				<when test="col=='title'">
 					title like '%'||#{word}||'%'
-				</when>
-				<when test="col=='content'">
-					content like '%'||#{word}||'%'
 				</when>
 			</choose>
 		</where>

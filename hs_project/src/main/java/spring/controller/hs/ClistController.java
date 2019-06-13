@@ -26,7 +26,21 @@ public class ClistController {
 	private ClistMapperInter inter;
 
 	@ResponseBody
-
+	@GetMapping("/c_list/delete")
+	public String delete() {
+		return "/c_list/delete";
+	}
+	
+	@ResponseBody
+	@PostMapping("/c_list/delete")
+	public Map delete(int c_num) {
+		Map map = new HashMap();
+		map.put("c_num", c_num);
+		inter.delete(map);
+		
+		return map;
+	}
+	@ResponseBody
 	@GetMapping("/c_list/update")
 	public String update() {
 		return "/c_list/update";
@@ -38,9 +52,9 @@ public class ClistController {
 		Map map = new HashMap();
 		map.put("c_num", c_num);
 		map.put("checked", checked);
-		
+
 		inter.update(map);
-		
+
 		return map;
 	}
 
@@ -50,18 +64,16 @@ public class ClistController {
 
 	}
 
+	@ResponseBody
 	@PostMapping("/c_list/create")
-	public String create(ClistDTO dto, HttpServletRequest request, RedirectAttributes redi) {
-
-		int flag = inter.create(dto);
-
-		redi.addFlashAttribute("flag", flag);
-		if (flag == 1) {
-			redi.addFlashAttribute("msg", "게시물을 생성했습니다.");
-			return "redirect:/c_list/list";
-		} else {
-			return "/error";
+	public int create(ClistDTO dto, HttpServletRequest request, RedirectAttributes redi) {
+		int cnt = inter.create(dto);
+		int c_num = 0;
+		if (cnt > 0) {
+			c_num = dto.getC_num();
 		}
+
+		return c_num;
 
 	}
 
