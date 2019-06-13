@@ -5,9 +5,10 @@
 	div.notice{
 	    border-top: 2px solid #000 ;
 	    border-bottom: 2px solid #000;
-	    width: 82%;
-	    padding: 15px 10px 10px 10px;
-	    margin-left: 10%;
+	    width: 80%;
+	    padding: 10px 10px 10px 10px;
+	    margin : 1% 10%;
+	   
 	}
 	
 	div.notice .title{
@@ -20,7 +21,7 @@
 		list-style : none;
 		padding: 0;
 		float : left;
-		width : 44%;
+		width : 40%;
 		margin-right : 30px;
 		
 	}
@@ -52,15 +53,15 @@
 	
 	hr{
 	    width: 80%;
-	    padding: 0 10px;
-    	margin-left: 10%;
+	    padding: 10px 10px;
+    	margin: 10%;
     	color:#ccc;
 	}
 	
 	.posting_wrap {
 	    clear: both;
 	    float: left;
-	    width: 82%;
+	    width: 80%;
 	    margin-left: 10%;
 	    padding: 0 10px;
 		

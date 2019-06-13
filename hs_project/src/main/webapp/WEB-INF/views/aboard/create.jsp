@@ -14,7 +14,7 @@
 		position: relative;
 		clear: both;
 		float: left;
-		width: 100%;
+		width: 80%;
 		margin-top: 30px;
 		padding-top: 10px;
 		border-top: 1px solid #ebebeb;
