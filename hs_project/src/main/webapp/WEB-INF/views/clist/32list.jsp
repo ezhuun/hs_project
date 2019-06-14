@@ -290,6 +290,8 @@ input[type="checkbox"] {
 
 </div>
 
+
+
 <script>
 	$(".checkItem").click(function() {
 		var currentId = $(this).attr("id");
@@ -428,32 +430,28 @@ input[type="checkbox"] {
 		var parentItem = $(this).parent();
 		var parentId = parentItem.find("input").attr("id");
 
-		
-		if(message=confirm("정말로 삭제하시겠습니까?")){
-			$.ajax({
-				url : "delete", //(action url),
-				type : "post", //(get,post방식),
-				data : {
-					"c_num" : parentId
-				},
-				dataType : "json", //("html","xml","json","text","jsonp"),
-				success : function(data) {
-					console.log(data);
-				},
-				error : function(xhr, status, errorThrown) {
-				}
-			});
+		$.ajax({
+			url : "delete", //(action url),
+			type : "post", //(get,post방식),
+			data : {
+				"c_num" : parentId
+			},
+			dataType : "json", //("html","xml","json","text","jsonp"),
+			success : function(data) {
+				console.log(data);
+			},
+			error : function(xhr, status, errorThrown) {
+			}
+		});
 
-			parentItem.animate({
-				left : "-30%",
-				height : 0,
-				opacity : 0
-			}, 200);
-			setTimeout(function() {
-				$(parentItem).remove();
-			}, 1000);			
-		}
-
+		parentItem.animate({
+			left : "-30%",
+			height : 0,
+			opacity : 0
+		}, 200);
+		setTimeout(function() {
+			$(parentItem).remove();
+		}, 1000);
 	});
 
 	// Enter Key detect
@@ -463,9 +461,21 @@ input[type="checkbox"] {
 				var keycode = (ev.keyCode ? ev.keyCode : ev.which);
 				if (keycode == '13') {
 					fnc.call(this, ev);
-					location.reload();
 				}
 			})
 		})
 	}
 </script>
+
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">
+			&times;</button>
+		<h4 class="modal-title">※경고※</h4>
+	</div>
+	<div class="modal-body">
+		<p>삭제할 시 복구가 불가능합니다.</p>
+	</div>
+	<div class="modal-footer"></div>
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
