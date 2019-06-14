@@ -79,13 +79,13 @@ public class AboardReplyController {
 	
 	
 	@GetMapping("/aboard/aboardreply/list/{a_num}/{sno}/{eno}")//요청uri
-	public ResponseEntity<List<AboardReplyDTO>> getList (@PathVariable("a_num") int imgno,
+	public ResponseEntity<List<AboardReplyDTO>> getList (@PathVariable("a_num") int a_num,
 			@PathVariable("sno") int sno, @PathVariable("eno") int eno) {	 
 	 
 		Map map = new HashMap();
 		map.put("sno", sno);
 		map.put("eno", eno);
-		map.put("imgno", imgno);
+		map.put("a_num", a_num);
 		 
 	 
 		return new ResponseEntity<List<AboardReplyDTO>>(arinter.list(map), HttpStatus.OK);

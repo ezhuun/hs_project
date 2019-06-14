@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  FROM (
 			  		SELECT r_num, r_name, content, regdate
 			  		FROM a_board_reply
+			  		WHERE a_num = #{a_num}
                   	order by r_num
         	  )
 		)

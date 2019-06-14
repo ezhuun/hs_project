@@ -40,20 +40,36 @@
 	    flex-direction: column;
 	    justify-content: center;
 	    align-items: center;
+	    
 	}
 	.area{
-		min-height:500px;
+		min-height:400px;
 	}
 
 	
 	#rcontent{
-		max-width:95%;
+		max-width:90%;
 		border-radius:unset;		
 	}
 	
-	button {
+	button{
 		border-radius:unset !important;
 	}
+	
+	.sideBorder-comment{
+		border-top: 3px solid rgba(123, 133, 160, 0.8); 
+		margin-top: 0;
+		background-color:rgba(123, 133, 160, 0.2) 
+	
+	}
+	
+	#commentBtn{
+		width:70px;
+		background-color: #7b85a0; 
+		margin-bottom:1%;
+		color:white; 
+	}
+
 	
 	</style>
 
@@ -74,33 +90,38 @@
 				${dto.content}
 			</div>
 	
-			<div> 
+			<div class="btn-group btn-xs" style="float:right" > 
 				<button type="button" class="btn btn-default btn-xs" onclick="location.href='./create'">등록</button>
 				<button type="button" class="btn btn-default btn-xs" onclick="updateM();">수정</button>
 				<button type="button" class="btn btn-default btn-xs" id="btndelete">삭제</button>
 				<button type="button" class="btn btn-default btn-xs" onclick="listM();">목록</button>
 			</div>
-			
-			
-			<!-- 댓글시작 -->
-			
-			
-			<div class="container">
-		        <div class="commentList"></div>
-		    </div>
-	  
-			<div class="panel" style="margin-top: 20px;">
-        		<label for="comment">comment</label>
-        			<div class="panel" style="display: flex;">
-		                <input type="hidden" name="a_num" value="${dto.a_num}"/>
-		                <input type="text" class="form-control" id="rcontent" placeholder="내용을 입력하세요." >
-		                <button class="btn btn-default" type="button" >등록</button>
-                    </div>
-      	    </div>
+		</form>	
+		<!-- 댓글시작 -->
+	
+		    
+		  
+			<div style="width:80%;">
+        		<form name="commentForm" >
+        		<label for="comment"  style="margin-bottom:0" >comment</label>
+        		<input type="hidden" name="a_num" value="${dto.a_num}"/>
+        		<div class="sideBorder-comment">
+        		<input type="text"id="r_name" name="r_name" style="width:15%; margin:1% 2%;" placeholder="닉네임"  >  
+        			<div style='display:flex;'>
+        				<textarea style='width:827px; margin:0 0 1% 2%' placeholder="고운말을 사용해주세요." ></textarea>
+						<button type="button" class="btn" id="commentBtn">등록</button>
+		            </div>
+		        </div>                        
+      	    	</form>
+      	    </div>	
       	    
-		</form> 
+      	    <div class="commentList" style="width:80%" ></div>
+      		<div>${rpaging }</div>        
 		</div>
-	</div>			
+		
+	</div>
+		
+	
 		
 		
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
@@ -142,206 +163,104 @@
 		
 		}	
 	</script>	
-	<script type="text/javascript" src="${root }/js/aboardreply.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-		  
-		var a_num = '<c:out value="${a_num}"/>';
-		var sno = '<c:out value="${sno}"/>';
-		var eno = '<c:out value="${eno}"/>';
-		var replyUL = $(".chat");
-		  
-		showList(); //댓글을 보여주기 위한
-		
-		function showList(){
-		    replyService.getList({a_num:a_num,sno:sno,eno:eno}, function(list) {
-		            
-				var str="";
-		     
-		    	if(list == null || list.length == 0){
-		     		return;
-		     	}
-		     
-		     	for (var i = 0, len = list.length || 0; i < len; i++) {
-		    	 	str +="<div><div class='header'><strong class='primary-font'>"+list[i].id+"</strong>"; 
-		    	 	str +="<small class='pull-right text-muted'>"+list[i].regdate+"</small></div>";
-		    	 	str +=replaceAll(list[i].content,'\n','<br>')+"</div></li>";
-		     	}
-		 
-		     	replyUL.html(str);
-		     
-		     	showReplyPage();	 
-		 
-			});//end getList function 호출   
-		     
-		}//end showList	  
-		
-		function replaceAll(str, searchStr, replaceStr) {		
-			
-			return str.split(searchStr).join(replaceStr);
-		
-		}
-		 
-		var nPage = '<c:out value="${nPage}"/>'; //bbsController에서 받아오는 데이터
-		var nowPage = '<c:out value="${nowPage}"/>';
-		var colx = '<c:out value="${col}"/>';
-		var wordx = '<c:out value="${word}"/>';
-		var replyPageFooter = $(".panel-footer");
-		
-		 
-		function showReplyPage(){
-			var param = "nPage="+nPage;
-			
-			param += "&nowPage="+nowPage;
-			param += "&a_num="+a_num;
-			param += "&col="+colx;
-			param += "&word="+wordx;
-							 
-			replyService.getPage(param, function(paging) {
-		 
-		 		console.log(paging);
-		 
-		    	var str ="<div><small class='text-muted'>"+paging+"</small></div>";
-		    	replyPageFooter.html(str);
-		  
-			});
-		}//end showReplyPage
-		
-		
-		var modal = $(".modal");
-		var modalInputContent = modal.find("textarea[name='content']");
-		var modalInputId = modal.find("input[name='id']");
-		var modalInputRegDate = modal.find("input[name='regdate']");
-		var modalModBtn = $("#modalModBtn");
-		var modalRemoveBtn = $("#modalRemoveBtn");
-		var modalRegisterBtn = $("#modalRegisterBtn");
-	
-		//댓글 조회 클릭 이벤트 처리 
-		$(".chat").on("click", "li", function(e){
-		   
-			var r_num = $(this).data("r_num"); //this = li
-		   
-		    //alert(r_num)
-		    replyService.get(r_num, function(reply){
-		   
-				modalInputContent.val(reply.content); //var:데이터를 담는다는 의미
-		    	modalInputId.closest("div").hide();
-		    	modalInputRegDate.closest("div").hide();
-		    	modal.data("r_num", reply.r_num);
-		     
-		    	modal.find("button[id !='modalCloseBtn']").hide();
-		     
-		     	if('${sessionScope.id}'==reply.id){
-		        	modalModBtn.show();
-		       		modalRemoveBtn.show();
-		     	}
-		     	
-		     	$(".modal").modal("show");
-		         
-			});
-		});
-		
-			 
-		$("#modalCloseBtn").on("click", function(e){
-		 
-			modal.modal('hide');
-		});
-		
-		
-		modalModBtn.on("click", function(e){
-		    var reply = {r_num:modal.data("r_num"), content: modalInputContent.val()};
-		    //alert(reply.r_num);
-		    replyService.update(reply, function(result){
-		          
-			    alert(result);
-			    modal.modal("hide");
-			    showList(); //갱신된 댓글 목록 가져오기
-			      
-		    });
-		    
-		});//modify 
-		 
-		 
-		modalRemoveBtn.on("click", function (e){
-		    
-		    var r_num = modal.data("r_num");
-		    
-		    replyService.remove(r_num, function(result){
-		          
-		        alert(result);
-		        modal.modal("hide");
-		        showList();
-		        
-			});
-		    
-		});//remove
-		
-		$("#addReplyBtn").on("click", function(e){
-			  
-			if('${sessionScope.id}'==''){ //로그인이 안된상태
-				
-				if(confirm("로그인을 해야 댓글을 쓸수 있습니다.")) {
-			        var url = "../member/login";
-			       
-			        url += "?col=${col}";
-			        url += "&word=${word}";
-			        url += "&nowPage=${nowPage}";
-			        url += "&nPage=${nPage}";
-			        url += "&a_num=${a_num}";
-			        url += "&rurl=../a_num/read";
-			   
-			        location.href = url;
-			    }
-				
-			}else{ //로그인이 된 상태
-			 
-				modalInputContent.val("");
-				modalInputId.closest("div").hide();
-				modalInputRegDate.closest("div").hide();
-				modal.find("button[id !='modalCloseBtn']").hide();
-				
-				modalRegisterBtn.show();
-  
-				$(".modal").modal("show");
-			  
-			  
-			}
-		});
-			 
-			 
-			modalRegisterBtn.on("click",function(e){
-			  
-				if(modalInputContent.val()==''){
-					alert("댓글을 입력하세요")
-					return ;
-				}
-
-				var reply = 
-					{content: modalInputContent.val(),
-			   		 id:'<c:out value="${sessionScope.id}"/>',
-			      	 bbsno:'<c:out value="${a_num}"/>'};
-				
-				//alert(reply.content);
-				
-				//호출시작
-				replyService.add(reply, function(result){
-  
- 					alert(result);
-  
- 					modal.find("input").val("");
-  					modal.modal("hide");
-  
-  					//showList(1);
-  					showList();
-			    
-				}); //end add //호출끝
-			  
-			}); //end modalRegisterBtn.on	
-		
-				 
-	}); //end $(document).ready
+    <script>
+	var a_num = '${dto.a_num}'; //게시글 번호
+ 
+	$('[name=commenBtn]').click(function(){ //댓글 등록 버튼 클릭시 
+    var insertData = $('[name=commentForm]').serialize(); //commentInsertForm의 내용을 가져옴
+    commentInsert(insertData); //Insert 함수호출(아래)
+});
+ 
+ 
+ 
+//댓글 목록 
+function commentList(){
+    $.ajax({
+        url : './aboardreply/list/'+a_num+'/1/5.json',
+        type : 'get',
+        success : function(data){
+            var a =''; 
+            $.each(data, function(key, value){
+            	a += '<div class="panel commentArea" style="width:95%; margin:1% 2.5%;">';
+                a += '<span class="commentInfo" style="font-size:12px; margin-right:10px;">'+value.r_name;
+                a += '<span class="commentInfo" style="font-size:10px; color:gray; magin-left:10px;">'+value.regdate;
+                a += '<a onclick="commentUpdate('+value.r_num+',\''+value.comment+'\');"> 수정 </a>';
+                a += '<a onclick="commentDelete('+value.r_num+');"> 삭제 </a> ';
+                a += '<div class="commentContent" style="font-size:14px; color:black"'+value.r_num+'">'+value.content +'</p>';
+                a += '</div></div>';
+            });
+            
+            $(".commentList").html(a);
+        }
+    });
+}
+ 
+//댓글 등록
+function commentInsert(insertData){
+    $.ajax({
+        url : './aboardreply/create',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+            if(data == 1) {
+                commentList(); //댓글 작성 후 댓글 목록 reload
+                $('[name=comment]').val('');
+            }
+        }
+    });
+}
+ 
+//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+function commentUpdate(r_num, comment){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="comment_'+r_num+'" value="'+content+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+r_num+');">수정</button> </span>';
+    a += '</div>';
+    
+    $('.commentContent'+r_num).html(a);
+    
+}
+ 
+//댓글 수정
+function commentUpdateProc(r_num){
+    var updateContent = $('[name=comment_'+r_num+']').val();
+    
+    $.ajax({
+        url : './aboardreply/update',
+        type : 'post',
+        data : {'comment' : updateContent, 'r_num' : r_num},
+        success : function(data){
+            if(data == 1) commentList(a_num); //댓글 수정후 목록 출력 
+        }
+    });
+}
+ 
+//댓글 삭제 
+function commentDelete(r_num){
+    $.ajax({
+        url : './aboardreply/delete/'+r_num,
+        type : 'post',
+        success : function(data){
+            if(data == 1) commentList(r_num); //댓글 삭제후 목록 출력 
+        }
+    });
+}
+ 
+ 
+ 
+ 
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력 
+});
+ 
+ 
+ 
 </script>
+
 	
+
 	
 	<!-- 여기까지 -->
 	

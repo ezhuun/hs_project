@@ -65,12 +65,12 @@
 				
 				<div class="write">		
 					<label for="title">제목</label>
-					<input type="text" name="title" id="title" class="form-control">
+					<input type="text" name="title" id="title" class="form-control" value="${dto.title }">
 				</div>
 				
 				<div class="write">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="5" id="content" name='content'></textarea>
+					<textarea class="form-control" rows="5" id="content" name='content'>${dto.content }</textarea>
 				</div> 
 
 				<br>		
