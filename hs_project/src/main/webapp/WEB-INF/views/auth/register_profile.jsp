@@ -64,8 +64,8 @@
 <script src="${root}/js/auth.js" charset="utf-8"></script>
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function(){
-		const beegin_date = document.querySelector("#begin_date");
-		beegin_date.addEventListener('click', function() {
+		const begin_date = document.querySelector("#begin_date");
+		begin_date.addEventListener('click', function() {
 		  picker.open();
 		}, false);
 
@@ -75,7 +75,7 @@
 		}, false);
 
 		const picker= new MaterialDatetimePicker({
-			el: beegin_date,
+			el: begin_date,
 			format: 'YYYY-MM-DD',
 			openedBy: 'focus'
 		});

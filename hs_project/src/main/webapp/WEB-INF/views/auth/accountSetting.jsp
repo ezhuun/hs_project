@@ -23,6 +23,33 @@
 			        	<div class="user_view_info"><span id="currentName">${member.name}</span></div>
 			        	<div class="user_view_link"><span id="changeName" onclick="popupChangeName();">이름 변경</span></div>
 		        	</div>
+		        	
+		        	<div class="user_view_cols">
+			        	<div class="user_view_selectionHeader">생일</div>
+			        	<div class="user_view_info">			        		
+			        		<input type="text" id="birth" name="birth" value="${member.birth}" style="display:none;">
+			        		<label for="birth">
+			        			${member.birth}
+			        		</label>
+			        		<span class="user_view_link" id="btn_birth" style="padding-left:0.5rem;">
+			        			<span>변경</span>
+			        		</span>
+			        	</div>
+		        	</div>
+		        	
+		        	<div class="user_view_cols">
+			        	<div class="user_view_selectionHeader">처음 만난 날</div>
+			        	<div class="user_view_info">			        		
+			        		<input type="text" id="begin_date" name="begin_date" value="${member.begin_date}" style="display:none;">
+			        		<label for="begin_date">
+			        			${member.begin_date}
+			        		</label>
+			        		<span class="user_view_link" id="btn_begin_date" style="padding-left:0.5rem;">
+			        			<span>변경</span>
+			        		</span>
+			        	</div>
+		        	</div>
+		        	
 		        	<div class="user_view_cols">
 			        	<div class="user_view_selectionHeader">비밀번호</div>
 			        	<div class="user_view_link"><span id="changePasswd" onclick="popupChangePasswd();">비밀번호 변경</span></div>
@@ -69,6 +96,10 @@
 				        	<div class="user_view_info">${member.lover.name}</div>
 			        	</div>
 			        	<div class="user_view_cols">
+				        	<div class="user_view_selectionHeader">생일</div>
+				        	<div class="user_view_info">${member.birth}</div>
+			        	</div>
+			        	<div class="user_view_cols">
 				        	<div class="user_view_selectionHeader">최근접속</div>
 				        	<div class="user_view_info">${member.lover.last_login}</div>
 			        	</div>
@@ -89,3 +120,43 @@
 	</div>
 	
 	<script src="${pageContext.request.contextPath}/js/auth.js" charset="utf-8"></script>
+	<script>
+		const begin_date = document.querySelector("#begin_date");
+		const btn_begin_date = document.querySelector("#btn_begin_date");
+		const picker= new MaterialDatetimePicker({
+			el: begin_date,
+			format: 'YYYY-MM-DD',
+			openedBy: 'focus'
+		});
+		btn_begin_date.addEventListener('click', function() {
+			picker.open();
+		}, false);
+		begin_date.addEventListener('change', function(e) {
+			const uuid = document.querySelector("#uuid").value;
+			const val = e.target.value;
+			e.target.nextElementSibling.innerText = val;
+			$.post(contextPath + "/changeMemberDate", {uuid: uuid, begin_date: val});
+		}, false);
+		
+		
+		
+		
+		
+		
+		const birth = document.querySelector("#birth");
+		const btn_birth = document.querySelector("#btn_birth");
+		const _picker= new MaterialDatetimePicker({
+			el: birth,
+			format: 'YYYY-MM-DD',
+			openedBy: 'focus'
+		});
+		btn_birth.addEventListener('click', function() {
+			_picker.open();
+		}, false);
+		birth.addEventListener('change', function(e) {
+			const uuid = document.querySelector("#uuid").value;
+			const val = e.target.value;
+			e.target.nextElementSibling.innerText = val;
+			$.post(contextPath + "/changeMemberDate", {uuid: uuid, birth: val});
+		}, false);
+	</script>

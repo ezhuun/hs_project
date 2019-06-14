@@ -81,6 +81,20 @@
 	]]>
 	</select>
 
+
+
+	<update id="changeMemberDate" parameterType="MemberDTO">
+	<![CDATA[
+		UPDATE
+			member
+		SET
+			birth = #{birth}
+			, begin_date = #{begin_date}
+		WHERE
+			uuid = #{uuid}
+	]]>
+	</update>
+
 	<update id="changeName" parameterType="map">
 	<![CDATA[
 		UPDATE

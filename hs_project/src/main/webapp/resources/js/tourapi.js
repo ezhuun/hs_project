@@ -1,7 +1,7 @@
 const serviceKey = "0165%2B411e%2FgQnKNGRQg%2BLDx3RvUEyydBouP2dSw1kt7oznhaPXAx6SEXBjjZSnXlWWw8rdxjb8pW%2BhIws3LOiQ%3D%3D";
 	
 const getData = function (url) {
-	return new Promise(resolve => {
+	return new Promise(function(resolve){
 		$.get(url, function (data) {
 			resolve(data);
 		});
@@ -62,9 +62,25 @@ const pickViewerClose = function () {
 const pickViewer = async function (id, contentTypeId) {
 	//공통정보
 	const common_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json";
-	const common = await getData(common_url);
+	const common = getData(common_url);
 	const commonData = common.response.body.items.item;
+	
+	//소개정보
+	const info_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y&_type=json";
+	const info = getData(info_url);
+	const infoData = info.response.body.items.item;
 
+	//코스정보
+	const course_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y&_type=json";
+	const course = getData(course_url);
+	const courseData = course.response.body.items.item;
+	
+	await common;
+	await info;
+	await course;
+	
+	
+	//공통정보
 	let html = "";
 	if (commonData.title)
 		html += "<h3>" + commonData.title + "</h3>";
@@ -85,12 +101,7 @@ const pickViewer = async function (id, contentTypeId) {
 	html += "</div>";
 	html += "</div>";
 
-
-	//소개정보
-	const info_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y&_type=json";
-	const info = await getData(info_url);
-	const infoData = info.response.body.items.item;
-
+	//코스정보
 	html += "<br><hr class='pick-line'>";
 	html += "<h3>코스</h3>";
 	html += "<div class='course-details'>";
@@ -320,11 +331,8 @@ const pickViewer = async function (id, contentTypeId) {
 		html += "<span> 취급메뉴: " + infoData.treatmenu + "</span>";
 	html += "</div>";
 
-	//코스정보
-	const course_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y&_type=json";
-	const course = await getData(course_url);
-	const courseData = course.response.body.items.item;
-
+	
+	//상세정보
 	if (courseData) {
 		html += "<br><hr class='pick-line'>";
 		if (contentTypeId == "25") {
@@ -542,8 +550,12 @@ const apiCall = async function (lati, longi) {
 	}));
 }
 
-if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(function (position) {
-		apiCall(position.coords.latitude, position.coords.longitude);
-	});
+const geoLocationCall = function(){
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			apiCall(position.coords.latitude, position.coords.longitude);
+		});
+	}	
 }
+
+geoLocationCall();

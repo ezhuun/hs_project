@@ -85,6 +85,14 @@
 		align-items: flex-start;
 		justify-content: center;
 	}
+	
+	.user_view_group{
+		flex-direction: column-reverse;
+	}
+	
+	.user_profile_photo_area{
+		align-self: center;
+	}
 }
 
 .wrap {
@@ -121,7 +129,7 @@
 }
 
 .wrap .header-top {
-	background: rgb(123, 133, 160, 0.8);
+	background: rgba(123, 133, 160, 0.8);
 }
 
 .wrap .content {
@@ -291,21 +299,25 @@ ul.nav-menu li ul li {
 	cursor: pointer;
 }
 
+ul.nav-menu li ul li a{
+	all: unset;
+}
+
 ul.nav-menu li ul li::after {
 	content: '';
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 0;
-	height: 0.125rem;
-	background-color: #efefef;
+	height: 0.0625rem;
+	background-color: #FFDDA6;
 	transition: all 0.3s ease-in;
 }
 
 ul.nav-menu li ul li:hover::after {
 	width: 100%;
 }
-
+	
 .banner-overlay::after {
 	content: '';
 	position: absolute;
@@ -884,7 +896,7 @@ ul.today-pick-slider {
 }
 
 .user_view_link {
-	color: #3CABFA;
+	color: #00bcd4;
 	font-size: 0.875rem;
 }
 .user_view_link span{

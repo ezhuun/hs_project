@@ -10,12 +10,12 @@
 			<div class="auth-title">비밀번호 변경</div>
 			<div class="auth-form">
 				<div class="auth-inner-input nomargin">
-					비밀번호 <input type="password" id="passwd" name="passwd" required/>
+					비밀번호 <input type="password" id="passwd" name="passwd" autocomplete="off" required/>
 				</div>
 			</div>
 			<div class="auth-form">
 				<div class="auth-inner-input nomargin">
-					비밀번호 확인 <input type="password" id="passwdCheck" name="passwdCheck" required/>
+					비밀번호 확인 <input type="password" id="passwdCheck" name="passwdCheck" autocomplete="off" required/>
 				</div>
 			</div> 
 			<div class="auth-button">

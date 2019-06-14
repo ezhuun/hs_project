@@ -156,12 +156,12 @@
 	<span class="headerLine">+</span>
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
-			<img id="slide-loading" src="${root}/images/common/loading2.gif"/>
+			<img id="slide-loading" src="${root}/images/common/loading2.gif" onclick="geoLocationCall();"/>
 		</ul>
 	</div>
 	
 </div>
-	
+
 	<script src="${root}/js/tourapi.js"></script>
 	<script>
 	//scroll header

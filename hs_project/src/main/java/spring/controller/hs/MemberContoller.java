@@ -40,6 +40,18 @@ public class MemberContoller {
 	//private int amount = 10;
 
 	@ResponseBody
+	@PostMapping(value="/changeMemberDate")
+	public void changeBirth(MemberDTO dto){
+		MemberDTO _dto = service.getMemberByUuid(dto.getUuid());
+		if(dto.getBirth() != null) {
+			dto.setBegin_date(_dto.getBegin_date());
+		}else if(dto.getBegin_date() != null) {
+			dto.setBirth(_dto.getBirth());
+		}
+		service.changeMemberDate(dto);
+	}
+	
+	@ResponseBody
 	@PostMapping(value="/changeName", produces="application/text; charset=utf8")
 	public String changeName(MemberDTO dto){
 		String result = "0";

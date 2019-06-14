@@ -1,31 +1,32 @@
 const allInput = document.querySelectorAll("input[type=email], input[type=text], input[type=password], input[type=number], input[type=file]");
 let inputValues = [];
-Array.prototype.slice.call(allInput).forEach(function (input, i) {;
-	inputValues[i] = input.value;
-	input.addEventListener("keyup", function (e) {
+if(document.querySelector("#submitBtn")){
+	Array.prototype.slice.call(allInput).forEach(function (input, i) {;
 		inputValues[i] = input.value;
-		const valid = !inputValues.includes("");
-		if (valid == true) {
-			document.querySelector("#submitBtn").removeAttribute("disabled");
-			document.querySelector("#submitBtn").classList.remove("disabled");
-		} else {
-			document.querySelector("#submitBtn").setAttribute("disabled", "disabled");
-			document.querySelector("#submitBtn").classList.add("disabled");
-		}
+		input.addEventListener("keyup", function (e) {
+			inputValues[i] = input.value;
+			const valid = !inputValues.includes("");
+			if (valid == true) {
+				document.querySelector("#submitBtn").removeAttribute("disabled");
+				document.querySelector("#submitBtn").classList.remove("disabled");
+			} else {
+				document.querySelector("#submitBtn").setAttribute("disabled", "disabled");
+				document.querySelector("#submitBtn").classList.add("disabled");
+			}
+		});
+		input.addEventListener("change", function (e) {
+			inputValues[i] = input.value;
+			const valid = !inputValues.includes("");
+			if (valid == true) {
+				document.querySelector("#submitBtn").removeAttribute("disabled");
+				document.querySelector("#submitBtn").classList.remove("disabled");
+			} else {
+				document.querySelector("#submitBtn").setAttribute("disabled", "disabled");
+				document.querySelector("#submitBtn").classList.add("disabled");
+			}
+		});
 	});
-	input.addEventListener("change", function (e) {
-		inputValues[i] = input.value;
-		const valid = !inputValues.includes("");
-		if (valid == true) {
-			document.querySelector("#submitBtn").removeAttribute("disabled");
-			document.querySelector("#submitBtn").classList.remove("disabled");
-		} else {
-			document.querySelector("#submitBtn").setAttribute("disabled", "disabled");
-			document.querySelector("#submitBtn").classList.add("disabled");
-		}
-	});
-});
-
+}
 const initHelp = function () {
 	const els = document.querySelectorAll(".auth-inner-input");
 	Array.prototype.slice.call(els).forEach(function (el) {
@@ -628,7 +629,7 @@ const onDeleteMember = function(uuid){
 
 const handleDeleteMember = function(uuid){
 	utils.popupForm('비밀번호 확인', 
-			'<div>비밀번호<input type=\"password\" id=\"d_passwd\" name=\"d_passwd\"></div>', 
+			'<div>비밀번호<input type=\"password\" id=\"d_passwd\" name=\"d_passwd\" autocomplete=\"off\"></div>', 
 			'<button onclick=\"onDeleteMember(\''+uuid+'\')\">확인</button>');
 }
 
@@ -776,9 +777,9 @@ const handleClickChangePasswd = function(){
 const popupChangePasswd = function(){
 	const title = '비밀번호 변경';
 	let form = '';
-	form += '<div>현재 비밀번호<input type="password" id="currentPasswdCheck" name="currentPasswdCheck"></div>';
-	form += '<div>비밀번호<input type="password" id="newPasswd" name="newPasswd"></div>';
-	form += '<div>비밀번호 확인<input type="password" id="newPasswdCheck" name="newPasswdCheck"></div>';
+	form += '<div>현재 비밀번호<input type="password" id="currentPasswdCheck" name="currentPasswdCheck" autocomplete="off"></div>';
+	form += '<div>비밀번호<input type="password" id="newPasswd" name="newPasswd" autocomplete="off"></div>';
+	form += '<div>비밀번호 확인<input type="password" id="newPasswdCheck" name="newPasswdCheck" autocomplete="off"></div>';
 	const button = '<button onclick="handleClickChangePasswd();">확인</button>';
 	
 	utils.popupForm(title, form, button);

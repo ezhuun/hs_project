@@ -32,6 +32,11 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	@Override
+	public void changeMemberDate(MemberDTO dto) {
+		mapper.changeMemberDate(dto);
+	}
+
+	@Override
 	public MemberDTO getJoinMemberByUuid(String uuid) {
 		return mapper.getJoinMemberByUuid(uuid);
 	}

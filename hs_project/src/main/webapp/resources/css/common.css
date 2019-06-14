@@ -393,3 +393,11 @@ body {
     border-radius: 3px;
     padding: 1rem;
 }
+
+.c-scrim{
+	z-index: 2;
+}
+
+.c-datepicker{
+	z-index: 2;
+}

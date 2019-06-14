@@ -27,4 +27,5 @@ public interface MemberService {
 	boolean duplicateEmail(String email);
 	boolean changeName(String uuid, String name);
 	MemberDTO getJoinMemberByUuid(String uuid);
+	void changeMemberDate(MemberDTO dto);
 }
