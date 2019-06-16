@@ -62,23 +62,19 @@ const pickViewerClose = function () {
 const pickViewer = async function (id, contentTypeId) {
 	//공통정보
 	const common_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json";
-	const common = getData(common_url);
-	const commonData = common.response.body.items.item;
-	
+	const common = await getData(common_url);
+
 	//소개정보
 	const info_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y&_type=json";
-	const info = getData(info_url);
-	const infoData = info.response.body.items.item;
+	const info = await getData(info_url);
 
 	//코스정보
 	const course_url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeId + "&contentId=" + id + "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y&_type=json";
-	const course = getData(course_url);
+	const course = await getData(course_url);
+
+	const commonData = common.response.body.items.item;
+	const infoData = info.response.body.items.item;
 	const courseData = course.response.body.items.item;
-	
-	await common;
-	await info;
-	await course;
-	
 	
 	//공통정보
 	let html = "";

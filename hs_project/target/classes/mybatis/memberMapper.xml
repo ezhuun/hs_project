@@ -84,15 +84,22 @@
 
 
 	<update id="changeMemberDate" parameterType="MemberDTO">
-	<![CDATA[
 		UPDATE
 			member
 		SET
-			birth = #{birth}
-			, begin_date = #{begin_date}
+			<choose>
+				<when test="birth==null">
+					begin_date = #{begin_date}
+				</when>
+				<when test="begin_date==null">
+					birth = #{birth}
+				</when>
+				<otherwise>
+					birth = #{birth}, begin_date = #{begin_date}
+				</otherwise>
+			</choose>
 		WHERE
 			uuid = #{uuid}
-	]]>
 	</update>
 
 	<update id="changeName" parameterType="map">
