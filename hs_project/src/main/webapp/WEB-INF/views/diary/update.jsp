@@ -50,7 +50,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="content">썸네일</label>
 				<div class="col-sm-8">
-					<input  class="form-control" type="file" name="filenameMF" id="filename" accept=".jpg,.gif,.png"  value="${diarydto.filename}">
+					<input  class="form-control" type="file" name="filenameMF" id="filename" accept=".jpg,.gif,.png"  >
 				</div>
 			</div>
 

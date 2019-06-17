@@ -62,5 +62,33 @@
     	FROM diary
 	</select>
 	
+	<!-- join 부모,자식 둘다 reseultMap이 필요 => 1:N관계에서만 써줌-->
+	<!-- 멤버와 다이어리는 테이블로 보면 1:1관계이지만 다이어리내의 글 하나로 봤을때는 1:1관계이므로 memberDTO에 저장할 필요없이 사용할 필드를 자식DTO에 넣어서 사용 -->
+	<!-- <resultMap type="memberDTO" id="MDJoin">
+		<result property="uuid" column="uuid"/>
+		<result property="name" column="name"/>
+		<result property="profile" column="profile"/>
+		부모DTO에 자식의 객체를 저장
+		<collection property="diarydtoList" column="uuid" javaType="List" ofType="diaryDTO"
+					resultMap="spring.model.diary.diaryDTOListMap"/>
+	</resultMap> -->
+	
+	<resultMap type="diaryDTO" id="MDJoin">
+		<result property="diary_num" column="diary_num"/>
+		<result property="uuid" column="uuid"/>
+		<result property="content" column="content"/>
+		<result property="regdate" column="regdate"/>
+		<result property="title" column="title"/>
+		<result property="c_code" column="c_code"/>
+		<result property="d_date" column="d_date"/>
+		<result property="name" column="name"/> <!-- member의 name -->
+		<result property="profile" column="profile"/> <!-- member의 profile -->
+	</resultMap>
+	
+	 <select id="mdJoinList" resultMap="MDJoin"> <!-- mdJoinList = > interface에 작성 -->
+		select d.*, m.profile, m.name
+		from diary d, member m 
+		where m.uuid = d.uuid
+	</select>
 	
 </mapper>

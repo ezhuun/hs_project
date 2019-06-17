@@ -3,6 +3,91 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="spring.mapper.hs.DiaryMapperInter">
+<mapper namespace="spring.mapper.hs.DiaryReplyMapperInter">
+	<insert id="create" parameterType="DiaryReplyDTO">
+		<selectKey keyProperty="r_num" resultType="int" order="BEFORE">
+			select nvl(max(r_num),0)+1 from diary_reply
+		</selectKey>
+		insert into diary_reply(r_num,uuid,content,regdate,diary_num)
+		values(#{r_num},#{uuid},#{content},sysdate,#{diary_num})
+	</insert>
+	
+	<select id="list" parameterType="Map" resultType="DiaryReplyDTO">
+		select r_num,uuid,content,regdate,diary_num,r
+		from (  
+				select r_num,uuid,content,regdate,diary_num,rownum  r
+				from(
+					select r_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,diary_num
+					from diary_reply
+					where diary_num = #{diary_num}
+					order by r_num
+				)
+			)
+		<![CDATA[
+		where r >= #{sno} and r <= #{eno}
+		]]>
+	</select>
+	
+	<select id="read" parameterType="int" resultType="DiaryReplyDTO">
+		select *
+		from diary_reply
+		where r_num = #{r_num}
+	</select>
+	<update id="update" parameterType="DiaryReplyDTO">
+		update diary_reply
+		set content = #{content}
+		where r_num = #{r_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete
+		from diary_reply
+		where r_num = #{r_num}
+	</delete>
+	
+	<!-- 댓글갯수 -->
+	<select id="rcount" parameterType="int">
+		select count(*)
+		from diary_reply
+		where diary_num = #{diary_num}
+	</select>
+	
+	<select id="total" parameterType="int" resultType="int" >
+		select count(*)
+		from diary_reply
+		where diary_num = #{diary_num}
+	</select>
+	
+	<!-- join -->
+	<resultMap type="diaryreplyDTO" id="MDRJoin">
+		<result property="r_num" column="r_num"/>
+		<result property="uuid" column="uuid"/>
+		<result property="content" column="content"/>
+		<result property="regdate" column="regdate"/>
+		<result property="diary_num" column="diary_num"/>
+		<result property="name" column="name"/>
+		<result property="profile" column="profile"/>
+	</resultMap>
+	
+	
+	<select id="mdrJoinList" parameterType="Map" resultMap="MDRJoin">
+		
+		
+		select name, profile, r_num,uuid,content,regdate,diary_num, r
+		from (  
+				select name, profile, r_num,uuid,content,regdate,diary_num, rownum  r
+				from(
+					select m.name, m.profile, dr.*
+					from diary_reply dr, member m
+					where dr.uuid = m.uuid
+					order by dr.regdate
+				)
+			)
+		<![CDATA[
+		where r >= #{sno} and r <= #{eno}
+		]]>
+		
 
+		
+	</select>
 </mapper>

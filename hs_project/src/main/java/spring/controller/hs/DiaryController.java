@@ -64,19 +64,19 @@ public class DiaryController {
 
 	// read
 	@GetMapping("/diary/read")
-	public String read(int diary_num, HttpServletRequest request, Model model) {
+	public String read(int diary_num, HttpServletRequest request, Model model,String nowPage) {
 		// 議고쉶�닔利앷� 異붽�
 		DiaryDTO diarydto = diaryinter.read(diary_num);
 		model.addAttribute("diarydto", diarydto);// title,content,d_date등은 jsp에서 사용시 diarydto를 붙이고 사용가능
 
-		// �뙎湲�愿��젴 異붽�
+		//조회 하단에 댓글 페이징
 		int nPage = 1;
 
 		if (request.getParameter("nPage") != null) {
 			nPage = Integer.parseInt(request.getParameter("nPage"));
 		}
 
-		int recordPerPage = 3; // �븳�럹�씠吏��떦 異쒕젰�븷 �젅肄붾뱶 媛��닔
+		int recordPerPage = 5; // �븳�럹�씠吏��떦 異쒕젰�븷 �젅肄붾뱶 媛��닔
 		int sno = ((nPage - 1) * recordPerPage) + 1; //
 		int eno = nPage * recordPerPage;
 
@@ -84,10 +84,11 @@ public class DiaryController {
 		map.put("diary_num", diary_num);// diarydto를 붙이지 않고 diary_num사용가능
 		map.put("sno", sno);
 		map.put("eno", eno);
-		// map.put("nowPage", nowPage);
-
-		model.addAttribute("map", map);
-
+		map.put("nPage", nPage);
+		map.put("nowPage", nowPage);
+		System.out.println(diary_num+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+		model.addAllAttributes(map);
+		
 		return "/diary/read";
 	}
 
@@ -112,6 +113,8 @@ public class DiaryController {
 				Utility.deleteFile(basePath, oldfile);
 			}
 			filename = Utility.saveFileSpring(filenameMF, basePath);
+		}else {
+			filename = oldfile;
 		}
 		
 		diarydto.setFilename(filename);
@@ -155,7 +158,7 @@ public class DiaryController {
 		if (request.getParameter("nowPage") != null) {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
-		int recordPerPage = 5;
+		int recordPerPage = 9;
 
 		int sno = ((nowPage - 1) * recordPerPage) + 1;
 		int eno = nowPage * recordPerPage;
@@ -167,7 +170,7 @@ public class DiaryController {
 		int total = diaryinter.total();
 
 		String url = "list";
-		String paging = Utility.paging(total, nowPage, recordPerPage, url);
+		String paging = Utility.diarypaging(total, nowPage, recordPerPage, url);
 
 		// list�떞湲�
 		List<DiaryDTO> list = diaryinter.list(map);

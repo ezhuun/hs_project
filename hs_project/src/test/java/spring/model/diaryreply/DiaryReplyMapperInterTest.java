@@ -1,7 +1,6 @@
-package spring.model.diary;
+package spring.model.diaryreply;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import spring.mapper.hs.DiaryMapperInter;
+import spring.mapper.hs.DiaryReplyMapperInter;
+import spring.model.diary.DiaryReplyDTO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,19 +26,19 @@ import spring.mapper.hs.DiaryMapperInter;
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/spring-security.xml"
 		})
-public class DiaryMapperInterTest {
+public class DiaryReplyMapperInterTest {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired 
-	DiaryMapperInter diaryinter;
+	DiaryReplyMapperInter drinter;
 	
 	@Test
 	//@Ignore
 	public void test() {
 		Map map = new HashMap();
 		
-		List<DiaryDTO> list = diaryinter.mdJoinList(map);
+		List<DiaryReplyDTO> list = drinter.mdrJoinList(map);
 		System.out.println(list);	
 	}
 	
@@ -46,42 +46,38 @@ public class DiaryMapperInterTest {
 	@Test
 	@Ignore
 	public void testCreate() {
-		DiaryDTO diarydto = new DiaryDTO();
-		diarydto.setDiary_num(3);
-		diarydto.setTitle("ì–´ë¦°ì´ëŒ€ê³µì› ë‹¤ë…€ì˜´");
-		diarydto.setContent("ê³µì›ì´ ë„ˆë¬´ë„ˆë¬´ ì˜ˆë»¤ë‹¹");
-		diarydto.setC_code("00000001");
-		diarydto.setUuid("test2");
-		diarydto.setD_date("2019-04-01");
+		DiaryReplyDTO drdto = new DiaryReplyDTO();
+		drdto.setR_num(3);
+		drdto.setContent("°ø¿øÀÌ ³Ê¹«³Ê¹« ¿¹»¼´ç");
+		drdto.setUuid("test2");
 		
-		assertTrue(diaryinter.create(diarydto)>0);
+		
+		assertTrue(drinter.create(drdto)>0);
 	}
 
 	@Test
 	 @Ignore
 	public void testRead() {
-		DiaryDTO diarydto = diaryinter.read(1);
-		logger.info("diarydto: " + diarydto);
+		DiaryReplyDTO drdto = drinter.read(1);
+		logger.info("drdto: " + drdto);
 		
 	}
 
 	@Test
 	@Ignore
 	public void testUpdate() {
-		DiaryDTO diarydto = new DiaryDTO();
-		diarydto.setTitle("ì–´ë¦°ì´ëŒ€ê³µì›ê³¼ ì„ì´Œí˜¸ìˆ˜");
-		diarydto.setContent("ì–´ë¦°ì´ëŒ€ê³µì›ë„ ì˜ˆë»¤ì§€ë§Œ ì„ì´Œí˜¸ìˆ˜ ì•¼ê²½ë„ ë„ˆë¬´ ì¢‹ì•˜ë‹¹");
-		diarydto.setD_date("2019-06-06");
-		diarydto.setDiary_num(1);;
+		DiaryReplyDTO drdto = new DiaryReplyDTO();
+		drdto.setContent("¾î¸°ÀÌ´ë°ø¿øµµ ¿¹»¼Áö¸¸ ¼®ÃÌÈ£¼ö ¾ß°æµµ ³Ê¹« ÁÁ¾Ò´ç");
+		drdto.setR_num(1);
 		
-		assertTrue(diaryinter.update(diarydto) > 0);
+		assertTrue(drinter.update(drdto) > 0);
 	}
 
 	@Test
 	@Ignore
 	public void testDelete() {
 		int diary_num = 1;
-		assertTrue(diaryinter.delete(diary_num) > 0);
+		assertTrue(drinter.delete(diary_num) > 0);
 	}
 
 	@Test
@@ -98,7 +94,7 @@ public class DiaryMapperInterTest {
 		map.put("sno", 1);
 		map.put("eno", 5);
 
-		List<DiaryDTO> list = diaryinter.list(map);
+		List<DiaryReplyDTO> list = drinter.list(map);
 		logger.info("list: " + list);
 	}
 
@@ -106,7 +102,7 @@ public class DiaryMapperInterTest {
 	@Ignore
 	public void testTotal() {
 		int diary_num = 1;
-		int cnt = diaryinter.total();
+		int cnt = drinter.total(diary_num);
 		logger.info("total: " + cnt);
 	}
 

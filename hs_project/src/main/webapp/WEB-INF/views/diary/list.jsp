@@ -169,8 +169,9 @@
 			</figure> -->
 
 		<button type="button" onclick="location.href='./create'">생성</button>
+		<div>${paging }</div>
 	</div>
-
+	
 	<!-- Modal -->
 <!-- 	<div class="modal fade" id="myModal" role="dialog"> -->
 <!-- 		<div class="modal-dialog modal-sm"> -->
@@ -188,6 +189,7 @@
 <!-- 			</div> -->
 <!-- 		</div> -->
 <!-- 	</div> -->
+	
 </div>
 
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->

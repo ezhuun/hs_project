@@ -1,5 +1,7 @@
 package spring.model.diary;
 
+
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class DiaryDTO {
@@ -14,7 +16,33 @@ public class DiaryDTO {
     private int    filesize; // 파일 사이즈 
     private MultipartFile filenameMF; 
     
-    public String getFilename() {
+    //private List memberDTOListMap; 
+    //부모는 자식의 컬럼을 넣지 않음
+    private String name;
+    private String profile;
+    
+    
+    public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getProfile() {
+		return profile;
+	}
+
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+
+	public String getFilename() {
 		return filename;
 	}
 
@@ -64,11 +92,15 @@ public class DiaryDTO {
 	
 
 
+
+
+
 	@Override
 	public String toString() {
 		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
 				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + ", filename=" + filename
-				+ ", filesize=" + filesize + ", filenameMF=" + filenameMF + "]";
+				+ ", filesize=" + filesize + ", filenameMF=" + filenameMF + ", name=" + name + ", profile=" + profile
+				+ "]";
 	}
 
 

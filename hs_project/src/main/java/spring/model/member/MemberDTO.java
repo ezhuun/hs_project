@@ -1,5 +1,7 @@
 package spring.model.member;
 
+import java.util.List;
+
 public class MemberDTO {
 
 	private int no;
@@ -23,7 +25,6 @@ public class MemberDTO {
 	
 	private MemberDTO lover;
 	private MemberConnectDTO connect;
-	
 
 	@Override
 	public String toString() {
