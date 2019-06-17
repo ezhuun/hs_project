@@ -9,7 +9,7 @@ var replyService = (function() {
 
 		$.ajax({
 			type : 'post',			//post는 create를 의미
-			url : './aboard/create',//replycontroller에서 해당 url과 동일한 곳으로 매핑이 되서 이동
+			url : './aboardreply/create',//replycontroller에서 해당 url과 동일한 곳으로 매핑이 되서 이동
 			data : JSON.stringify(reply), //reply는 json객체로 json형식으로 된것을 문자열로 형식으로 변경하고
 			contentType : "application/json; charset=utf-8",// 그 문자열은 json임을 알려줌
 			success : function(result, status, xhr) {//result는 컨트롤러에서 return값이 들어옴
@@ -31,29 +31,21 @@ var replyService = (function() {
 		var sno = param.sno;
 		var eno = param.eno;
 
-		// alert(param.bbsno);, 비동기 통신, path variable
-		$.getJSON("./aboard/list/" + a_num + "/" + sno + "/" + eno + ".json", //요청 url, .json = >json형식으로 데이터를 보내겠다
-																			 //replycontroller에서 해당 url과 동일한 곳으로 매핑이 되서 이동
-																			//.json을 지우면 요청의 응답값은 xml로 이동됨
-		function(data) {//data는 replycontroller의 url로 매핑된 곳의 결과가 data로 들어옴, 요청했을때 처리한 결과를 .json형식으로 받아서 data로 들어감
-			// alert(data);
-			if (callback) {//callback은 read.jsp에 있는 두번째 인자를 의미
-				callback(data); // 댓글 목록만 가져오는 경우, getList안에 두번째 파라메터(function(list))에 list안으로 data가 들어감
-				// callback(data.replyCnt, data.list); //댓글 숫자와 목록을 가져오는 경우
-			}
+		$.getJSON("./aboardreply/list/" + a_num + "/" + sno + "/" + eno + ".json",
+			
+			function(data) {
+			
+			if (callback) {
+				callback(data); 
+				}
 		});
 	}
 
 	function getPage(param, callback, error) {
-		/*var nPage = param.nPage;
-		var nowPage = param.nowPage;
-		var col = param.col;
-		var word = param.word;
-		var bbsno = param.bbsno;*/
-		
+
 		$.ajax({
 			type : 'get',
-			url : "./aboard/page",
+			url : "./aboardreply/page",
 			data : param,
 			contentType : "application/text; charset=utf-8",
 			success : function(result, status, xhr) {
@@ -72,7 +64,7 @@ var replyService = (function() {
 	function remove(r_num, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : './aboard/' + r_num,
+			url : './aboardreply/' + r_num,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -90,7 +82,7 @@ var replyService = (function() {
 		console.log("r_num: " + reply.r_num);
 		$.ajax({
 			type : 'put',
-			url : './aboard/' + reply.r_num,
+			url : './aboardreply/' + reply.r_num,
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
@@ -107,7 +99,7 @@ var replyService = (function() {
 	}
 
 	function get(r_num, callback, error) {
-		$.get("./aboard/" + r_num + ".json", function(result) {//결과는 json으로 받겠다는 뜻
+		$.get("./aboardreply/" + r_num + ".json", function(result) {//결과는 json으로 받겠다는 뜻
 			if (callback) {
 				callback(result);
 			}

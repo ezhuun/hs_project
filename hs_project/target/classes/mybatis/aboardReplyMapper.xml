@@ -21,11 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="create" parameterType="AboardReplyDTO">
 		<selectKey keyProperty="r_num" resultType="int" order="BEFORE">
-		SELECT nvl(max(r_num),0)+1
-		FROM a_board_reply	
+			SELECT nvl(max(r_num),0)+1
+			FROM a_board_reply	
 		</selectKey>	
-		INSERT INTO a_board_reply(r_num, r_name, a_num, uuid, content, to_char(regdate,'yy/mm/dd hh24:mi')regdate) 
-		VALUES (#{r_num},#{r_name},#{a_num},#{uuid},#{content},sysdate)	
+		
+		insert into a_board_reply(r_num, r_name, a_num, uuid, content, regdate) 
+		values(#{r_num}, #{r_name}, #{a_num}, #{uuid}, #{content}, sysdate)	
 	</insert>
 	
 	<select id="read" parameterType="int" resultType="AboardReplyDTO">

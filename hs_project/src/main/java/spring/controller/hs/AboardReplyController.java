@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import spring.mapper.hs.AboardReplyMapperInter;
 import spring.model.aboardReply.AboardReplyDTO;
+import spring.model.member.MemberDTO;
 import spring.utility.hs.Utility;
 
 @RestController
@@ -67,8 +70,8 @@ public class AboardReplyController {
 		int total = arinter.total(a_num);
 		String url = "read";
 	 
-		int recordPerPage = 3; // 한페이지당 출력할 레코드 갯수
-		String fk = "a_num=";
+		int recordPerPage = 4; // 한페이지당 출력할 레코드 갯수
+		String fk = "&a_num=";
 	
 		String paging = Utility.rpaging(total, nowPage, recordPerPage, col, word, url, nPage,fk, a_num);
 	 
@@ -81,7 +84,7 @@ public class AboardReplyController {
 	@GetMapping("/aboard/aboardreply/list/{a_num}/{sno}/{eno}")//요청uri
 	public ResponseEntity<List<AboardReplyDTO>> getList (@PathVariable("a_num") int a_num,
 			@PathVariable("sno") int sno, @PathVariable("eno") int eno) {	 
-	 
+		
 		Map map = new HashMap();
 		map.put("sno", sno);
 		map.put("eno", eno);
@@ -94,8 +97,9 @@ public class AboardReplyController {
 			
 
 	@PostMapping("/aboard/aboardreply/create")
-	public ResponseEntity<String> create(@RequestBody AboardReplyDTO vo){
-	//@RequestBody를 쓰면 json형식으로 온 데이터를 IreplyDTO타입 파라메터로 변환해서 받을 수 있음.
+	public ResponseEntity<String> create(AboardReplyDTO vo, HttpSession session){
+		MemberDTO dto = (MemberDTO)session.getAttribute("member");
+		vo.setUuid(dto.getUuid());
 		
 		//타입이 변경된 데이터가 제대로 들어왔는지 확인
 		log.info("AboardReplyDTO1: " + vo.getContent());
@@ -107,7 +111,6 @@ public class AboardReplyController {
 		int flag = arinter.create(vo);
 		
 		log.info("Reply INSERT flag: "+flag);
-		
 		return flag == 1? new ResponseEntity<>("success",HttpStatus.OK)
 							: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			
