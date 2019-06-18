@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import spring.mapper.hs.DiaryMapperInter;
 import spring.model.diary.DiaryDTO;
+import spring.model.diary.DiaryService;
 import spring.utility.hs.Utility;
 
 @Controller
@@ -24,9 +25,10 @@ public class DiaryController {
 
 	@Autowired
 	private DiaryMapperInter diaryinter;
-	
+		
 	//댓글과 글 삭제 service
-	
+	@Autowired
+	private DiaryService service;
 	
 	
 	// create
@@ -140,14 +142,16 @@ public class DiaryController {
 	@PostMapping("/diary/delete")
 	public String delete(int diary_num, RedirectAttributes redi) {
 		
-		int flag = diaryinter.delete(diary_num);
-		System.out.println(flag+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-		if(flag>0) {
-			//redi.addFlashAttribute("msg","글삭제");
-			return "redirect:/diary/list";
-		}else {
+		try {
+			System.out.println("gggggggggggggggggggggggggggggggg");
+			 service.delete(diary_num);
+			 return "redirect:/diary/list";
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("ettttttttttttttttttttt");
 			return "/diary/read";
 		}
+		
 	}
 	
 	// list

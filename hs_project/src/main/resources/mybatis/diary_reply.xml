@@ -35,7 +35,8 @@
 	</select>
 	<update id="update" parameterType="DiaryReplyDTO">
 		update diary_reply
-		set content = #{content}
+		set content = #{content},
+		 	regdate = sysdate
 		where r_num = #{r_num}
 	</update>
 	
@@ -80,7 +81,7 @@
 					select m.name, m.profile, dr.*
 					from diary_reply dr, member m
 					where dr.uuid = m.uuid
-					order by dr.regdate
+					order by dr.r_num
 				)
 			)
 		<![CDATA[

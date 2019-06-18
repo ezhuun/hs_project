@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp"%>
+<%@ taglib prefix="util" uri="/ELFunctions" %>
 
 
 <!-- 여기부터 -->
@@ -49,7 +50,8 @@
 					<!-- 댓글갯수 -->
 					<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i>
-							<span>댓글   ${drdto.rcount }</span>
+							<%-- <c:set var="rcount" value="${util:rcount(drdto.bbsno,rinter) }"/> --%>
+							<span>댓글 <span class="badge">${drdto.rcount}</span></span>
 							
 						<!-- <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>NewReply</button> -->
 					</div>
@@ -168,15 +170,15 @@
 					for(var i=0, len = list.length || 0; i < len; i++){
 						//1행1열이미지추가
 						str += "<li class='list-group-item' id='"+list[i].r_num+"'  data-r_num='"+list[i].r_num+"'>"
-							+ "<div id='divList'><table><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
+							+ "<div class='divList' ><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
 							+ "<div><img src='${member.profile}' width='50' height='50'>"
 							+ "</div></td>";
 						//1행2열 이름,날짜,수정삭제 추가
 						str += "<td style='text-align: left'>"
-							+ "<span>"+ list[i].name +"</span>"
+							+ "<span><strong>"+ list[i].name +"</strong></span>"
 							+ "<span>"+ list[i].regdate +"</span>";
 							if('${member.name}' == list[i].name){
-								str += "<span> <a href='#' id='modifybtn'>수정</a> <a href='#' id='deletebtn'> 삭제</a></span>";
+								str += "<span> <a href='#' class='modifybtn'  id='"+list[i].r_num+"'>수정</a> <a href='#' id='deletebtn'> 삭제</a></span>";
 							}
 						str	+= "</td></tr>";
 						//2행 내용 추가
@@ -242,105 +244,65 @@
 		
 		});//end createbtn
 		
-		var modifybtn = $("#modifybtn");
-		
-		//댓글 수정 처리 x------------------------------------------------------
-		$(document).on("click","modifybtn" ,function(e){
-		
-		e.preventDefault();
-		alert("수정입니까?");
-			//id가 divList인 내부요소를 모두 삭제
-			//해당 divList만 삭제해야됨
-			//$("#divList *").remove();
-			var r_num = $(this).data("r_num");//
-			var name = $(this).data("name");
-			var regdate = $(this).data("regdate");
+		var modifybtn = $(".modifybtn");
 			
-			var str = "";
-			str += "<table><tr><td>"
-				+  "<span>" + name + "</span>"
-				+  "<span>" + regdate + "</span>"
-				+  "</td></tr>";
-			str += "<tr><td>"
-				+  "<div class='replyupdate' style='width: 100%'>"
-				+  "<div class='form-group' style='display: flex'>"
-				+  "<textarea name='updatecontent' rows='2' style='width: 90%'></textarea>"
-				+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
-				+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
-				+  "</div></div></div></td></tr></table>";
+			
+		$(document).on("click",".modifybtn" ,function(e){
+			e.preventDefault();
+		
 				
-			$("#divList *").append(str);	
-			
-			var replycontent = replyupdate.find("textarea[name='updatecontent']");
-			var reply = {
-				r_num : replyupdate.data("r_num"),
-				content : replycontent.val()
-			};
-			replyService.update(reply,function (update){
-				alert(update);
-				showReplyList();
-			
-			});//end update
-			
-		});//end modifybtn
-		
-		
-	
-	});
-	
-	//실행 o   등록버튼 실행 동적, 수정 클릭
-	
-	$(document).on("click","#modifybtn" ,function(e){
-		e.preventDefault();
-		alert("수정입니까?");
-			
-			//id가 divList인 내부요소를 모두 삭제
-			//해당 divList만 삭제해야됨
-			//$("#divList *").remove();
-			
-			//$(this).parents("#divList").remove();
-			var r_num = $(this).parents("li").data("r_num");//
+			var r_num = $(this).parents("li").data("r_num");
 			var name = "${member.name}";
-			var regdate = "${diary_reply.regdate}";
+			$(this).parents("#tableList ").remove();
+			
+			//regdate, content등을 가지고 오기 위해서 비동기통신으로 저장된 값을 가지고 옴
+			replyService.get(r_num,function(result){
 		
-			//$("#divList *").remove();
-			
-			var str = "";
-			str += "<table><tr><td>"
-				+  "<span>" + name + "</span>"
-				+  "<span>" + regdate + "</span>"
-				+  "</td></tr>";
-			str += "<tr><td>"
-				+  "<div class='replyupdate' style='width: 100%'>"
-				+  "<div class='form-group' style='display: flex'>"
-				+  "<textarea name='updatecontent' rows='2' style='width: 90%'></textarea>"
-				+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
-				+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
-				+  "</div></div></div></td></tr></table>";
-			$(this).parents("#divList").append(str);	
-			//$("#divList *").append(str);	
-			
-			/* var replycontent = replyupdate.find("textarea[name='updatecontent']");
-			var reply = {
-				r_num : replyupdate.data("r_num"),
-				content : replycontent.val()
-			};
-			replyService.update(reply,function (update){
-				alert(update);
-				showReplyList();
-			
-			});//end update */
+				var regdate = result.regdate;			
+				var beforecontent = result.content;
+				var str = "";
+				
+				str += "<p>"
+					+  "<span><strong>" + name + "</strong></span>"
+					+  "<span>" + regdate + "</span>"
+					+  "<span> <a href='#' id='cancelbtn'>수정취소</a> "
+					+  "<p>";
+				
+				str	+=  "<div class='replyupdate' style='width: 100%'>"
+					+  "<div class='form-group' style='display: flex'>"
+					+  "<textarea name='updatecontent' rows='3' style='width: 90%'></textarea>"
+					+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
+					+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
+					+  "</div></div></div></td></tr></table>";
+				
+				/* var a = $(this).attr("id");
+				console.log(a); */
+				
+				console.log("rrrrrdewrerwrrrrrrrrrrrrrrr");
+				
+				/* if(test == r_num){
+					$(".divList").append(str);
+				} */
+				
+				//$(".divList").append(str);	
+				$(this).parents("li").append(str);
+				});//end get 	
 			
 		});//end modifybtn
 	
 		//수정버튼 클릭시 발생
 		$(document).on("click","#updatebtn", function(){
 			
-			var replycontent = replyupdate.find("textarea[name='updatecontent']");
+			
+			var replycontent = $(".replyupdate").find("textarea[name='updatecontent']");
+						
+			
 			var reply = {
-				r_num : replyupdate.data("r_num"),
+				r_num : $(this).parents("li").data("r_num"),
 				content : replycontent.val()
 			};
+			
+			
 			replyService.update(reply,function (update){
 				alert(update);
 				showReplyList();
@@ -349,6 +311,10 @@
 			
 		});
 		
+		//수정취소 클릭시 발생
+		$(document).on("click","#cancelbtn", function(){
+				showReplyList();		
+		});
 		
 		//삭제 클릭시 발생
 		$(document).on("click","#deletebtn",function(){
@@ -359,10 +325,15 @@
 			replyService.remove(r_num, function(result) {
 			alert(result);
 			
-			showReplyList();
 			
+			showReplyList();
 			});
+			
 		});
+		
+	
+});//end page loading
+
 		
 
 </script>
