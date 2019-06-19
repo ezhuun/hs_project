@@ -82,7 +82,7 @@ var replyService = (function() {
 		console.log("r_num: " + reply.r_num);
 		$.ajax({
 			type : 'put',
-			url : './aboardreply/' + reply.r_num,
+			url : './aboardreply/update' + reply.r_num,
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {

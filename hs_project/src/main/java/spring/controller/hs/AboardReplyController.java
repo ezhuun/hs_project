@@ -33,9 +33,9 @@ public class AboardReplyController {
 	@Autowired
 	private AboardReplyMapperInter arinter;
 	
-	@PutMapping("/aboard/aboardreply/{r_num}")
-	public ResponseEntity<String> modify( @RequestBody AboardReplyDTO vo, @PathVariable("r_num") int r_num) {
-	 		
+	@PutMapping("/aboard/aboardreply/update/{r_num}")
+	public ResponseEntity<String> modify(@RequestBody AboardReplyDTO vo, @PathVariable("r_num") int r_num) {
+		
 		log.info("r_num: " + r_num);
 		log.info("modify: " + vo);
 		 

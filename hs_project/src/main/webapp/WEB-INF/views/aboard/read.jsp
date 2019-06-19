@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 	<style type="text/css">
+	a{cursor:pointer;}
 	#topic{
 	    border-top: 2px solid rgba(123, 133, 160, 0.8);
 	    border-bottom: 2px solid rgba(123, 133, 160, 0.8);
@@ -62,11 +63,20 @@
 		background-color:rgba(123, 133, 160, 0.2) ;	
 	}
 	
-	#commentBtn{
+	#commentInBtn{
 		width:70px;
 		background-color: #7b85a0; 
 		margin-bottom:1%;
 		color:white; 
+	}
+	
+	#commentUpBtn{
+		width:65px;
+		background-color: #7b85a0; 
+		margin-bottom:5%;
+		color:white; 
+			}
+	
 	}
 
 	
@@ -107,7 +117,7 @@
         		<input type="text"id="r_name" name="r_name" style="width:15%; margin:1% 2%;" placeholder="닉네임"  >  
         			<div style='display:flex;'>
         				<textarea style='width:827px; margin:0 0 1% 2%' placeholder="고운말을 사용해주세요." id="content" name="content" ></textarea>
-						<button type="button" class="btn" id="commentBtn">등록</button>
+						<button type="button" class="btn" id="commentInBtn">등록</button>
 		            </div>
 		        </div>                        
       	    	</form>
@@ -163,6 +173,11 @@
 		}	
 	</script>	
     <script>
+		$(document).ready(function(){
+	    	commentList(); //페이지 로딩시 댓글 목록 출력 
+		});
+      
+    
 		var a_num = '<c:out value="${a_num}"/>';//게시글 번호
 		var sno = '<c:out value="${sno}"/>';
 		var eno = '<c:out value="${eno}"/>';
@@ -171,10 +186,9 @@
 		var colx = '<c:out value="${col}"/>';
 		var wordx = '<c:out value="${word}"/>';
 		var rpaging = $(".rpaging");
+	
 		
-
-		
-		$("#commentBtn").on("click",(function(){ //댓글 등록 버튼 클릭시 
+		$("#commentInBtn").on("click",(function(){ //댓글 등록 버튼 클릭시 
 			var insertData = $("#commentForm").serialize(); //commentForm의 내용을 가져옴
 			//insertData = {a_num:1, r_num:1, content:"aaa"};
 			commentInsert(insertData); //Insert 함수호출(아래)
@@ -210,9 +224,9 @@
 	            	a += '<div class="panel commentArea" style="width:95%; margin:1% 2.5%;">';
 	                a += '<span class="commentInfo" style="font-size:12px; margin-right:10px;">'+value.r_name;
 	                a += '<span class="commentInfo" style="font-size:10px; color:gray; magin-left:10px;">'+value.regdate;
-	                a += '<a onclick="commentUpdate('+value.r_num+',\''+value.content+'\');"> 수정 </a>';
-	                a += '<a onclick="commentDelete('+value.r_num+');"> 삭제 </a> ';
-	                a += '<div class="commentContent" style="font-size:14px; color:black"'+value.r_num+'">'+value.content +'</p>';
+	                a += '<a style="padding-left:5px;" id="'+value.r_num+'"onclick="commentUpdate('+value.r_num+',\''+value.content+'\');">수정</a> ';
+	                a += '<a onclick="commentDelete('+value.r_num+');">삭제</a> ';
+	                a += '<div class="commentContent" style="font-size:14px; color:black" id="'+value.r_num+'">'+value.content +'</p>';
 	                a += '</div></div>';
 	            });
 	            
@@ -243,28 +257,30 @@
 
  
 	//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
-	function commentUpdate(r_num, comment){
+	function commentUpdate(r_num, content){
 	    var a ='';
 	    
-	    a += '<div class="input-group">';
-	    a += '<input type="text" class="form-control" name="comment_'+r_num+'" value="'+content+'"/>';
-	    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+r_num+');">수정</button> </span>';
+	    a += '<div="bootstrap">';
+	    a += '<textarea style=width:817px; margin:0 0 1% 2% name="content_'+r_num+'">'+content+'</textarea>';
+	    a += '<button class="btn" type="button" id="commentUpBtn" onclick="commentUpdateProc('+r_num+');">수정</button>';
 	    a += '</div>';
 	    
-	    $('.comment'+r_num).html(a);
+	    $("#"+r_num+".commentContent").html(a);
 	    
 	}
  
 	//댓글 수정
 	function commentUpdateProc(r_num){
-	    var updateContent = $('[name=comment_'+r_num+']').val();
+	    var updateContent = $('[name=content_'+r_num+']').val();
+	    var param = {'content' : updateContent, 'r_num' : r_num};
 	    
 	    $.ajax({
-	        url : './aboardreply/update',
-	        type : 'post',
-	        data : {'comment' : updateContent, 'r_num' : r_num},
+	        url : './aboardreply/update/'+r_num,
+	        type : 'put',
+	        data : JSON.stringify(param),
+	        contentType:"application/json", 
 	        success : function(data){
-	            if(data == 1) commentList(a_num); //댓글 수정후 목록 출력 
+	            if(data == "success") commentList(r_num); //댓글 수정후 목록 출력 
 	        }
 	    });
 	}
@@ -283,33 +299,9 @@
  
 	 
 	 
-	$(document).ready(function(){
-	    commentList(); //페이지 로딩시 댓글 목록 출력 
-	});
+
 	 
 	
-	
-	function getPage(param, callback, error) {
-
-		
-		$.ajax({
-			type : 'get',
-			url : "./aboardreply/page",
-			data : param,
-			contentType : "application/text; charset=utf-8",
-			success : function(result, status, xhr) {
-				if (callback) {
-					callback(result);
-				}
-			},
-			error : function(xhr, status, er) {
-				if (error) {
-					error(er);
-				}
-			}
-		});
-	}
- 
  
 </script>
 
