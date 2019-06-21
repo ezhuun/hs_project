@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp"%>
 
-
 <script type='text/javascript'
 	src='${root }/libs/unitegallery/js/jquery-11.0.min.js'></script>
 <script type='text/javascript'
@@ -88,8 +87,17 @@
 .snip1361:hover figcaption, .snip1361.hover figcaption {
 	top: 150px;
 }
+#createbtn{
+	background-color: white; 
+	color: black" 
+	
+}
+.content{
+	padding: 10px;
 }
 </style>
+
+
 <!-- 여기부터 -->
 <script type="text/javascript">
 	function read(diary_num) {
@@ -104,10 +112,8 @@
 	window.close();    //현재 팝업창 Close
 	}
 </script>
-<div class="container-inner sideBorder boxsing">
-
+<div class="container-inner sideBorder ">
 	<div class="bootstrap">
-		<h1>Diary List</h1>
 		<!-- 목록에 보여질 데이터들을 for문을 이용하여 다 보이도록 -->
 		<!-- 이미지 등을 담는 컨테이너 역할 -->
 		<div id="gallery">
@@ -125,70 +131,38 @@
 					</tr>
 				</c:when>
 				<c:otherwise>
+				<div class="row">
 					<c:forEach var="diarydto" items="${list}">
-						<figure class="snip1361">
-							<!-- 생성시 메인에 사용할 사진을 설정 or 내용에 적은 사진 중에서 첫번째 사진을 사용 -->
-							<img src="${root }/images/diary/storage/${diarydto.filename}" alt="sample45" />
-							<figcaption>
-								<!-- 이에 대한 설명을하는 문구를 담는 태그 -->
-								<h3>${diarydto.title }</h3>
-								<p>${diarydto.d_date }</p>
-							</figcaption>
-							<!-- read(조회)로 이동 getmapping-->
-							<a href="javascript:read('${diarydto.diary_num }')"></a>
-
-						</figure>
-						<br>
+						<c:if test="${diarydto.c_code eq member.c_code}">
+						
+						<div class="col-md-4">
+							<figure class="snip1361">
+								<!-- 생성시 메인에 사용할 사진을 설정 or 내용에 적은 사진 중에서 첫번째 사진을 사용 -->
+								<img src="${root }/images/diary/storage/${diarydto.filename}" alt="sample45" />
+								<figcaption>
+									<!-- 이에 대한 설명을하는 문구를 담는 태그 -->
+									<h3>${diarydto.title }</h3>
+									<p>${diarydto.d_date }</p>
+								</figcaption>
+								<!-- read(조회)로 이동 getmapping-->
+								<a href="javascript:read('${diarydto.diary_num }')"></a>
+	
+							</figure>
+							</div>
+							
+							
+						</c:if>
 					</c:forEach>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</div>
-
-
-
-		<!-- 	<figure class="snip1361">
-				<img src="D:/machine/ojt/image/Tulips.jpg" alt="sample45" />
-				<figcaption>
-					이에 대한 설명을하는 문구를 담는 태그
-					<h3>Date</h3>
-					<p>title</p>
-				</figcaption>
-				<a href="#"></a>
-				read(조회)로 이동
-			</figure>
-
-			<figure class="snip1361">
-				<img src="D:/machine/ojt/image/Tulips.jpg" alt="sample45" />
-				<figcaption>
-					이에 대한 설명을하는 문구를 담는 태그
-					<h3>Date</h3>
-					<p>title</p>
-				</figcaption>
-				<a href="#"></a>
-				read(조회)로 이동
-			</figure> -->
-
-		<button type="button" onclick="location.href='./create'">생성</button>
-		<div>${paging }</div>
+		<div align="right" style="margin: 10px; margin-top: 30px; "> 
+			<button class="btn btn-default" type="button" id="createbtn" onclick="location.href='./create'">글쓰기</button>
+		</div>
+		<hr style="color: gray;">
+		<div class="paging">${paging }</div>
 	</div>
-	
-	<!-- Modal -->
-<!-- 	<div class="modal fade" id="myModal" role="dialog"> -->
-<!-- 		<div class="modal-dialog modal-sm"> -->
-<!-- 			<div class="modal-content"> -->
-<!-- 				<div class="modal-header"> -->
-<!-- 					<button type="button" class="close" data-dismiss="modal">&times;</button> -->
-<!-- 					<h4 class="modal-title">알림 메세지!</h4> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-body"> -->
-<!-- 					<p>This is a small modal.</p> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-footer"> -->
-<!-- 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 	
 </div>
 
@@ -203,23 +177,5 @@
 		jQuery(document).ready(function() {
 			jQuery("#gallery").unitegallery();
 		});
-	</script>
-	<script>
-		/* $(document).ready(function() {
-			var modal = '${msg}'; //Controller에서 가져온 데이터
-			checkModal(modal); //modal생성
-
-			//history back일때는 modal 안보여주는 코드 1
-			history.replaceState({}, null, null);
-
-			function checkModal(modal) { //modal 생성함수 선언
-				if (history.state)
-					return; //코드2
-				if (modal) {
-					$(".modal-body").html(modal);
-					$("#myModal").modal("show");
-				}
-			}
-		}); */
 	</script>
 	<!-- 여기까지 -->

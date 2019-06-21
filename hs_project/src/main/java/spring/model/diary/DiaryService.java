@@ -16,7 +16,8 @@ public class DiaryService {
 	
 	public void delete(int diary_num) throws Exception{
 		
+		drinter.deleteall(diary_num);
 		diaryinter.delete(diary_num);
-		drinter.delete(diary_num);
+		
 	}
 }

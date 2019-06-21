@@ -32,7 +32,7 @@ var replyService = (function() {
 		var sno = param.sno;
 		var eno = param.eno;
 		
-		// alert(param.bbsno);, 비동기 통신, path variable
+		//, 비동기 통신, path variable
 		$.getJSON("./reply/list/" + diary_num + "/" + sno + "/" + eno + ".json", //요청 url, .json = >json형식으로 데이터를 보내겠다
 																			 //replycontroller에서 해당 url과 동일한 곳으로 매핑이 되서 이동
 																			//.json을 지우면 요청의 응답값은 xml로 이동됨

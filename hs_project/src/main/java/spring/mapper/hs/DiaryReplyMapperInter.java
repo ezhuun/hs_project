@@ -14,4 +14,5 @@ public interface DiaryReplyMapperInter {
 	int total(int diary_num);
 	int rcount(int diary_num);
 	List<DiaryReplyDTO> mdrJoinList(Map map);
+	int deleteall(int diary_num);
 }

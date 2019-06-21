@@ -80,6 +80,8 @@ public class DiaryReplyController {
 		map.put("sno", sno);
 		map.put("eno", eno);
 		map.put("diary_num", diary_num);
+		
+		
 		System.out.println("=====================");
 		System.out.println(map);
 		List<DiaryReplyDTO> list = drinter.mdrJoinList(map);

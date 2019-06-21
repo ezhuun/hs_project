@@ -291,6 +291,7 @@ public class Utility {
 	
 	//댓글갯수
 	public static int rcount(int diary_num, DiaryReplyMapperInter drinter) {
+		System.out.println(diary_num+"442525827971893672");
 		return drinter.rcount(diary_num);
 	}
 }

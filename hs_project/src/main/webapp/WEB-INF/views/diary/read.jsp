@@ -5,61 +5,47 @@
 
 
 <!-- 여기부터 -->
-<div class="container-inner sideBorder boxsing bootstrap">
+<div class="container-inner sideBorder boxsing">
+<div class="bootstrap" style="width: 100%">
 	<%-- <b># 파일 다운로드 방법</b><br>
 		경로설정 = ${root}/download?dir=/resources/upload/profile&filename=test.jpg<br>
 		<a href="${root}/downloadr?dir=/resources/upload/profile&filename=test.jpg">다운로드</a>
 		<br><br> --%>
 	
-		<form class="form-horizontal" name="frm" method="post">
-			<input type="hidden" name="diary_num" id="diary_num"
-				value="${diarydto.diary_num }">
-			<input type="hidden" id="filename" name="filename"
-				value="${diarydto.filename }">
+		<form class="form-horizontal" name="frm" method="post" >
+			<input type="hidden" name="diary_num" id="diary_num" value="${diarydto.diary_num }">
+			<input type="hidden" id="filename" name="filename" value="${diarydto.filename }">
 			
-			<div class="se-section-content">
-				<p class="title">${diarydto.title }</p>
-				<div class="container">
-					<span class="writer_date"> 
-						<span class="profile"> <img src="#">
-						<!-- 작성자 프로파일 -->
-						</span> 
-						<span class="uuid">${diarydto.uuid }</span> <i class="dot"> ・
-					</i> <span class="date">${diarydto.regdate }</span>
-					<!-- 작성날짜 -->
-					</span>
-
-				</div>
+			<div class="panel" id="topic">
+				<h2 class="title" style="margin-top: 10px; margin-bottom: 30px; ">${diarydto.title }</h2>
+					<span class="profile"> <img src="${diarydto.profile }"></span> 
+					<span class="uuid">${diarydto.uuid }</span> 
+					<span class="date">${diarydto.regdate }</span>
 			</div>
-
-			<hr>
-
-			<div class="se-main-container">
-				
+			
+			<div class="panel area" id="d_content">		
 				<div>${diarydto.content }</div>
 			</div>
 		</form>
-		<hr>
-	
+		
 		<!-- 댓글 -->
 		<div class='row'>
 			<div class="col-lg-12">
 				<!-- /.panel -->
-				<div class="panel panel-default">
+				<div class="panel panel-default" >
 					
 					<!-- 댓글갯수 -->
 					<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i>
-							<%-- <c:set var="rcount" value="${util:rcount(drdto.bbsno,rinter) }"/> --%>
-							<span>댓글 <span class="badge">${drdto.rcount}</span></span>
-							
-						<!-- <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>NewReply</button> -->
+							<c:set var="rcount" value="${util:rcount(diary_num,drinter) }"/>
+							<strong>댓글</strong> 
+							<c:if test="${rcount>0 }"><strong>${rcount}</strong></c:if> 
 					</div>
 					
 					<!-- /.panel-heading 댓글의 목록,등록이 보여지는 곳-->
 					<div class="panel-body">
 						<!-- 댓글 list -->
-						<ul class="replylist list-group" style="background-color: #F2F2F2;">
+						<ul class="replylist list-group">
 							<!-- li로 계속 댓글이 추가됨 -->
 							<li class="left clearfix" data-rno="12">
 								<div><!-- 내용까지 포함 -->
@@ -95,19 +81,24 @@
 						      <!-- <button style="flex:1" id='createbtn' class='btn btn-primary btn-xs pull-right'>등록</button> -->
 						    </div>
 						  </div>
+						  <!-- 댓글페이지 -->
+						  <div class="panel-footer"></div>
 					</div>
-					<!-- 댓글페이지 -->
-					<div class="panel-footer"></div>
+					
+					
 				</div>
 			</div>
 		</div>
 		
 		
 		<!-- 다이어리 글 관련버튼 -->
-		<button type="button" onclick="location.href='./list'">목록</button>
-		<button type="button" onclick="update()">수정</button>
-		<button type="button" onclick="location.href='./create'">생성</button>
-		<button type="button" class="btn btn-defulat" id="btnDelete">삭제</button>
+		<div align="right">
+			<button type="button" class="btn btn-default" onclick="location.href='./create'">글쓰기</button>
+			<button type="button" class="btn btn-default" onclick="update()">수정</button>
+			<button type="button" class="btn btn-default" id="btnDelete">삭제</button>
+			<button type="button" class="btn btn-default" onclick="location.href='./list'">목록</button>
+		</div>
+	</div>
 </div>	
 
 
@@ -140,14 +131,16 @@
 
 <script type="text/javascript">
 
-
+var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열리는것을 방지	
 	$(document).ready(function() {
 		//댓글목록,생성,수정,삭제 처리(위에 댓글관련 영역의 id나 class를 이용하여)
+		
+		
 		var diary_num = '<c:out value="${diary_num}"/>';
 		var sno = '<c:out value="${sno}"/>';
 		var eno = '<c:out value="${eno}"/>';
 		var replyUL = $(".replylist");
-
+	
 		showReplyList();//댓글목록보여주는 함수 호출
 		
 		function showReplyList(){
@@ -161,33 +154,33 @@
 				},
 				//두번째 인자(callback)에 들어갈 데이터, list는 js파일에서 가지고 온 데이터
 				function (list){
-					//console.log(list);
+					console.log(list);
 					var str = "";
 					if(list == null || list.length == 0){
-						str = "댓글이 없습니다."
-						return;
+						str = ""
+						
 					}
 					for(var i=0, len = list.length || 0; i < len; i++){
 						//1행1열이미지추가
 						str += "<li class='list-group-item' id='"+list[i].r_num+"'  data-r_num='"+list[i].r_num+"'>"
-							+ "<div class='divList' ><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
-							+ "<div><img src='${member.profile}' width='50' height='50'>"
+							+ "<div class='divList' id='"+list[i].r_num+"'><div id='test'></div><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
+							+ "<div><img class='img-rounded'  src='${list.profile}' width='50' height='50'>"
 							+ "</div></td>";
 						//1행2열 이름,날짜,수정삭제 추가
 						str += "<td style='text-align: left'>"
-							+ "<span><strong>"+ list[i].name +"</strong></span>"
-							+ "<span>"+ list[i].regdate +"</span>";
+							+ "<span><strong>"+ list[i].name +"</strong></span>&nbsp;"
+							+ "<span class='date'>"+ list[i].regdate +"</span>";
 							if('${member.name}' == list[i].name){
-								str += "<span> <a href='#' class='modifybtn'  id='"+list[i].r_num+"'>수정</a> <a href='#' id='deletebtn'> 삭제</a></span>";
+								str += "<span class='updel'> <a href='#' class='modifybtn'  id='"+list[i].r_num+"'>수정</a> <a href='#' id='deletebtn'> 삭제</a></span>";
 							}
 						str	+= "</td></tr>";
 						//2행 내용 추가
 						str += "<tr><td colspan='3'><p>"
 							+list[i].content
 							//+ replaceAll(list[i].content,'\n', '<br>')
-							+ "</p></td></tr></table></div></li>";
+							+ "</p></td></tr></table></div></li><hr id='style'>";
 						
-					}//for end
+					}//for end<\
 					
 					replyUL.html(str);
 		
@@ -208,9 +201,9 @@
 		function showReplyPage(){
 			replyService.getPage(param,
 								function (paging){
-									var str = "<div><small class='text-muted'>"
-											+ paging 
-											+ "</small></div>";
+									var str = //"<small class='text-muted'>"
+											 paging ;
+											//+ "</small>";
 									
 									replyPageFooter.html(str);	
 			});	
@@ -244,56 +237,68 @@
 		
 		});//end createbtn
 		
+		//댓글 수정 처리
 		var modifybtn = $(".modifybtn");
-			
+		
 			
 		$(document).on("click",".modifybtn" ,function(e){
 			e.preventDefault();
-		
-				
-			var r_num = $(this).parents("li").data("r_num");
-			var name = "${member.name}";
-			$(this).parents("#tableList ").remove();
 			
+		
+			var r_num = $(this).parents("li").data("r_num");		
+			var name = "${member.name}";			
+			var str = "";
 			//regdate, content등을 가지고 오기 위해서 비동기통신으로 저장된 값을 가지고 옴
+			
 			replyService.get(r_num,function(result){
 		
 				var regdate = result.regdate;			
 				var beforecontent = result.content;
-				var str = "";
+				
 				
 				str += "<p>"
 					+  "<span><strong>" + name + "</strong></span>"
 					+  "<span>" + regdate + "</span>"
 					+  "<span> <a href='#' id='cancelbtn'>수정취소</a> "
-					+  "<p>";
+					+  "</p>";
 				
 				str	+=  "<div class='replyupdate' style='width: 100%'>"
 					+  "<div class='form-group' style='display: flex'>"
-					+  "<textarea name='updatecontent' rows='3' style='width: 90%'></textarea>"
+					+  "<textarea name='updatecontent' rows='3' style='width: 90%'>"+beforecontent+"</textarea>"
 					+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
 					+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
-					+  "</div></div></div></td></tr></table>";
-				
-				/* var a = $(this).attr("id");
-				console.log(a); */
-				
-				console.log("rrrrrdewrerwrrrrrrrrrrrrrrr");
-				
-				/* if(test == r_num){
-					$(".divList").append(str);
+					+  "</div></div></div>";
+					
+		
+	            	$("#"+r_num).append(str);
+	            	console.log(str);
+				});//end get 	
+								
+				$(this).parents("#tableList").remove();
+			 	
+			 	click++;
+			 	
+			 	/* if(click>1){//이미 선택한 수정창이 존재
+					showReplyList();
+					//$("#"+r_num).append(str);
+										
 				} */
 				
-				//$(".divList").append(str);	
-				$(this).parents("li").append(str);
-				});//end get 	
-			
+				
+				 /* if(upstr!=null){//이미 선택한 수정창이 존재
+					showReplyList();
+					$("#"+r_num).append(upstr);
+										
+				} */
+				
+				
+				
 		});//end modifybtn
 	
 		//수정버튼 클릭시 발생
 		$(document).on("click","#updatebtn", function(){
 			
-			
+			alert(click);
 			var replycontent = $(".replyupdate").find("textarea[name='updatecontent']");
 						
 			
@@ -308,17 +313,18 @@
 				showReplyList();
 			
 			});//end update 
-			
+			click =0;
 		});
 		
 		//수정취소 클릭시 발생
 		$(document).on("click","#cancelbtn", function(){
-				showReplyList();		
+				showReplyList();
+				click=0;		
 		});
 		
 		//삭제 클릭시 발생
 		$(document).on("click","#deletebtn",function(){
-			alert("삭제하시겠습니까?");
+			if(confirm("삭제하시겠습니까?")){
 			var r_num= $(this).parents("li").data("r_num");
 			//var r_num = $(".replycreate").data("r_num");
 			
@@ -328,7 +334,7 @@
 			
 			showReplyList();
 			});
-			
+			}
 		});
 		
 	
@@ -339,25 +345,26 @@
 </script>
 
 <style>
-	.panel-body{
+.panel-body{
 		padding: 0px;
+		background-color: #f5f5f5;
 	}
-	.reply-contet{
+.reply-contet{
 		    padding: 10px;
 		    border-width: 1px;
 		    border-style: solid;
 	}
-</style>
-<style>
-.title {
+.panel-heading {
+    color: #333;
+    border-color: #ddd;
+    background-color: rgb(255, 255, 255) !important; 
+}
+/* .title {
 	padding: 5px;
 	font-size: 50px;
 	text-align: center;
-}
+} */
 
-.se-main-container {
-	text-align: center;
-}
 
 .bootstrap .container {
 	padding-right: 15px;
@@ -366,9 +373,56 @@
 	margin-left: auto;
 	padding: 20px;
 }
+#topic{
+	border-top: 2px solid rbga(123,133,160,0.8) !important; 
+	border-bottom: 2px solid rgba(123,133,160,0.8);
+	
+	padding: 10px 0px;
+	margin: 20px;
+}
+.panel{
+	border-style: none;
+	border-top: 2px;
+	height: 80%;
+	text-align: left;
+}
+.title{
+	width :100%;
+	margin: 20px 0;
+	text-align: left;
+	font-size: 20px;
+}
+#d_content{
+	text-align: center;
+}
+#replypanel{
+	color: #333;
+    border-color: #ddd;
+}
 
-.bootstrap p {
-	margin: 0 0 20px;
+.list-group-item{
+	background-color: #f5f5f5 !important;
+	border: 0px !important; 
+	padding: 0px !important;
+	/* //border-bottom :1px dashed !important;
+	//border-top: 1px dashed !important; */
+}
+/*--hr태그 */
+#style{
+	border: 0.5px dashed !important; 
+	margin-top: 10px;
+    margin-bottom: 10px;
+    color: gray;
+}
+.panel-footer{
+padding: 0px !important;
+}
+.date{
+	color:gray;
+}
+.updel{
+	    margin-left: 43em;
+	    color: gray;
 }
 </style>
 

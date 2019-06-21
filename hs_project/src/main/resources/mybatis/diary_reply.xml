@@ -46,8 +46,16 @@
 		where r_num = #{r_num}
 	</delete>
 	
+	<!-- 해당부모글 삭제시 댓글도 삭제 -->
+	<delete id="deleteall" parameterType="int">
+		delete
+		from diary_reply
+		where diary_num = #{diary_num}
+	</delete>
+	
+	
 	<!-- 댓글갯수 -->
-	<select id="rcount" parameterType="int">
+	<select id="rcount" parameterType="int" resultType="int">
 		select count(*)
 		from diary_reply
 		where diary_num = #{diary_num}
@@ -81,6 +89,7 @@
 					select m.name, m.profile, dr.*
 					from diary_reply dr, member m
 					where dr.uuid = m.uuid
+					and diary_num = #{diary_num}
 					order by dr.r_num
 				)
 			)

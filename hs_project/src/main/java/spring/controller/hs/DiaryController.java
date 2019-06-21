@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import spring.mapper.hs.DiaryMapperInter;
+import spring.mapper.hs.DiaryReplyMapperInter;
 import spring.model.diary.DiaryDTO;
 import spring.model.diary.DiaryService;
 import spring.utility.hs.Utility;
@@ -30,6 +31,8 @@ public class DiaryController {
 	@Autowired
 	private DiaryService service;
 	
+	@Autowired
+	private DiaryReplyMapperInter drinter;
 	
 	// create
 	@GetMapping("/diary/create")
@@ -88,7 +91,8 @@ public class DiaryController {
 		map.put("eno", eno);
 		map.put("nPage", nPage);
 		map.put("nowPage", nowPage);
-		System.out.println(diary_num+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+		
+		request.setAttribute("drinter", drinter);
 		model.addAllAttributes(map);
 		
 		return "/diary/read";
@@ -162,7 +166,7 @@ public class DiaryController {
 		if (request.getParameter("nowPage") != null) {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
-		int recordPerPage = 9;
+		int recordPerPage = 3;
 
 		int sno = ((nowPage - 1) * recordPerPage) + 1;
 		int eno = nowPage * recordPerPage;
