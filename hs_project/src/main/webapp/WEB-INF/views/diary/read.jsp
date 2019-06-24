@@ -130,7 +130,9 @@
 <script type="text/javascript" src="${root }/js/diaryreply.js"></script>
 
 <script type="text/javascript">
-
+var r_num_list = new Array;
+var r_num = "";
+var upstr = "";
 var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열리는것을 방지	
 	$(document).ready(function() {
 		//댓글목록,생성,수정,삭제 처리(위에 댓글관련 영역의 id나 class를 이용하여)
@@ -163,13 +165,13 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 					for(var i=0, len = list.length || 0; i < len; i++){
 						//1행1열이미지추가
 						str += "<li class='list-group-item' id='"+list[i].r_num+"'  data-r_num='"+list[i].r_num+"'>"
-							+ "<div class='divList' id='"+list[i].r_num+"'><div id='test'></div><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
+							+ "<div class='divList' id='"+list[i].r_num+"'><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
 							+ "<div><img class='img-rounded'  src='${list.profile}' width='50' height='50'>"
 							+ "</div></td>";
 						//1행2열 이름,날짜,수정삭제 추가
 						str += "<td style='text-align: left'>"
 							+ "<span><strong>"+ list[i].name +"</strong></span>&nbsp;"
-							+ "<span class='date'>"+ list[i].regdate +"</span>";
+							+ "<span class='date'>"+ list[i].regdate +"</span>&nbsp;";
 							if('${member.name}' == list[i].name){
 								str += "<span class='updel'> <a href='#' class='modifybtn'  id='"+list[i].r_num+"'>수정</a> <a href='#' id='deletebtn'> 삭제</a></span>";
 							}
@@ -247,55 +249,62 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 		
 			var r_num = $(this).parents("li").data("r_num");		
 			var name = "${member.name}";			
-			var str = "";
-			//regdate, content등을 가지고 오기 위해서 비동기통신으로 저장된 값을 가지고 옴
-			
+			var upstr = "";
+			r_num_list.push(r_num);
+			//배열에 r_num을 계속 저장(append) 그전꺼랑 현재꺼를 수정취소
+			//regdate, content등을 가지고 오기 위해서 read비동기통신으로 저장된 값을 가지고 옴
+			//수정 클릭시 발생
 			replyService.get(r_num,function(result){
 		
 				var regdate = result.regdate;			
 				var beforecontent = result.content;
 				
 				
-				str += "<p>"
-					+  "<span><strong>" + name + "</strong></span>"
-					+  "<span>" + regdate + "</span>"
-					+  "<span> <a href='#' id='cancelbtn'>수정취소</a> "
-					+  "</p>";
-				
-				str	+=  "<div class='replyupdate' style='width: 100%'>"
-					+  "<div class='form-group' style='display: flex'>"
-					+  "<textarea name='updatecontent' rows='3' style='width: 90%'>"+beforecontent+"</textarea>"
-					+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
-					+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
-					+  "</div></div></div>";
+				upstr   += "<p>"
+						+  "<span><strong>" + name + "</strong></span>"
+						+  "<span>" + regdate + "</span>"
+						+  "<span> <a href='#' class='cancelbtn' id='cancelbtn"+r_num+"'>수정취소</a> "
+						+  "</p>";
 					
-		
-	            	$("#"+r_num).append(str);
-	            	console.log(str);
+				upstr	+=  "<div class='replyupdate' style='width: 100%'>"
+						+  "<div class='form-group' style='display: flex'>"
+						+  "<textarea name='updatecontent' rows='3' style='width: 90%'>"+beforecontent+"</textarea>"
+						+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
+						+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
+						+  "</div></div></div>";
+					
+	            	$("#"+r_num).append(upstr);
+	            	//r_num_list.push(result.r_num);
+	            	click++;
+					 //값추가
+					//console.log(r_num_list);
+	            	
 				});//end get 	
 								
 				$(this).parents("#tableList").remove();
 			 	
-			 	click++;
-			 	
-			 	/* if(click>1){//이미 선택한 수정창이 존재
-					showReplyList();
-					//$("#"+r_num).append(str);
-										
-				} */
+			 	console.log("777888");
+			 	console.log(r_num_list);
+
+
+			 	if(r_num_list.length>0){//이미 선택한 수정창이 존재
+			 		//그전 댓글수정창만 닫음
+			 		if(r_num_list[1] !=null){
+			 			alert("88888~");
+			 			console.log(r_num_list[0]);
+			 			console.log("#cancelbtn"+r_num_list[0]);
+			 			$("#cancelbtn1"+r_num_list[0]).trigger("click");
+			 			
+			 		}
+					//$("#cancelbtn").trigger("click");									
+				} 
 				
-				
-				 /* if(upstr!=null){//이미 선택한 수정창이 존재
-					showReplyList();
-					$("#"+r_num).append(upstr);
-										
-				} */
 				
 				
 				
 		});//end modifybtn
 	
-		//수정버튼 클릭시 발생
+		//수정'버튼' 클릭시 발생
 		$(document).on("click","#updatebtn", function(){
 			
 			alert(click);
@@ -312,13 +321,16 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 				alert(update);
 				showReplyList();
 			
-			});//end update 
+			});//end update  
 			click =0;
 		});
 		
 		//수정취소 클릭시 발생
-		$(document).on("click","#cancelbtn", function(){
+		$(document).on("click",".cancelbtn", function(){
 				showReplyList();
+				console.log(upstr);
+				console.log(r_num);
+				$("#"+r_num).append(upstr);
 				click=0;		
 		});
 		
@@ -421,7 +433,7 @@ padding: 0px !important;
 	color:gray;
 }
 .updel{
-	    margin-left: 43em;
+	  
 	    color: gray;
 }
 </style>
