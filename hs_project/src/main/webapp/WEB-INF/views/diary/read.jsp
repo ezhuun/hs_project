@@ -37,9 +37,9 @@
 					<!-- 댓글갯수 -->
 					<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i>
-							<c:set var="rcount" value="${util:rcount(diary_num,drinter) }"/>
-							<strong>댓글</strong> 
-							<c:if test="${rcount>0 }"><strong>${rcount}</strong></c:if> 
+							<%-- <c:set var="rcount" value="${util:rcount(diary_num,drinter) }"/> --%>
+							<strong>댓글 <span class="show_rcount" style="font-size: 18px;"></span></strong> 
+							
 					</div>
 					
 					<!-- /.panel-heading 댓글의 목록,등록이 보여지는 곳-->
@@ -126,14 +126,29 @@
 	})
 </script>
 
+
+<script type="text/javascript">
+      function sleep(milliSeconds){  
+        var startTime = new Date().getTime(); 
+        while (new Date().getTime() < startTime + milliSeconds); 
+      }      
+      function callNotWorker(){
+        sleep(10000); //10초 동안 대기 시킨다
+        alert("10초 후");
+      }               
+    </script>
+    
+    
 <!-- AJAX처리파일사용 -->
 <script type="text/javascript" src="${root }/js/diaryreply.js"></script>
 
 <script type="text/javascript">
+var rcount = "";
 var r_num_list = new Array;
 var r_num = "";
 var upstr = "";
 var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열리는것을 방지	
+
 	$(document).ready(function() {
 		//댓글목록,생성,수정,삭제 처리(위에 댓글관련 영역의 id나 class를 이용하여)
 		
@@ -142,7 +157,7 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 		var sno = '<c:out value="${sno}"/>';
 		var eno = '<c:out value="${eno}"/>';
 		var replyUL = $(".replylist");
-	
+		var rcountUL = $(".show_rcount");
 		showReplyList();//댓글목록보여주는 함수 호출
 		
 		function showReplyList(){
@@ -182,10 +197,14 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 							//+ replaceAll(list[i].content,'\n', '<br>')
 							+ "</p></td></tr></table></div></li><hr id='style'>";
 						
-					}//for end<\
+					}//for end
+				
 					
 					replyUL.html(str);
-		
+					
+					//댓글갯수 함수 호출
+					showReplyRcount();
+					
 					//댓글페이지 함수 호출
 					showReplyPage();
 				});//function list end, getList end	
@@ -203,12 +222,18 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 		function showReplyPage(){
 			replyService.getPage(param,
 								function (paging){
-									var str = //"<small class='text-muted'>"
-											 paging ;
-											//+ "</small>";
-									
+									var str = paging ;
+		
 									replyPageFooter.html(str);	
 			});	
+		}
+		
+		function showReplyRcount(){
+			replyService.rcount(diary_num,function(show_rcount){
+				var rcount = show_rcount;					
+				rcountUL.html(rcount);
+			});
+		
 		}
 		
 		var replycreate =$(".replycreate")
@@ -228,15 +253,16 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 						name : '<c:out value="${member.name}"/>',
 						uuid : '<c:out value="${member.uuid}"/>'
 			}
-			//console.log(reply);
+			
 			replyService.add(reply, function(create){
-				alert(create);
+	
 				replycontent.val("") ;
-				
 				showReplyList();
 			
 			});//end add
-		
+			 
+				
+			
 		});//end createbtn
 		
 		//댓글 수정 처리
@@ -272,42 +298,26 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 						+  "<div class='updatebtn' style='flex:1; text-align: center;border-color: #ccc; background-color: #ccc;'>"
 						+  "<a href='#' id='updatebtn' style='display: inline-block;width: 100%;height: 50%;line-height: 50px;'>수정</a>"
 						+  "</div></div></div>";
+					click++;
 					
-	            	$("#"+r_num).append(upstr);
-	            	//r_num_list.push(result.r_num);
-	            	click++;
-					 //값추가
-					//console.log(r_num_list);
-	            	
-				});//end get 	
-								
-				$(this).parents("#tableList").remove();
-			 	
-			 	console.log("777888");
-			 	console.log(r_num_list);
-
-
-			 	if(r_num_list.length>0){//이미 선택한 수정창이 존재
-			 		//그전 댓글수정창만 닫음
-			 		if(r_num_list[1] !=null){
-			 			alert("88888~");
-			 			console.log(r_num_list[0]);
-			 			console.log("#cancelbtn"+r_num_list[0]);
-			 			$("#cancelbtn1"+r_num_list[0]).trigger("click");
-			 			
-			 		}
-					//$("#cancelbtn").trigger("click");									
-				} 
+					if(click>1){
+						showReplyList();
+						$("li#"+r_num+" a.modifybtn").trigger("click");			
+						click=0;
+					}
 				
-				
-				
-				
+	            	$("li#"+r_num).html(upstr);	            	
+        	
+				});//end get		
 		});//end modifybtn
+		
+		
+			
 	
 		//수정'버튼' 클릭시 발생
 		$(document).on("click","#updatebtn", function(){
 			
-			alert(click);
+			
 			var replycontent = $(".replyupdate").find("textarea[name='updatecontent']");
 						
 			
@@ -325,6 +335,8 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 			click =0;
 		});
 		
+		
+		
 		//수정취소 클릭시 발생
 		$(document).on("click",".cancelbtn", function(){
 				showReplyList();
@@ -341,7 +353,7 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 			//var r_num = $(".replycreate").data("r_num");
 			
 			replyService.remove(r_num, function(result) {
-			alert(result);
+			
 			
 			
 			showReplyList();

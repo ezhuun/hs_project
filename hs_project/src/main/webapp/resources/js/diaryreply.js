@@ -13,6 +13,7 @@ var replyService = (function() {
 			data : JSON.stringify(reply), //reply는 json객체로 json형식으로 된것을 문자열로 형식으로 변경하고
 			contentType : "application/json; charset=utf-8",// 그 문자열은 json임을 알려줌
 			success : function(result, status, xhr) {//result는 컨트롤러에서 return값이 들어옴
+				alert(result);
 				if (callback) {
 					callback(result);
 				}
@@ -120,6 +121,26 @@ var replyService = (function() {
 		});
 	};
 	
+	function rcount(diary_num,callback,error){
+		console.log("diary_num : "+diary_num);
+		$.ajax({
+			type : 'get',
+			url : './reply/rcount/'+diary_num,
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});	
+		
+	}
+	
+	
 	//JSON 함수명을 리턴, key=함수이름 => 함수가 실행됨
 	//이름없는 함수를 실행한 결과는 함수이름인데 그 뒤에()를 붙였기 때문에 replyService =  add();식으로 값을 가짐
 	return {
@@ -128,6 +149,7 @@ var replyService = (function() {
 		getList : getList,
 		getPage : getPage,
 		remove : remove,
-		update : update
+		update : update,
+		rcount  : rcount
 	};
 })();//=> 함수명뒤에 붙음 = 함수호출

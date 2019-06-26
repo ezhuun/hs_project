@@ -38,7 +38,7 @@ public class DiaryReplyController {
 	//Create
 	@PostMapping("/diary/reply/create")
 	public ResponseEntity<String> create(@RequestBody DiaryReplyDTO drdto){ 
-		System.out.println(drdto+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println(drdto+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		log.info("DiaryReplyDTO: "+drdto.getContent());
 		drdto.setContent(drdto.getContent().replaceAll("/n/r", "<br>"));
 		
@@ -63,6 +63,17 @@ public class DiaryReplyController {
 		int flag = drinter.update(drdto);
 		return flag==1 ? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	//rcount
+	@GetMapping("/diary/reply/rcount/{diary_num}")
+		public ResponseEntity<String> upcnt(@PathVariable("diary_num")int diary_num){
+		System.out.println("2222222222222222222222222222222"+diary_num);
+		String rcount = Integer.toString(drinter.rcount(diary_num));
+		return new ResponseEntity<>(rcount,HttpStatus.OK) ;
+	}
+		
+	
+	
 	
 	//Delete
 	@DeleteMapping("/diary/reply/{r_num}")

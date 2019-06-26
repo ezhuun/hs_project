@@ -166,7 +166,7 @@ public class DiaryController {
 		if (request.getParameter("nowPage") != null) {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
-		int recordPerPage = 12;
+		int recordPerPage = 50;
 
 		int sno = ((nowPage - 1) * recordPerPage) + 1;
 		int eno = nowPage * recordPerPage;
