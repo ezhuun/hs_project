@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 
-
 	<div class="container-inner sideBorder">
 	
        	<div class="user_view_container">
@@ -35,7 +34,7 @@
 			        			<span>변경</span>
 			        		</span>
 			        	</div>
-		        	</div>
+		        	</div>		        	
 		        	
 		        	<div class="user_view_cols">
 			        	<div class="user_view_selectionHeader">처음 만난 날</div>
