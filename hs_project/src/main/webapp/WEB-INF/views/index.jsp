@@ -8,7 +8,16 @@
 		<div class="dday-container">
 			<div class="dday-round">
 				<span>우리 벌써</span>
-				<span class="days">100</span>
+				<span class="days">
+					<c:choose>
+						<c:when test="${not empty member.begin_date}">
+							<c:set var="begin" value="${member.begin_date} 00:00:00" />
+							${util:diffDay(begin)}
+						</c:when>
+						<c:otherwise>0</c:otherwise>
+					</c:choose>
+				</span>
+				
 				<span>일째 사랑중♡</span>
 			</div>
 			<div class="both-photo">
@@ -90,25 +99,27 @@
 			<div class="tb-body">
 				<table>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-
+		<div class="tb-container responsiveNone">
+			<img src="${root}/images/common/banner_date_trouble.gif" />
+		</div>
 		<div class="tb-container">
 			<div class="tb-top">
 				<span class="tb-title">추천 고민</span>
@@ -118,62 +129,40 @@
 			<div class="tb-body">
 				<table>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 					<tr>
-						<td>어려워요</td>
+						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		<div class="tb-container">
-			<img src="${root}/images/banner/banner_date_trouble.png" />
-		</div>
+
 	</div>
 	
 	
-	
-	
 	<br/>
-	<span class="h2">오늘 여기 어때요?</span>
+	<span class="h2">이런 곳 어때요?</span>
 	<span class="headerLine">+</span>
 	<div class="today-pick-box">
 		<ul class="today-pick-slider">
-<!-- 			<li> -->
-<!-- 				<div class="today-pick-card"> -->
-<!-- 					<div class="pick-card-container">1</div> -->
-<!-- 				</div> -->
-<!-- 			</li> -->
+			<img id="slide-loading" src="${root}/images/common/loading2.gif" onclick="geoLocationCall();"/>
 		</ul>
 	</div>
 	
 </div>
 
-	
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
-	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
+	<script src="${root}/js/tourapi.js"></script>
 	<script>
 	//scroll header
 	document.addEventListener('scroll', debounce(headerScrolling, 10));
@@ -192,113 +181,4 @@
 			}
 		}
 	}
-	
-	//slider script config
-	let slider;
-	if(document.body.scrollWidth < 768){
-		slider =$('.today-pick-slider').bxSlider({
-			auto: true,
-			slideWidth: 374,
-			minSlides: 1,
-			maxSlides: 1,
-			moveSlides: 1,
-			slideMargin: 50,
-			pager:false,
-			controls: false,
-		});
-	}else{
-		slider =$('.today-pick-slider').bxSlider({
-			auto: true,
-			slideWidth: 374,
-			minSlides: 3,
-			maxSlides: 3,
-			moveSlides: 1,
-			slideMargin: 50,
-			pager:false,
-			controls: false,
-		});
-	}
-
-	let media = window.matchMedia("screen and (max-width: 768px)");
-	media.addListener(function(e) {
-		if(e.matches){
-			slider.reloadSlider({
-				auto: true,
-				slideWidth: 374,
-				minSlides: 1,
-				maxSlides: 1,
-				moveSlides: 1,
-				slideMargin: 50,
-				pager:false,
-				controls: false,
-			});
-		}else{
-			slider.reloadSlider({
-				auto: true,
-				slideWidth: 374,
-				minSlides: 3,
-				maxSlides: 3,
-				moveSlides: 1,
-				slideMargin: 50,
-				pager:false,
-				controls: false,
-			});
-		}
-	});
-
-	
-	//api 호출
-	const apiCall = async function(lati, longi, temp) {
-		let code = "locationBasedList";
-		let api_uri = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/"+code+"?ServiceKey=0165%2B411e%2FgQnKNGRQg%2BLDx3RvUEyydBouP2dSw1kt7oznhaPXAx6SEXBjjZSnXlWWw8rdxjb8pW%2BhIws3LOiQ%3D%3D&_type=json&MobileOS=ETC&MobileApp=AppTest";
-		api_uri = api_uri + "&listYN=Y";
-		api_uri = api_uri + "&arrange=B";
-		api_uri = api_uri + "&contentTypeId=25";
-		api_uri = api_uri + "&mapY=" + lati;
-		api_uri = api_uri + "&mapX=" + longi;
-		api_uri = api_uri + "&radius=2000";
-		api_uri = api_uri + "&numOfRows=30";
-		api_uri = api_uri + "&pageNo=1";
-		
-		console.log(api_uri);
-		
-		var arr;
-		await $.get(api_uri, function(data){
-			arr = data.response.body.items.item;
-		});
-		
-		if(!arr){
-			apiCall(37.568477, 126.981611);
-			return;
-		}
-      	for(let i=arr.length-1; i>0; i--){
-            let j = Math.floor(Math.random() * (i+1));
-            let temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-      	
-		var html="";
-		arr.forEach(function(item, i){
-			html += "<li>";
-			html += "<div class='today-pick-card'>";
-			html += "<div class='pick-card-container'>";
-			html += "<div class='pick-img'><img src='"+item.firstimage2+"'></div>";
-			html += "<span>"+item.title+"</span>";
-			html += "</div>";
-			html += "</div>";
-			html += "</li>";
-		});
-		document.querySelector(".today-pick-slider").innerHTML = html;
-		slider.reloadSlider();
-	}
-	apiCall(37.568477, 126.981611);
-	
-	
-// 	if (navigator.geolocation) {
-// 	  navigator.geolocation.getCurrentPosition(function(position) {
-// 		  apiCall(position.coords.latitude, position.coords.longitude);
-// 	  });
-// 	}
-	
 	</script>

@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Utility {
 	
+	
+	
 	public static long validDiffTime(String timestamp) {
 		long diffDays = 0;
 

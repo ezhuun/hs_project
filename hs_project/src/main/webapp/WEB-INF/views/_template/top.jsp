@@ -12,14 +12,14 @@
 						<li><a href="#">D-day</a></li>
 						<li><a href="#">체크리스트</a>
 							<ul>
-								<li>서브메뉴1</li>
-								<li>서브메뉴2</li>
-								<li>서브메뉴2</li>
+								<li><a href="#">서브메뉴1</a></li>
+								<li><a href="#">서브메뉴2</a></li>
+								<li><a href="#">서브메뉴3</a></li>
 							</ul>
 						</li>
 						<li><a href="#">발자취</a>
 							<ul>
-								<li>서브메뉴1</li>
+								<li><a href="#">서브메뉴1</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -54,20 +54,23 @@
 								<li><a href="#">D-day</a></li>
 								<li><a href="#">체크리스트</a>
 									<ul>
-										<li>서브메뉴1</li>
-										<li>서브메뉴2</li>
-										<li>서브메뉴2</li>
+										<li><a href="#">서브메뉴1</a></li>
+										<li><a href="#">서브메뉴2</a></li>
+										<li><a href="#">서브메뉴3</a></li>
+										<li><a href="#">서브메뉴1</a></li>
+										<li><a href="#">서브메뉴2</a></li>
+										<li><a href="#">서브메뉴3</a></li>
 									</ul>
 								</li>
 								<li><a href="#">발자취</a>
 									<ul>
-										<li>서브메뉴1</li>
+										<li><a href="#">서브메뉴1</a></li>
 									</ul>
 								</li>
 								<li><a href="#">익명게시판</a>
 									<ul>
-										<li>서브메뉴1</li>
-										<li>서브메뉴1</li>
+										<li><a href="#">서브메뉴1</a></li>
+										<li><a href="#">서브메뉴2</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -76,3 +79,7 @@
 				</div>
 			</div>
 		</div>
+		
+	<script src="${pageContext.request.contextPath}/js/utils.js" charset="utf-8"></script>
+	<script src="${pageContext.request.contextPath}/js/common.js" charset="utf-8"></script>
+	

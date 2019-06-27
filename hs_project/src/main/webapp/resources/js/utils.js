@@ -181,10 +181,10 @@ const utils = {
 		if (btn !== undefined && btn != "") {
 			div_button.innerHTML = btn;
 		}
-		div_container.addEventListener("mouseup", function (e) {
+		div_container.addEventListener("mousedown", function (e) {
 			e.stopPropagation();
 		});
-		div_form.addEventListener("mouseup", function (e) {
+		div_form.addEventListener("mousedown", function (e) {
 			if(e.button == 0){
 			 utils.popupFormClose();
 			}
