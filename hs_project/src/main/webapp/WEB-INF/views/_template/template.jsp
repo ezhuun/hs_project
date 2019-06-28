@@ -35,7 +35,7 @@
 	
 	<script src="${pageContext.request.contextPath}/libs/jquery/jquery-1.9.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/libs/bootstrap/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+	<script src="${pageContext.request.contextPath}/libs/jquery/jquery.bxslider.min.js"></script>
 	<script src="https://unpkg.com/babel-polyfill@6.2.0/dist/polyfill.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/rome/2.1.22/rome.standalone.js"></script>

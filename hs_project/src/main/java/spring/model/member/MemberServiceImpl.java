@@ -28,6 +28,34 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private JavaMailSender mailSender;
 
+	
+	
+	
+	@Override
+	public void changeMemberDate(MemberDTO dto) {
+		mapper.changeMemberDate(dto);
+	}
+
+	@Override
+	public MemberDTO getJoinMemberByUuid(String uuid) {
+		return mapper.getJoinMemberByUuid(uuid);
+	}
+
+	@Override
+	public boolean changeName(String uuid, String name) {
+		boolean flag = false;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("uuid", uuid);
+		map.put("name", name);
+		
+		int cnt = mapper.changeName(map);
+		if(cnt > 0) {
+			flag = true;
+		}
+		
+		return flag;
+	}
+
 	@Transactional
 	@Override
 	public boolean deleteMember(String uuid) throws Exception {
