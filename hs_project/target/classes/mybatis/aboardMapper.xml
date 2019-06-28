@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="spring.mapper.hs.AboardMapperInter">
 	<select id="notice_list" parameterType="Map" resultType="AboardDTO">
-		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd hh24:mi')regdate, viewcnt, r
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd')regdate, viewcnt, r
 		FROM ( 
 			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
 			  FROM (
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="list" parameterType="Map" resultType="AboardDTO">
-		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd hh24:mi')regdate, viewcnt, r
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd')regdate, viewcnt, r
 		FROM ( 
 			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
 			  FROM (
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT nvl(max(a_num),0)+1
 		FROM a_board	
 		</selectKey>	
-		INSERT INTO a_board(a_num, a_name, uuid, title, content, to_char(regdate,'yy/mm/dd hh24:mi')regdate) 
+		INSERT INTO a_board(a_num, a_name, uuid, title, content, regdate) 
 		VALUES (#{a_num},#{a_name},#{uuid},#{title},#{content},sysdate)	
 	</insert>
 	

@@ -77,7 +77,7 @@
 				<div class="btn-wrap">
 					<button class="btn btn-default" id="list" onclick="location.href='./list'">목록</button>
 					<button class="btn btn-default" id="ok" type="submit">확인</button>
-					<button class="btn btn-default" id="cancle" type="reset">취소</button>
+					<button class="btn btn-default" id="cancle" type="reset" onclick="history.back()">취소</button>
 				</div>
 		
 			</form>

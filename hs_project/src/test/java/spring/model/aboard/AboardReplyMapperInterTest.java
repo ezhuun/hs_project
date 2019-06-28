@@ -1,4 +1,4 @@
-package spring.model.aboardReply;
+package spring.model.aboard;
 
 import static org.junit.Assert.assertTrue;
 
@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import spring.mapper.hs.AboardReplyMapperInter;
+import spring.model.aboard.AboardReplyDTO;
 
 
 

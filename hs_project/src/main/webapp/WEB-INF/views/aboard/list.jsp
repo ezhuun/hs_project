@@ -1,84 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
-
-<style type="text/css">
-	div.notice{
-	    border-top: 2px solid #000 ;
-	    border-bottom: 2px solid #000;
-	    width: 80%;
-	    padding: 10px 10px 10px 10px;
-	    margin : 1% 10%;
-	   
-	}
-	
-	div.notice .title{
-		margin: 20px 0;
-	}
-	.bridge_talk{
-		padding-left: 10%;
-	}
-	ul.talk-list{
-		list-style : none;
-		padding: 0;
-		float : left;
-		width : 40%;
-		margin-right : 30px;
-		
-	}
-	
-	ul.talk-list li a {
-    	color: #464646;
-    	font-size: 13px;
-    	line-height : 1.3;
-    	white-space: nowrap;
-		overflow: hidden;
-			
-	}
-	
-	.reply-num {
-    	font-size: 11px;
-    	padding-left: 6px;
-    	padding-top: 3px;
-    	color: #e9281d;
-    	float:right;
-	}
-
-	
-	ul.talk-list li span.name {
-	    font-size: 11px;
-	    color: #999;
-	    text-align: left;
-	    letter-spacing: -1px;
-	}
-	
-	hr{
-	    width: 80%;
-	    padding: 10px 10px;
-    	margin: 10%;
-    	color:#ccc;
-	}
-	
-	.posting_wrap {
-	    clear: both;
-	    float: left;
-	    width: 80%;
-	    margin-left: 10%;
-	    padding: 0 10px;
-		
-	}
-
-
-	.talk_list th {
-    	padding: 9px 0;
-    	border-bottom: 1px solid #cccccc;
-	}
-	
-	th, td {
-    	border-collapse: collapse;
-	}
-	
-</style>
-
+<link rel="stylesheet" href="${root }/css/aboardList.css" type="text/css"/>
 	<!-- 여기부터 -->
 	<div class="container-inner sideBorder bootstrap">
 		<div id="header" class="notice"><!-- talk -->
@@ -94,11 +16,13 @@
 					<c:otherwise>
 						<c:forEach var = "dto" items="${notice_list }" begin="0" end ="4" step="1">
 							<li>
+								<c:set var="rcount" value="${util:rcount(dto.a_num, arinter)}"/>
 								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
+								<c:if test="${rcount>0 }"><span style="color: #e9281d;">(${rcount })</span></c:if>
 								<span class="name">${dto.a_name}</span>
 								<span class="reply-num">${dto.viewcnt }</span>
 							</li>
-						</c:forEach>
+						</c:forEach> 
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -113,7 +37,9 @@
 					<c:otherwise>
 						<c:forEach var = "dto" items="${notice_list }" begin="5" end="9" step="1">
 							<li>
+								<c:set var="rcount" value="${util:rcount(dto.a_num, arinter)}"/>
 								<a href="javascript:read('${dto.a_num}')">${dto.title}</a>
+								<c:if test="${rcount>0 }"><span style="color: #e9281d;">(${rcount })</span></c:if>
 								<span class="name">${dto.a_name}</span>
 								<span class="reply-num">${dto.viewcnt }</span>
 							</li>
@@ -122,22 +48,40 @@
 				</c:choose>
 			</ul>
 		</div>
-		<br>
+		<br>	
 		<hr>
-		<div class="posting_wrap">
-			<table class="talk_list" summary="톡톡 카테고리 최신글 목록">
+		
+	
+		<div class="posting_wrap" style=" margin-top:60px;" >
+			
+			<div class=" bootstrap" style="min-height: 500px;">
+			<div id="search-input" >			
+			<div class="input-group">
+				<input type="text" class="form-control input-md" name="word" value="${word }">
+				<span class="input-group-btn">
+					<button class="btn btn-default btn-md" type="button">검색</button>
+				</span>			
+				<span class="input-group-btn">
+					<button class="btn btn-default btn-md" type="button" onclick="location.href='./create'">등록</button>
+				</span>	
+			</div>
+			
+			</div>	
+			<br>			
+		
+			<table class="talk_list" >
 				<colgroup>
-					<col width="700">
-					<col width="240">
-					<col width="215">
-					<col width="230">
+					<col width="550px">
+					<col width="150px">
+					<col width="116px">
+					<col width="120px">
 				</colgroup>
 				<thead>
 					<tr>
-						<th>제목</th>
-						<th>글쓴이</th>
-						<th>조회수</th>
-						<th>작성일</th>								
+						<th style="text-align:center; !important;">제목</th>
+						<th style="text-align:center; !important;">글쓴이</th>
+						<th style="text-align:center; !important;">조회수</th>
+						<th style="text-align:center; !important;">작성일</th>								
 					</tr>
 				</thead>
 				<tbody>
@@ -149,42 +93,32 @@
 							<c:forEach var="dto" items="${list }">
 								<tr>
 									<td class="subject">
+										<c:set var="rcount" value="${util:rcount(dto.a_num, arinter)}"/>
 										<strong id="${col}"></strong><a href="javascript:read('${dto.a_num}')">${dto.title}</a>
+										<c:if test="${rcount>0 }"><span style="color: #e9281d;">(${rcount })</span></c:if>
 									</td>
-									<td class="writer">
+									<td class="writer"  style="text-align:center; !important;">
 										<span class="name">${dto.a_name}</span>
 									</td>
-									<td>${dto.viewcnt }</td>
-									<td>${dto.regdate }</td>
-							</c:forEach>
-						
+									<td  style="text-align:center; !important;">${dto.viewcnt }</td>
+									<td  style="text-align:center; !important;">${dto.regdate }</td>
+							</c:forEach>						
 						</c:otherwise>						
 					
 					</c:choose>				
 				</tbody>
 			</table>
+			</div>
 			<div>${paging }</div>						
-		</div>
 		<br>
-		
-		
+		</div>	
+	</div>	
 	
-	</div>
+
 	
 
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
-	<script src="${root}/ckeditor/ckeditor.js"></script>
-	<script>
-	window.onload = function(){
-		CKEDITOR.replace("content");
-	}
-	</script>
-	<script>
-		function test(){
-			console.log('g');
-		}
-		test();
-	</script>
+
 	
 	<script type="text/javascript">
 

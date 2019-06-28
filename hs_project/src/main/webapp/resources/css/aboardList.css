@@ -1,0 +1,109 @@
+/*list------------------------------------------------------------------------*/
+	div.notice{
+	    border-top: 2px solid #000 ;
+	    border-bottom: 2px solid #000;
+	    width: 80%;
+	    padding: 10px 10px 10px 10px;
+	    margin : 1% 10%; 
+	}
+	
+	div.notice .title{
+		margin: 20px 0;
+	}
+	
+	.bridge_talk{
+		padding-left: 10%;
+	}
+	
+	ul.talk-list{
+		list-style : none;
+		padding: 0;
+		float : left;
+		width : 40%;
+		margin-right : 30px;
+	}
+	
+	ul.talk-list li a {
+    	color: #464646;
+    	font-size: 13px;
+    	line-height : 1.3;
+    	white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	.reply-num {
+    	font-size: 13px;
+    	padding-left: 6px;
+    	padding-top: 3px;
+    	color: #e9281d;
+    	float:right;
+	}
+	
+
+	
+	ul.talk-list li span.name {
+	    font-size: 11px;
+	    color: #999;
+	    text-align: left;
+	    letter-spacing: -1px;
+	}
+	
+	hr{
+	    width: 80%;
+	    margin: 10%;
+    	color:#ccc;
+	}
+	
+	.posting_wrap {
+	    clear: both;
+	    float: left;
+	    width: 80%;
+	    margin-left: 10%;		
+	}
+
+
+	.talk_list th {
+    	padding: 9px 0;
+    	border-bottom: 1px solid #cccccc;
+	}
+	
+	th, td {
+    	border-collapse: collapse;
+   	}
+   	
+   	#search-input{
+   		
+   		margin-left:62.5%;
+   		padding:3xp;
+   		border:1px solid #E4E4E4;
+   		background-color: #fff;
+   		width:80%
+   	}
+	
+	
+	#search-input input{
+		display: flex;
+		border:0;
+		box-shadow:none;
+	}
+	
+	#search-input button{
+		display: flex;
+		margin: 3px 0 0 0 ;
+		background: none;
+		box-shadow: none;
+		border:0;
+		color:#666666;
+		padding: 0 8px 0 10px;
+		border-left: 1px solid #ccc;
+		border-radius: 0;
+	}	
+	
+	#search-input button:hover{
+		border: 0;
+		box-shadow: none;
+		border-left: 1px solid #ccc;
+	}
+		
+
+/*---------------------------------------------------------------------------*/

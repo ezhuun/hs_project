@@ -1,0 +1,86 @@
+/*read-----------------------------------------------------------------------*/
+a{
+		cursor:pointer;
+		font-size:12px;	
+	}
+	
+	#topic{
+	    border-top: 2px solid rgba(123, 133, 160, 0.8);
+	    border-bottom: 2px solid rgba(123, 133, 160, 0.8);
+	    width: 100%;
+	    padding: 10px 0px;
+	}
+	
+	.panel{
+		border-style: none;
+		border-top: 2px;
+		height: 80%;
+	}
+	
+	.title{
+		margin: 20px 0;
+	}
+	
+	.reply{
+    	font-size: 11px;
+    	padding-left: 6px;
+    	padding-top: 3px;
+    	color: #999;
+    	float:right;
+	}
+	
+	.name, .date {
+	    font-size: 11px;
+	   	padding-left: 3px;
+    	padding-top: 3px;
+	    color: #999;
+	    text-align: left;
+	    letter-spacing: -1px;
+	}
+	
+	.bootstrap{
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center;
+	    
+	}
+	.area{
+		min-height:400px;
+	}
+
+	
+	#rcontent{
+		max-width:90%;
+		border-radius:unset;		
+	}
+	
+	button{
+		border-radius:unset !important;
+	}
+	
+	.sideBorder-comment{
+		border-top: 3px solid rgba(123, 133, 160, 0.8); 
+		margin-top: 0;
+		background-color:rgba(123, 133, 160, 0.2) ;	
+		padding: 1em;
+	}
+	
+	#commentInBtn{
+		width:70px;
+		height:50px;
+		background-color: #7b85a0; 
+		margin-bottom:1%;
+		color:white; 
+	}
+	
+	#commentUpBtn{
+		width:70px;
+		height:50px;
+		background-color: #7b85a0; 
+		vertical-align: top;
+		color:white; 
+	
+	}
+
+

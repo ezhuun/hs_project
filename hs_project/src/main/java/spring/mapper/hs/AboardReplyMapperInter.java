@@ -3,7 +3,7 @@ package spring.mapper.hs;
 import java.util.List;
 import java.util.Map;
 
-import spring.model.aboardReply.AboardReplyDTO;
+import spring.model.aboard.AboardReplyDTO;
 
 public interface AboardReplyMapperInter {
 	

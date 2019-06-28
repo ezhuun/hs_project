@@ -14,6 +14,8 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import spring.mapper.hs.AboardReplyMapperInter;
+
 public class Utility {
 	
 	public static long validDiffTime(String timestamp) {
@@ -270,6 +272,11 @@ public class Utility {
 
 		return str.toString();
 
+	}
+	
+	public static int rcount(int a_num, AboardReplyMapperInter arinter) {
+		System.out.println("값::::::::::::::::"+a_num);
+		return arinter.rcount(a_num);
 	}
 
 	

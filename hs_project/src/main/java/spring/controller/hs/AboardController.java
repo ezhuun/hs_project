@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import spring.mapper.hs.AboardMapperInter;
+import spring.mapper.hs.AboardReplyMapperInter;
 import spring.model.aboard.AboardDTO;
+import spring.model.aboard.AboardService;
 import spring.utility.hs.Utility;
 
 @Controller
@@ -24,6 +26,11 @@ public class AboardController {
 	
 	@Autowired
 	private AboardMapperInter ainter;
+	
+	@Autowired
+	private AboardService aservice;
+	
+	@Autowired AboardReplyMapperInter arinter;
 	
 	
 	//list
@@ -69,6 +76,7 @@ public class AboardController {
 		request.setAttribute("word", word);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("ainter", ainter);
+		request.setAttribute("arinter", arinter);
 		
 		return "/aboard/list";
 				
@@ -164,16 +172,19 @@ public class AboardController {
 	@PostMapping("/aboard/delete")
 	public String delete(@RequestParam Map<String, String>map, int a_num, Model model, RedirectAttributes redi) {
 		
-		boolean flag = ainter.delete(a_num)>0;
-
-		if(flag==true) {
+		//System.out.println("a_num:"+ a_num);
+		try {
+			aservice.delete(a_num);
 			redi.addFlashAttribute("msg", "게시글이 삭제되었습니다");
 			return "redirect:/aboard/list";
-		} else {
-				model.addAttribute("flag", flag);
-				return "error/error";
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error/error";
 		}
-
+	
+	
 	}
 		
 

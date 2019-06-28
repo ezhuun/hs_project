@@ -1,4 +1,4 @@
-package spring.model.aboardReply;
+package spring.model.aboard;
 
 public class AboardReplyDTO {
 

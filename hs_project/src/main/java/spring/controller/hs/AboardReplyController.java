@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import spring.mapper.hs.AboardReplyMapperInter;
-import spring.model.aboardReply.AboardReplyDTO;
+import spring.model.aboard.AboardReplyDTO;
 import spring.model.member.MemberDTO;
 import spring.utility.hs.Utility;
 
@@ -44,9 +44,9 @@ public class AboardReplyController {
 	}
 	
 	 
-	@DeleteMapping("/aboard/aboardreply/{r_num}") 
+	@DeleteMapping("/aboard/aboardreply/delete/{r_num}") 
 	public ResponseEntity<String> remove(@PathVariable("r_num") int r_num) {
-	 
+		System.out.println(r_num);
 		log.info("remove: " + r_num);
 	 
 		return arinter.delete(r_num) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
@@ -99,8 +99,7 @@ public class AboardReplyController {
 	@PostMapping("/aboard/aboardreply/create")
 	public ResponseEntity<String> create(AboardReplyDTO vo, HttpSession session){
 		MemberDTO dto = (MemberDTO)session.getAttribute("member");
-		vo.setUuid(dto.getUuid());
-		
+		vo.setUuid(dto.getUuid());		
 		//타입이 변경된 데이터가 제대로 들어왔는지 확인
 		log.info("AboardReplyDTO1: " + vo.getContent());
 		log.info("AboardReplyDTO1: " + vo.getUuid());

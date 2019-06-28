@@ -61,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM a_board_reply
 		WHERE a_num = #{a_num}	
 	</select>
+	
 	<!-- reply이 달린  -->
 	<delete id="adelete" parameterType="int">
 		DELETE
