@@ -25,5 +25,7 @@ public interface MemberService {
 	boolean createMember(Map<String, String> map) throws Exception;
 	Map<String, String> registerMember(String email, String passwd);
 	boolean duplicateEmail(String email);
-	
+	boolean changeName(String uuid, String name);
+	MemberDTO getJoinMemberByUuid(String uuid);
+	void changeMemberDate(MemberDTO dto);
 }

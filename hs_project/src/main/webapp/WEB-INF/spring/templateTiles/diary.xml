@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+	<!--  <definition name="main" template="/WEB-INF/views/_template/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/template/top.jsp" /> 
+        <put-attribute name="bottom" value="/WEB-INF/views/_template/bottom.jsp" />
+    </definition> -->
+    
+    <definition name="/diary/create" extends="index"> 
+        <put-attribute name="title" value="diary생성" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/diary/create.jsp" /> 
+    </definition> 
+    
+  	<definition name="/diary/read" extends="index"> 
+        <put-attribute name="title" value="diary조회" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/diary/read.jsp" /> 
+    </definition> 
+    
+    <definition name="/diary/update" extends="index"> 
+        <put-attribute name="title" value="diary수정" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/diary/update.jsp" /> 
+    </definition> 
+    
+    <definition name="/diary/delete" extends="index"> 
+        <put-attribute name="title" value="diary삭제" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/diary/delete.jsp" /> 
+    </definition> 
+    
+    <definition name="/diary/list" extends="index"> 
+        <put-attribute name="title" value="diary목록" ></put-attribute> 
+        <put-attribute name="body" value="/WEB-INF/views/diary/list.jsp" /> 
+    </definition> 
+</tiles-definitions>

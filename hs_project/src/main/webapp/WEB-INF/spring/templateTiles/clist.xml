@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="index" template="/WEB-INF/views/_template/template.jsp">
+ 		<put-attribute name="top" value="/WEB-INF/views/_template/top.jsp" />
+ 		<put-attribute name="bottom" value="/WEB-INF/views/_template/bottom.jsp" />
+	</definition>
+	
+	<definition name="/c_list/create" extends="index">
+		<put-attribute name="title" value="체크리스트 작성"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/clist/create.jsp" />
+	</definition>
+	
+	<definition name="/c_list/list" extends="index">
+		<put-attribute name="title" value="체크리스트  목록"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/clist/list.jsp" />
+	</definition>
+
+
+</tiles-definitions>
