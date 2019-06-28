@@ -16,24 +16,24 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<!-- oracle -->
+	<bean id="dataSourceSpied"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@172.16.81.104:1521:XE" />
+		<property name="username" value="heart" />
+		<property name="password" value="s1234" />
+	</bean>
 <!-- 	<bean id="dataSourceSpied" -->
 <!-- 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> -->
 <!-- 		<property name="driverClassName" -->
 <!-- 			value="oracle.jdbc.driver.OracleDriver" /> -->
 <!-- 		<property name="url" -->
 <!-- 			value="jdbc:oracle:thin:@localhost:1521:XE" /> -->
-<!-- 		<property name="username" value="heart" /> -->
-<!-- 		<property name="password" value="s1234" /> -->
+<!-- 		<property name="username" value="signal" /> -->
+<!-- 		<property name="password" value="1234" /> -->
 <!-- 	</bean> -->
-	<bean id="dataSourceSpied"
-		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName"
-			value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:XE" />
-		<property name="username" value="hyeri" />
-		<property name="password" value="1234" />
-	</bean>
 	<bean id="dataSource"
 		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />

@@ -10,19 +10,15 @@
 <!-- 여기부터 -->
 <div class="container-inner sideBorder boxsing">
 <div class="bootstrap" style="width: 100%">
-	<%-- <b># 파일 다운로드 방법</b><br>
-		경로설정 = ${root}/download?dir=/resources/upload/profile&filename=test.jpg<br>
-		<a href="${root}/downloadr?dir=/resources/upload/profile&filename=test.jpg">다운로드</a>
-		<br><br> --%>
-	
+
 		<form class="form-horizontal" name="frm" method="post" >
 			<input type="hidden" name="diary_num" id="diary_num" value="${diarydto.diary_num }">
 			<input type="hidden" name="uuid" id="uuid" value="${memebr.name }">
 			<input type="hidden" id="filename" name="filename" value="${diarydto.filename }">
-			${diarydto.profile }
+			
 			<div class="panel" id="topic">
 				<h2 class="title" style="margin-top: 10px; margin-bottom: 30px; ">${diarydto.title }</h2>
-					<span class="profile"> <img src="${diarydto.profile }"  width='30' height='30' onerror="this.src='${root}/upload/profile/default.png'" style="border-radius: 100%"></span> 
+					<span class="profile"> <img src="${root}/upload/profile/${diarydto.profile }"  width='30' height='30' onerror="this.src='${root}/upload/profile/default.png'" style="border-radius: 100%"></span> 
 					<span class="uuid">${diarydto.uuid }</span> 
 					<span class="date">${diarydto.regdate }</span>
 			</div>
@@ -172,7 +168,7 @@ var click = 0;//입력한 댓글의 수정을 누를때마다 수정창이 열�
 						//1행1열이미지추가
 						str += "<li class='list-group-item' id='"+list[i].r_num+"'  data-r_num='"+list[i].r_num+"'>"
 							+ "<div class='divList' id='"+list[i].r_num+"'><table id='tableList'><tr><td rowspan='2' class='imgtd' style='padding: 5px'>"
-							+ "<div><img class='img-rounded'  src='${list.profile}' onerror=\"this.src='${root}/upload/profile/default.png'\"  width='50' height='50'>"
+							+ "<div><img class='img-rounded'  src='${root}/upload/profile/"+list[i].profile+"' onerror=\"this.src='${root}/upload/profile/default.png'\"  width='50' height='50'>"
 							+ "</div></td>";
 						//1행2열 이름,날짜,수정삭제 추가
 						str += "<td style='text-align: left'>"
