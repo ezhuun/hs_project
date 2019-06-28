@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 
-<style type="text/css">
-#red {
-	color: red;
-}
-</style>
-
+	<link rel='stylesheet' href='${root }/css/d_day_css/style.css'  type='text/css'>
+	
 	<div class="container-inner sideBorder boxsing">
 	<div class="bootstrap">
 		<h1 class="col-sm-offset-2 col-sm-10">D-day 삭제</h1>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 
+	<script type="text/javascript" src="${root }/css/d_day_css/script.js"></script>
+	
 	<div class="container-inner sideBorder boxsing">
 	<h1 class="col-sm-offset-2 col-sm-10">D-day</h1>
 	<div class="bootstrap">
@@ -28,24 +30,24 @@
 	</div>
 </div>
 
-<script type="text/javascript">
+<script>
 function updateM(){
-  var url = "./update";
-  url = url + "?d_num=${dto.d_num}";
-  url = url + "&col=${param.col}";
-  url = url + "&word=${param.word}";
-  url = url + "&nowPage=${param.nowPage}";
-  
-  location.href = url;
+	  var url = "./update";
+	  url = url + "?d_num=${dto.d_num}";
+	  url = url + "&col=${param.col}";
+	  url = url + "&word=${param.word}";
+	  url = url + "&nowPage=${param.nowPage}";
+	  
+	  location.href = url;
 }
 
 function deleteM(){
-  var url = "./delete";
-  url = url + "?d_num=${dto.d_num}";
-  url = url + "&col=${param.col}";
-  url = url + "&word=${param.word}";
-  url = url + "&nowPage=${param.nowPage}";
-  
-  location.href = url;
+var url = "./delete";
+url = url + "?d_num=${dto.d_num}";
+url = url + "&col=${param.col}";
+url = url + "&word=${param.word}";
+url = url + "&nowPage=${param.nowPage}";
+
+location.href = url;
 }
 </script>

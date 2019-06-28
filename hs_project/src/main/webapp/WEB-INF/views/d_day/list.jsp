@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp"%>
 
+<link href="${root }/css/d_day_css/style.css" rel="stylesheet" type="text/css">
+
 <div class="container-inner sideBorder boxsing">
 <div class="bootstrap">
 	<h2>D-day 목록</h2>
@@ -124,26 +126,6 @@
 	</form>
 </div>
 </div>
-<style>
-#ld {
-background:#ff9999;
-}
-#loveday {
-background:#ffe5e5;
-}
-#bd {
-background:#3399ff;
-}
-#birthday {
-background:#cce5ff;
-}
-#lbd {
-background:#3399ff;
-}
-#lovebirthday {
-background:#cce5ff;
-}
-</style>
 
 <script>
 function read(d_num) {
@@ -152,9 +134,10 @@ function read(d_num) {
 	url += "&col=${col}";
 	url += "&word=${word}";
 	url += "&nowPage=${nowPage}";
-
+	
 	location.href = url;
 }
+
 function update(d_num) {
 	var url = "update";
 	url = url + "?d_num=" + d_num;

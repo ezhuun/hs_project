@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
 
-	<!-- 여기부터 -->
+	<script type="text/javascript" src="${root }/css/d_day_css/script.js"></script>
 	
 	<div class="container-inner sideBorder boxsing">
 	<div class="bootstrap">
@@ -34,19 +34,3 @@
 		</form>
 	</div>
 	</div>
-	
-	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
-	<script>
-	document.addEventListener("DOMContentLoaded", function(){
-		const d_date = document.querySelector("#d_date");
-		d_date.addEventListener('click', function() {
-		  picker.open();
-		}, false);
-
-		const picker= new MaterialDatetimePicker({
-			el: d_date,
-			format: 'YYYY-MM-DD',
-			openedBy: 'focus'
-		});
-	});
-	</script>
