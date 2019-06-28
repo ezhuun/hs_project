@@ -12,7 +12,7 @@
 						<li><a href="${pageContext.request.contextPath}/d_day/list">D-day</a></li>
 						<li><a href="${pageContext.request.contextPath}/c_list/list">체크리스트</a></li>
 						<li><a href="${pageContext.request.contextPath}/diary/list">다이어리</a></li>
-						<li><a href="#">익명게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/aboard/list">익명게시판</a></li>
 					</ul>
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 								<li><a href="${pageContext.request.contextPath}/d_day/list">D-day</a></li>
 								<li><a href="${pageContext.request.contextPath}/c_list/list">체크리스트</a></li>
 								<li><a href="${pageContext.request.contextPath}/diary/list">다이어리</a></li>
-								<li><a href="#">익명게시판</a></li>
+								<li><a href="${pageContext.request.contextPath}/aboard/list">익명게시판</a></li>
 							</ul>
 						</div>
 					</div>

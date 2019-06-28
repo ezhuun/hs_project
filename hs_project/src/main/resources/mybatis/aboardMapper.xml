@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.AboardMapperInter">
+	<select id="notice_list" parameterType="Map" resultType="AboardDTO">
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd')regdate, viewcnt, r
+		FROM ( 
+			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
+			  FROM (
+			  		SELECT a_num, a_name, title, regdate, viewcnt
+			  		FROM a_board
+                  	order by viewcnt desc
+                  	
+        	  )
+		)
+		<![CDATA[WHERE r>=1 and r<=10]]>    
+		
+	</select>
+
+	<select id="list" parameterType="Map" resultType="AboardDTO">
+		SELECT a_num, a_name, title, to_char(regdate,'yy/mm/dd')regdate, viewcnt, r
+		FROM ( 
+			  SELECT a_num, a_name, title, regdate, viewcnt, rownum r
+			  FROM (
+			  		SELECT a_num, a_name, title, regdate, viewcnt
+			  		FROM a_board
+			  		WHERE title like '%'||#{word}||'%' or content like '%'||#{word}||'%'
+                  	order by a_num desc
+        	  )
+		)
+		<![CDATA[WHERE r>=#{sno} and r<=#{eno}]]>    
+		
+	</select>
+	
+	<insert id="create" parameterType="AboardDTO">
+		<selectKey keyProperty="a_num" resultType="int" order="BEFORE">
+		SELECT nvl(max(a_num),0)+1
+		FROM a_board	
+		</selectKey>	
+		INSERT INTO a_board(a_num, a_name, uuid, title, content, regdate) 
+		VALUES (#{a_num},#{a_name},#{uuid},#{title},#{content},sysdate)	
+	</insert>
+	
+	<select id="read" parameterType="int" resultType="AboardDTO">
+		SELECT *
+		FROM a_board
+		WHERE a_num = #{a_num}
+	</select>
+	
+
+	<update id="update" parameterType="AboardDTO">
+		UPDATE a_board
+		SET	title = #{title},
+			content = #{content}
+		WHERE a_num = #{a_num}	
+	</update>	
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM a_board
+		WHERE a_num = #{a_num}	
+	</delete>
+	
+	<select id="total" parameterType="Map" resultType="int">
+		SELECT count(*)
+		FROM a_board
+		WHERE title like '%'||#{word}||'%' or content like '%'||#{word}||'%'                     	
+	</select>
+	
+		
+	<update id="upViewcnt" parameterType="int">
+	<!-- 조회수 증가. read와 연관 -->
+		UPDATE a_board
+		SET viewcnt = viewcnt+1
+		WHERE a_num = #{a_num}	
+	</update>	
+</mapper>
+	

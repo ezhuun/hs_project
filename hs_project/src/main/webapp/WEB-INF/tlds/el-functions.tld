@@ -19,16 +19,19 @@
 		<function-signature>boolean compareDay(java.lang.String)</function-signature>
 	</function>
 
+
 	<function>
-        <description>댓글수 보여주기</description>
-        <name>rcount</name>
-        <function-class>
-            spring.utility.hs.Utility
-        </function-class>
-        <function-signature>
-            int rcount(int, spring.mapper.hs.DiaryReplyMapperInter )
-        </function-signature>
-    </function>
+		<description>댓글수 보여주기</description>
+		<name>rcount</name>
+		<function-class>
+			spring.utility.hs.Utility
+		</function-class>
+		<function-signature>
+			int rcount(int,spring.mapper.hs.AboardReplyMapperInter)
+		</function-signature>
+	</function>
+
+
 
 	<function>
 		<description>d-day 구하기</description>
