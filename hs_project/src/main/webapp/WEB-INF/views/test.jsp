@@ -20,7 +20,7 @@
 		<script src="${root}/ckeditor/ckeditor.js"></script>
 		<script>
 		window.onload = function(){
-			CKEDITOR.replace("content");
+			CKEDITOR.replace("content",{tabSpaces:4});
 		}
 		</script>
 		<textarea name="content"></textarea>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
+import spring.mapper.hs.MemberMapperInter;
 import spring.model.member.MemberConnectDTO;
 import spring.model.member.MemberDTO;
 import spring.model.member.MemberService;
@@ -38,6 +39,48 @@ public class MemberContoller {
 	private int amount = (60 * 60 * 24) * 3;
 	//private int amount = 10;
 
+	@ResponseBody
+	@PostMapping(value="/changeMemberDate")
+	public void changeBirth(MemberDTO dto){
+		MemberDTO _dto = service.getMemberByUuid(dto.getUuid());
+		if(dto.getBirth() != null) {
+			dto.setBegin_date(_dto.getBegin_date());
+		}else if(dto.getBegin_date() != null) {
+			dto.setBirth(_dto.getBirth());
+		}
+		service.changeMemberDate(dto);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/changeName", produces="application/text; charset=utf8")
+	public String changeName(MemberDTO dto){
+		String result = "0";
+		
+		boolean flag = service.changeName(dto.getUuid(), dto.getName());
+		if(flag == true) {
+			result = dto.getName();
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deletePhoto")
+	public String deletePhoto(HttpServletRequest request, String uuid){
+		String result = "0";
+		String basePath = request.getRealPath("/resources/upload/profile");
+		
+		MemberDTO dto = service.getMemberByUuid(uuid);
+		if(service.updatePhoto(uuid, "")) {
+			if(dto.getProfile() != null) {
+				Utility.deleteFile(basePath, dto.getProfile());
+			}
+			result = "1";
+		}
+		
+		return result;
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/deleteMember")
@@ -85,6 +128,30 @@ public class MemberContoller {
 			service.updateDisconnectStatus(uuid, limit);
 		} catch (Exception e) {}
 		return "redirect:/logout";
+	}
+	
+	@ResponseBody
+	@PostMapping("/changePasswd")
+	public String changePasswd(String uuid, String currentPasswd, String newPasswd) {
+		String result = "0";
+		MemberDTO dto = service.getMemberByUuid(uuid);
+		
+		boolean flag = false;
+		boolean pflag = service.passwdCheck(currentPasswd, dto.getPasswd());
+		if(pflag == true) {
+			flag = service.changePasswd(uuid, newPasswd);
+			if(flag) {
+				result = "1";
+			}else {
+				result = "2";
+			}
+		}
+		
+		//result 
+		//0 => 비밀번호 불일치
+		//1 => 비밀번호 변경성공
+		//2 => 비밀번호 변경실패
+		return result;
 	}
 	
 	@ResponseBody
@@ -241,8 +308,9 @@ public class MemberContoller {
 						service.lastLoginUpdate(dto.getUuid());
 						
 						//연결된 계정정보를 가져온다..
-						dto.setLover(service.getConnectedAccount(dto.getUuid()));
-						dto.setConnect(service.getCode(dto.getC_code()));
+						//dto.setLover(service.getConnectedAccount(dto.getUuid()));
+						//dto.setConnect(service.getCode(dto.getC_code()));
+						dto = service.getJoinMemberByUuid(dto.getUuid());
 						
 
 						//유저 uuid 세션 기록
@@ -300,11 +368,12 @@ public class MemberContoller {
 			}
 			
 			//dto의 getuuid로 dto를 다시 가져온다
-			dto = service.getMemberByUuid(dto.getUuid());
-			dto.setPasswd(null);
+//			dto = service.getMemberByUuid(dto.getUuid());
+//			dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//			dto.setConnect(service.getCode(dto.getC_code()));
+			dto = service.getJoinMemberByUuid(dto.getUuid());
 			service.lastLoginUpdate(dto.getUuid());
-			dto.setLover(service.getConnectedAccount(dto.getUuid()));
-			dto.setConnect(service.getCode(dto.getC_code()));
+			dto.setPasswd(null);
 
 			session.setMaxInactiveInterval(amount);
 			session.setAttribute("member", dto);

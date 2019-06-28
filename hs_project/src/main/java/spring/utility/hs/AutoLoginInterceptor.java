@@ -26,8 +26,9 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		if(obj != null) {
 			MemberDTO dto = (MemberDTO)obj;
-			dto.setLover(service.getConnectedAccount(dto.getUuid()));
-			dto.setConnect(service.getCode(dto.getC_code()));
+			dto = service.getJoinMemberByUuid(dto.getUuid());
+//			dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//			dto.setConnect(service.getCode(dto.getC_code()));
 			session.setAttribute("member", dto);
 			
 			response.sendRedirect(request.getContextPath()+"/main");
@@ -39,8 +40,9 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 				MemberDTO dto = service.checkMemberWithSessionKey(session_key);
 
 				if(dto != null) {
-					dto.setLover(service.getConnectedAccount(dto.getUuid()));
-					dto.setConnect(service.getCode(dto.getC_code()));
+					dto = service.getJoinMemberByUuid(dto.getUuid());
+//					dto.setLover(service.getConnectedAccount(dto.getUuid()));
+//					dto.setConnect(service.getCode(dto.getC_code()));
 					session.setAttribute("member", dto);
 					
 					response.sendRedirect(request.getContextPath()+"/main");

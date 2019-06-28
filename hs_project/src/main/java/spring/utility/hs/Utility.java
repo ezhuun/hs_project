@@ -123,7 +123,7 @@ public class Utility {
 
 	/**
 	 * �삤�뒛,�뼱�젣,洹몄젣 �궇吏� 媛��졇�삤湲�
-	 * 
+	 *
 	 * @return List- �궇吏쒕뱾 ���옣
 	 */
 	public static List<String> getDay() {
@@ -141,7 +141,7 @@ public class Utility {
 
 	/**
 	 * �벑濡앸궇吏쒖� �삤�뒛,�뼱�젣,洹몄젣�궇吏쒖� 鍮꾧탳
-	 * 
+	 *
 	 * @param wdate - �벑濡앸궇吏�
 	 * @return - true:�삤�뒛,�뼱�젣,洹몄젣以� �벑濡앸궇吏쒖� 媛숈쓬 false:�삤�뒛,�뼱�젣,洹몄젣 �궇吏쒓�
 	 *         �벑濡앸궇吏쒖� �떎 �떎由�
@@ -184,7 +184,7 @@ public class Utility {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param totalRecord   �쟾泥� �젅肄붾뱶�닔
 	 * @param nowPage       �쁽�옱 �럹�씠吏�
 	 * @param recordPerPage �럹�씠吏��떦 �젅肄붾뱶 �닔
@@ -243,7 +243,7 @@ public class Utility {
 		str.append("</div>");
 		return str.toString();
 	}
-	
+
 	//댓글 페이징
 	public static String drpaging(int total, int nowPage, int recordPerPage,  String url,int nPage, int diary_num) {
 
@@ -288,7 +288,7 @@ public class Utility {
 		str.append("</div>");
 		return str.toString();
 	}
-	
+
 	//댓글갯수
 	public static int rcount(int diary_num, DiaryReplyMapperInter drinter) {
 		System.out.println(diary_num+"442525827971893672");
