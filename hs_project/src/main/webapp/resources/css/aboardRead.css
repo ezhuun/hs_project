@@ -1,5 +1,5 @@
 /*read-----------------------------------------------------------------------*/
-a{
+	a{
 		cursor:pointer;
 		font-size:12px;	
 	}
@@ -42,9 +42,15 @@ a{
 	    display: flex;
 	    flex-direction: column;
 	    justify-content: center;
-	    align-items: center;
-	    
+	    align-items: center;    
 	}
+	
+	
+	.btn-group{
+		padding:0;
+		float:right;	
+	}
+	
 	.area{
 		min-height:400px;
 	}

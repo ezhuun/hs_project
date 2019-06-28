@@ -17,17 +17,14 @@
 			<div class="panel area">
 				${dto.content}
 			</div>
-			<div class="btn-group btn-xs" style="float:right" > 
-				<button type="button" class="btn btn-default btn-xs" onclick="location.href='./create'">등록</button>
+			<div class="btn-group btn-xs">
 				<button type="button" class="btn btn-default btn-xs" onclick="updateM();">수정</button>
 				<button type="button" class="btn btn-default btn-xs" id="btndelete">삭제</button>
 				<button type="button" class="btn btn-default btn-xs" onclick="listM();" id="showlist">목록</button>
 			</div>
 		</form>	
 		<!-- 댓글시작 -->
-	
-		    
-		  
+			  
 			<div style="width:80%;">
         		<form id="commentForm" name="commentForm" >
         		<label for="comment"  style="margin-bottom:0" >comment</label>

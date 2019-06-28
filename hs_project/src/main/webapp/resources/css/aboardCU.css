@@ -1,0 +1,45 @@
+/*create,update------------------------------------------------------*/
+	h3{
+		width:25%;
+		margin-bottom: 14px;
+		padding-bottom: 10px;
+		border-bottom: 2px solid rgba(123, 133, 160, 0.8);
+		font-size: 25px; 
+	}
+	
+	
+	.span{
+		font-size:25px;
+	
+	}
+	
+	.bootstrap{
+		width:80%;
+		margin: 1% 10%;	
+	}
+
+	.btn-group{
+		padding:0;
+		float:right;	
+	}
+	
+	button {
+    	border-radius: unset !important;
+	}
+
+	
+	#a_name{
+		border-radius: unset !important;
+		width:25%
+	}
+	
+	#title{
+		border-radius: unset !important;
+	}
+	
+	.write{
+		margin-top:15px;
+	}
+
+
+/*-------------------------------------------------------------------*/

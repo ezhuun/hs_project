@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  		SELECT a_num, a_name, title, regdate, viewcnt
 			  		FROM a_board
                   	order by viewcnt desc
+                  	
         	  )
 		)
 		<![CDATA[WHERE r>=1 and r<=10]]>    
@@ -25,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  FROM (
 			  		SELECT a_num, a_name, title, regdate, viewcnt
 			  		FROM a_board
+			  		WHERE title like '%'||#{word}||'%' or content like '%'||#{word}||'%'
                   	order by a_num desc
         	  )
 		)
@@ -64,42 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="total" parameterType="Map" resultType="int">
 		SELECT count(*)
 		FROM a_board
-		<where>
-		<choose>
-			<when test="col=='col1'">
-				col1 like '%'||#{word}||'%'
-			</when>	
- 			<when test="col=='col2'">
- 				col2 like '%'||#{word}||'%'
- 			</when>
- 			<when test="col=='col3'">
- 				col3 like '%'||#{word}||'%'
- 			</when>
- 			<when test="col=='col4'">
-				col4 like '%'||#{word}||'%'
-			</when>	
- 			<when test="col=='col5'">
-				col5 like '%'||#{word}||'%'
-			</when>	
- 			<when test="col=='col6'">
-				col6 like '%'||#{word}||'%'
-			</when>				
- 			
- 			<when test="col=='colA'">
- 				col1 like '%'||#{word}||'%'
- 				or
- 				col2 like '%'||#{word}||'%'
- 				or
- 				col3 like '%'||#{word}||'%'
- 				or
- 				col4 like '%'||#{word}||'%'
- 				or
- 				col5 like '%'||#{word}||'%'
- 				or
- 				col6 like '%'||#{word}||'%'
- 			</when>
- 		</choose>
- 		</where>                          	
+		WHERE title like '%'||#{word}||'%' or content like '%'||#{word}||'%'                     	
 	</select>
 	
 		

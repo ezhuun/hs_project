@@ -275,7 +275,6 @@ public class Utility {
 	}
 	
 	public static int rcount(int a_num, AboardReplyMapperInter arinter) {
-		System.out.println("값::::::::::::::::"+a_num);
 		return arinter.rcount(a_num);
 	}
 

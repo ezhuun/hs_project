@@ -23,14 +23,12 @@ import spring.utility.hs.Utility;
 
 @Controller
 public class AboardController {
-	
-	@Autowired
-	private AboardMapperInter ainter;
-	
+		
 	@Autowired
 	private AboardService aservice;
 	
-	@Autowired AboardReplyMapperInter arinter;
+	@Autowired 
+	AboardReplyMapperInter arinter;
 	
 	
 	//list
@@ -40,8 +38,7 @@ public class AboardController {
 		//검색
 		String col = Utility.checkNull(request.getParameter("col"));
 		String word = Utility.checkNull(request.getParameter("word"));
-		
-		if(col.equals("total")) {word = "";}
+
 		
 		//페이지
 		int nowPage = 1;
@@ -61,13 +58,29 @@ public class AboardController {
 		map.put("sno", sno);
 		map.put("eno",eno);
 		
-		int total = ainter.total(map);
+		int total = 0;
+		try {
+			total = aservice.total(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		String url = "list";
 		String paging = Utility.paging(total, nowPage, recordPerPage, col, word, url);
 		
-		List<AboardDTO> list = ainter.list(map);
-		List<AboardDTO> notice_list = ainter.notice_list(map);
+		List<AboardDTO> list =null;
+		try {
+			list = aservice.list(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		List<AboardDTO> notice_list = null;
+		try {
+			notice_list = aservice.notice_list(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		request.setAttribute("notice_list", notice_list);
 		request.setAttribute("list", list);
@@ -75,7 +88,6 @@ public class AboardController {
 		request.setAttribute("col", col);
 		request.setAttribute("word", word);
 		request.setAttribute("nowPage", nowPage);
-		request.setAttribute("ainter", ainter);
 		request.setAttribute("arinter", arinter);
 		
 		return "/aboard/list";
@@ -92,17 +104,16 @@ public class AboardController {
 	}
 		
 	@PostMapping("/aboard/create")
-	public String create(AboardDTO dto, Model model, RedirectAttributes redi) {
-		
-			boolean flag = ainter.create(dto)>0;
-			
-			if(flag) {
-				redi.addFlashAttribute("msg","게시글이 등록되었습니다.");
-				return "redirect:/aboard/list";				
-			}else {
-				model.addAttribute("flag",flag);
-				return "error/error";
-			}		
+	public String create(AboardDTO dto, Model model) {
+	
+		try {
+			aservice.create(dto);
+			return "redirect:/aboard/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}				
+				
 	}
 		
 	
@@ -110,9 +121,18 @@ public class AboardController {
 	@GetMapping("/aboard/read")	
 	public String read(int a_num, Model model, int nowPage, String col, String word,HttpServletRequest request) {
 		
-		ainter.upViewcnt(a_num);
+		try {
+			aservice.upViewcnt(a_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		AboardDTO dto = ainter.read(a_num);
+		AboardDTO dto = null;
+		try {
+			dto = aservice.read(a_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		model.addAttribute("dto",dto);
 		
@@ -145,7 +165,14 @@ public class AboardController {
 	@GetMapping("/aboard/update")
 	public String update(int a_num, Model model) {
 		
-		AboardDTO dto = ainter.read(a_num);
+		AboardDTO dto = null ;
+		try {
+			dto = aservice.read(a_num);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		model.addAttribute("dto", dto);
 		
 		return "/aboard/update";		
@@ -153,33 +180,31 @@ public class AboardController {
 	}
 	
 	@PostMapping("/aboard/update")
-	public String update(AboardDTO dto, Model model, RedirectAttributes redi) {
-		
-		boolean flag= ainter.update(dto)>0;
-		
-		if(flag==true) {
-			redi.addFlashAttribute("msg", "게시글을 수정했습니다");
+	public String update(AboardDTO dto, Model model) {
+
+		try {
+			aservice.update(dto);
 			return "redirect:/aboard/list";
-		}else {
-			model.addAttribute("flag", flag);
+						
+		} catch (Exception e) {
+			e.printStackTrace();
 			return "error/error";
 		}
-				
+		
+		
+
 	}
 	
 	
 	//delete		
 	@PostMapping("/aboard/delete")
-	public String delete(@RequestParam Map<String, String>map, int a_num, Model model, RedirectAttributes redi) {
+	public String delete(@RequestParam Map<String, String>map, int a_num, Model model) {
 		
-		//System.out.println("a_num:"+ a_num);
 		try {
 			aservice.delete(a_num);
-			redi.addFlashAttribute("msg", "게시글이 삭제되었습니다");
 			return "redirect:/aboard/list";
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "error/error";
 		}
