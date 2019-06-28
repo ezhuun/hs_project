@@ -36,11 +36,6 @@
 
 
 	<!-- 자신의 js는 아래 script태그를 만들어서 사용 -->
-	<script>
-		function test(){
-			console.log('g');
-		}
-		test();
-	</script>
+
 
 	<!-- 여기까지 -->

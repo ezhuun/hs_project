@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.ClistMapperInter">
+
+	<insert id="create" parameterType="ClistDTO">
+		<selectKey resultType="integer" keyProperty="c_num" order="BEFORE">
+			select nvl(max(c_num+1), 0) as c_num from c_list
+		</selectKey>
+	
+	
+		insert into c_list(c_num, uuid, title, regdate, c_code)
+		values(
+		(select nvl(max(c_num+1),0) from c_list)
+		, #{uuid}
+		, #{title}
+		, sysdate
+		, #{c_code}
+		)
+	</insert>
+
+	<select id="read" parameterType="int" resultType="ClistDTO">
+		select * from
+		c_list
+		where c_num=#{c_num}
+	</select>
+
+
+	<update id="update" parameterType="Map">
+		update c_list
+		set
+		checked=#{checked}
+		where c_num=#{c_num}
+
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete c_list
+		where
+		c_num=#{c_num}
+
+	</delete>
+
+
+	<select id="list" parameterType="Map" resultType="ClistDTO">
+
+		select c_num, uuid, title,  regdate, c_code, checked, r
+			from(
+				select c_num, uuid, title,  regdate, c_code, checked, rownum r
+				from(
+					select c_num, uuid, title, to_char(regdate, 'YYYY-MM-DD') regdate, c_code, checked
+					from c_list
+					where c_code=#{c_code}
+					order by c_num
+				)
+			)
+		
+	</select>
+
+	<select id="total" parameterType="Map" resultType="int">
+
+		select count(*) from c_list
+		 where c_code=#{c_code} 
+		 where title=#{title} 
+		<where>
+			<choose>
+				<when test="col=='title'">
+					title like '%'||#{word}||'%'
+				</when>
+			</choose>
+		</where>
+
+	</select> 
+
+
+</mapper>
+
