@@ -231,7 +231,7 @@ public class Utility {
 		return key;
 	}
 
-<<<<<<< HEAD
+
 
 	public static String rpaging(int total, int nowPage, int recordPerPage, String col, String word, String url,
 			int nPage, String fk, int fno) {
@@ -284,7 +284,7 @@ public class Utility {
 
 
 
-=======
+
 
 	/**
 	 *
@@ -295,7 +295,7 @@ public class Utility {
 	 * @param word          寃��깋�뼱
 	 * @return �럹�씠吏� �깮�꽦 臾몄옄�뿴
 	 */
->>>>>>> master
+
 
 	public static String diarypaging(int totalRecord, int nowPage, int recordPerPage, String url) {
 
