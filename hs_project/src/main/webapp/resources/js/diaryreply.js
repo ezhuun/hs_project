@@ -13,7 +13,7 @@ var replyService = (function() {
 			data : JSON.stringify(reply), //reply는 json객체로 json형식으로 된것을 문자열로 형식으로 변경하고
 			contentType : "application/json; charset=utf-8",// 그 문자열은 json임을 알려줌
 			success : function(result, status, xhr) {//result는 컨트롤러에서 return값이 들어옴
-				alert(result);
+			
 				if (callback) {
 					callback(result);
 				}
@@ -28,31 +28,28 @@ var replyService = (function() {
 	}
 
 	function getList(param, callback, error) {
-
+		
 		var diary_num = param.diary_num;
 		var sno = param.sno;
 		var eno = param.eno;
 		
+		
+		
 		//, 비동기 통신, path variable
-		$.getJSON("./reply/list/" + diary_num + "/" + sno + "/" + eno + ".json", //요청 url, .json = >json형식으로 데이터를 보내겠다
+		$.getJSON("./reply/list/" +diary_num+ "/" +sno +"/" +eno+ ".json", //요청 url, .json = >json형식으로 데이터를 보내겠다
 																			 //replycontroller에서 해당 url과 동일한 곳으로 매핑이 되서 이동
 																			//.json을 지우면 요청의 응답값은 xml로 이동됨
 		//data에는 컨트롤러에서 댓글의 목록이 들어있는 변수 list에 대한 정보가 들어가 있음
 		function(data) {//data는 replycontroller의 url로 매핑된 곳의 결과가 data로 들어옴, 요청했을때 처리한 결과를 .json형식으로 받아서 data로 들어감
-			// alert(data);
 			if (callback) {//callback은 read.jsp에 있는 두번째 인자를 의미
 				callback(data); // 댓글 목록만 가져오는 경우, getList안에 두번째 파라메터(function(list))에 list안으로 data가 들어감
-				// callback(data.replyCnt, data.list); //댓글 숫자와 목록을 가져오는 경우
+				
 			}
 		});
 	}
 
 	function getPage(param, callback, error) {
-		/*var nPage = param.nPage;
-		var nowPage = param.nowPage;
-		var col = param.col;
-		var word = param.word;
-		var bbsno = param.bbsno;*/
+	
 		console.log(param)
 		$.ajax({
 			type : 'get',
@@ -122,7 +119,7 @@ var replyService = (function() {
 	};
 	
 	function rcount(diary_num,callback,error){
-		console.log("diary_num : "+diary_num);
+		
 		$.ajax({
 			type : 'get',
 			url : './reply/rcount/'+diary_num,

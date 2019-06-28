@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import spring.mapper.hs.DiaryMapperInter;
 import spring.mapper.hs.DiaryReplyMapperInter;
 import spring.model.diary.DiaryDTO;
 import spring.model.diary.DiaryService;
+import spring.model.member.MemberDTO;
 import spring.utility.hs.Utility;
 
 @Controller
@@ -73,7 +75,7 @@ public class DiaryController {
 		// 議고쉶�닔利앷� 異붽�
 		DiaryDTO diarydto = diaryinter.read(diary_num);
 		model.addAttribute("diarydto", diarydto);// title,content,d_date등은 jsp에서 사용시 diarydto를 붙이고 사용가능
-
+		
 		//조회 하단에 댓글 페이징
 		int nPage = 1;
 
@@ -90,7 +92,7 @@ public class DiaryController {
 		map.put("sno", sno);
 		map.put("eno", eno);
 		map.put("nPage", nPage);
-		map.put("nowPage", nowPage);
+		//map.put("nowPage", nowPage);
 		
 		request.setAttribute("drinter", drinter);
 		model.addAllAttributes(map);
@@ -170,11 +172,14 @@ public class DiaryController {
 
 		int sno = ((nowPage - 1) * recordPerPage) + 1;
 		int eno = nowPage * recordPerPage;
-
+		HttpSession session = request.getSession();
+		MemberDTO memberdto =  (MemberDTO)session.getAttribute("member");
+		
+		
 		Map map = new HashMap();
 		map.put("sno", sno);
 		map.put("eno", eno);
-
+		map.put("c_code", memberdto.getC_code());
 		int total = diaryinter.total();
 
 		String url = "list";

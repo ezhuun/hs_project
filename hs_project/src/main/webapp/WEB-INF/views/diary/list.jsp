@@ -7,6 +7,8 @@
 
 <link rel='stylesheet'
 	href='${root }/libs/unitegallery/css/unite-gallery.css' type='text/css' />
+	
+	
 
 <script type='text/javascript'
 	src='${root }/libs/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
@@ -67,7 +69,7 @@
 		<button class="btn btn-default" type="button" id="createbtn" onclick="location.href='./create'">글쓰기</button>
 	</div>
 	<div class="paging">
-		<hr align="center" style="color: gray;width: 90%;">
+		<hr align="center" style="color: gray;width: 100%;">
 		<div class="bootstrap">
 			${paging }
 		</div>

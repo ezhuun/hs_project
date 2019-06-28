@@ -15,11 +15,10 @@
 	</insert>
 
 	<!-- read -->
-	<select id="read" parameterType="int" resultType="DiaryDTO">
-		select diary_num, uuid,content, regdate , title, d_date,filename
-		from diary
-		where
-		diary_num = #{diary_num}
+	<select id="read" parameterType="int" resultType="DiaryDTO" resultMap="MDJoin">
+		select d.diary_num, d.uuid,d.content, d.regdate , d.title, d.d_date,d.filename,m.profile
+		from diary d, member m 
+		where m.uuid = d.uuid and diary_num = #{diary_num}
 	</select>
 
 	<!-- update -->
@@ -48,6 +47,7 @@
 				from(
 					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,d_date,c_code,filename
 					from diary
+					where c_code =#{c_code}
 					order by d_date
 				)
 			)

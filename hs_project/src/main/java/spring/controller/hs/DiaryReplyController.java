@@ -112,7 +112,7 @@ public class DiaryReplyController {
 		int recordPerPage = 5;
 		
 		String paging = Utility.drpaging(total, nowPage, recordPerPage, url, nPage, diary_num);
-		
+		System.out.println(paging+"1234444444444444444444444444");
 		return new ResponseEntity<>(paging,HttpStatus.OK);
 	}
 }
