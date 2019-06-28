@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.DiaryMapperInter">
+	<!-- create -->
+	<insert id="create" parameterType="DiaryDTO">
+		<selectKey keyProperty="diary_num" resultType="int"
+			order="BEFORE">
+			select nvl(max(diary_num),0)+1 from diary
+		</selectKey>
+		insert into diary(diary_num,title,content,regdate,c_code,uuid,d_date, filename)
+		values(#{diary_num},#{title},#{content},sysdate,#{c_code},#{uuid},#{d_date},#{filename})
+	</insert>
+
+	<!-- read -->
+	<select id="read" parameterType="int" resultType="DiaryDTO" resultMap="MDJoin">
+		select d.diary_num, d.uuid,d.content, d.regdate , d.title, d.d_date,d.filename,m.profile
+		from diary d, member m 
+		where m.uuid = d.uuid and diary_num = #{diary_num}
+	</select>
+
+	<!-- update -->
+	<update id="update" parameterType="DiaryDTO">
+		update diary
+		set title=#{title},
+		content=#{content},
+		d_date=#{d_date},
+		filename=#{filename}
+		where diary_num=#{diary_num}
+	</update>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete
+		from diary
+		where
+		diary_num=#{diary_num}
+	</delete>
+
+	<!-- list -->
+	<select id="list" parameterType="Map" resultType="DiaryDTO">
+		select diary_num,uuid,content,regdate,title,c_code,d_date,filename,r
+		from (  
+				select diary_num,uuid,content,regdate,title,c_code,d_date,filename,rownum  r
+				from(
+					select diary_num,uuid,content,to_char(regdate,'yyyy-mm-dd')regdate,title,d_date,c_code,filename
+					from diary
+					where c_code =#{c_code}
+					order by d_date
+				)
+			)
+		<![CDATA[
+		where r >= #{sno} and r <= #{eno}
+		]]>
+	</select>
+	
+	<!-- total -->
+	<select id="total"  resultType="int">
+		SELECT count(*) 
+    	FROM diary
+	</select>
+	
+	<!-- join 부모,자식 둘다 reseultMap이 필요 => 1:N관계에서만 써줌-->
+	<!-- 멤버와 다이어리는 테이블로 보면 1:1관계이지만 다이어리내의 글 하나로 봤을때는 1:1관계이므로 memberDTO에 저장할 필요없이 사용할 필드를 자식DTO에 넣어서 사용 -->
+	<!-- <resultMap type="memberDTO" id="MDJoin">
+		<result property="uuid" column="uuid"/>
+		<result property="name" column="name"/>
+		<result property="profile" column="profile"/>
+		부모DTO에 자식의 객체를 저장
+		<collection property="diarydtoList" column="uuid" javaType="List" ofType="diaryDTO"
+					resultMap="spring.model.diary.diaryDTOListMap"/>
+	</resultMap> -->
+	
+	<resultMap type="diaryDTO" id="MDJoin">
+		<result property="diary_num" column="diary_num"/>
+		<result property="uuid" column="uuid"/>
+		<result property="content" column="content"/>
+		<result property="regdate" column="regdate"/>
+		<result property="title" column="title"/>
+		<result property="c_code" column="c_code"/>
+		<result property="d_date" column="d_date"/>
+		<result property="name" column="name"/> <!-- member의 name -->
+		<result property="profile" column="profile"/> <!-- member의 profile -->
+	</resultMap>
+	
+	 <select id="mdJoinList" resultMap="MDJoin"> <!-- mdJoinList = > interface에 작성 -->
+		select d.*, m.profile, m.name
+		from diary d, member m 
+		where m.uuid = d.uuid
+	</select>
+	
+</mapper>

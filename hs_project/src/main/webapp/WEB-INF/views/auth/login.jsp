@@ -16,7 +16,7 @@
 					</label>
 				</div>
 				<div class="auth-inner-input">
-					비밀번호 <input type="password" id="passwd" name="passwd" required/>
+					비밀번호 <input type="password" id="passwd" name="passwd" autocomplete="off" required/>
 					<span class="link textSmall" onclick="handleClickForgetPasswd();">비밀번호를 잊어버리셨습니까?</span>
 				</div>
 			</div> 
