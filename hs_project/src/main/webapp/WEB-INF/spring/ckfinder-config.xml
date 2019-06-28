@@ -1,13 +1,13 @@
 <config>
 	<!--
 	CKFinder : Configuration File - Basic Instructions
-	
+
 	In a generic usage case, the following tasks must be done to configure CKFinder:
 	1. Check the baseDir and baseUrl options;
 	2. If available, paste your license key in the "licenseKey" setting;
 	3. Enable CKFinder using the "enabled" setting.
 
-	WARNING : DO NOT simply set "enabled" to "true" on a production site. By doing so, you 
+	WARNING : DO NOT simply set "enabled" to "true" on a production site. By doing so, you
 	are allowing "anyone" to upload and list the files in your server. You must implement
 	some kind of session validation.
 	http://docs.cksource.com/CKFinder_2.x/Developers_Guide/Java/Configuration/Extending
@@ -17,7 +17,7 @@
 	Configure the location of uploaded files. See the following article for more details:
 	http://docs.cksource.com/CKFinder_2.x/Developers_Guide/Java/Configuration/baseURL_and_baseDir
 	-->
-	<baseDir>D:\machine\spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\hs_project\resources\upload\ckstorage</baseDir>
+	<baseDir>D:\soldesk\machine\spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\hs_project\resources\upload\ckstorage</baseDir>
 	<baseURL>/hs_project/upload/ckstorage</baseURL>
 	<licenseKey></licenseKey>
 	<licenseName></licenseName>
@@ -51,8 +51,8 @@
 	Example: 'maxSize' => "8M",
 
 	==============================================================================
-	ATTENTION: Flash files with `swf' extension, just like HTML files, can be used 
-	to execute JavaScript code and to e.g. perform an XSS attack. Grant permission 
+	ATTENTION: Flash files with `swf' extension, just like HTML files, can be used
+	to execute JavaScript code and to e.g. perform an XSS attack. Grant permission
 	to upload `.swf` files only if you understand and can accept this risk.
 	==============================================================================
 	-->
@@ -113,7 +113,7 @@
 	</thumbs>
 	<!--
 	Increases the security on an IIS web server.
-	If enabled, CKFinder will disallow creating folders and uploading files whose names contain characters 
+	If enabled, CKFinder will disallow creating folders and uploading files whose names contain characters
 	that are not safe under an IIS web server.
 	-->
 	<disallowUnsafeCharacters>false</disallowUnsafeCharacters>
@@ -154,7 +154,7 @@
 	-->
 	<htmlExtensions>html,htm,xml,js</htmlExtensions>
 	<!--
-	Force ASCII names for files and folders. If enabled, characters with diactric 
+	Force ASCII names for files and folders. If enabled, characters with diactric
 	marks will be automatically converted to ASCII letters.
 	-->
 	<forceASCII>false</forceASCII>

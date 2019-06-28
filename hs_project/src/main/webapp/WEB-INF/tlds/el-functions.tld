@@ -2,14 +2,14 @@
 
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
                         web-jsptaglibrary_2_0.xsd"
 	version="2.0">
 
 	<description>EL에서 함수실행</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>ELfunctions</short-name>
-	<uri>/ELFunctions</uri> 
+	<uri>/ELFunctions</uri>
 
 
 	<function>
@@ -20,21 +20,23 @@
 	</function>
 
 	<function>
+        <description>댓글수 보여주기</description>
+        <name>rcount</name>
+        <function-class>
+            spring.utility.hs.Utility
+        </function-class>
+        <function-signature>
+            int rcount(int, spring.mapper.hs.DiaryReplyMapperInter )
+        </function-signature>
+    </function>
+
+	<function>
 		<description>d-day 구하기</description>
 		<name>diffDay</name>
 		<function-class>spring.utility.hs.Utility</function-class>
 		<function-signature>long validDiffTime(java.lang.String)</function-signature>
 	</function>
-	<!-- bbs댓글갯수 -->
-	<!-- <function>
-		<description>댓글수 보여주기</description>
-		<name>rcount</name>
-		<function-class>
-			spring.utility.heart.Utility
-		</function-class>
-		<function-signature>
-			int rcount(int,spring.model.reply.ReplyInter )
-		</function-signature>
-	</function> -->
+
+
 
 </taglib>

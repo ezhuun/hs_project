@@ -62,7 +62,7 @@
 										<li><a href="#">서브메뉴3</a></li>
 									</ul>
 								</li>
-								<li><a href="#">발자취</a>
+								<li><a href="${pageContext.request.contextPath}/diary/list">다이어리</a>
 									<ul>
 										<li><a href="#">서브메뉴1</a></li>
 									</ul>
