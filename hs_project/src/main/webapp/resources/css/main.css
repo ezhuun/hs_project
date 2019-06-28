@@ -58,38 +58,38 @@
 	.tb-container+div {
 		margin-left: 0 !important;
 	}
-	
+
 	.responsiveNone{
 		display: none;
 	}
-	
+
 	.common-container{
 		flex-direction: column !important;
 	}
-	
+
 	.trav-inner-container{
 		flex-direction: column !important;
 	}
-	
+
 	.common-details{
 		padding: 0 !important;
 	}
-	
+
 	.trav-inner-details{
 		padding: 0 !important;
 	}
-	
+
 	.user_view_group {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		justify-content: center;
 	}
-	
+
 	.user_view_group{
 		flex-direction: column-reverse;
 	}
-	
+
 	.user_profile_photo_area{
 		align-self: center;
 	}
@@ -134,7 +134,7 @@
 
 .wrap .content {
 	min-height: 622px;
-  background: 
+  background:
     radial-gradient(#ededed 3px, transparent 4px),
     radial-gradient(#ededed 3px, transparent 4px),
     linear-gradient(#fff 4px, transparent 0),
@@ -317,7 +317,7 @@ ul.nav-menu li ul li::after {
 ul.nav-menu li ul li:hover::after {
 	width: 100%;
 }
-	
+
 .banner-overlay::after {
 	content: '';
 	position: absolute;

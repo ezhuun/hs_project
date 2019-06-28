@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.hs.D_dayMapperInter">
+	<insert id="create" parameterType="D_dayDTO">
+		insert into
+		d_day (d_num, regdate, title, d_date, uuid)
+		values(
+		    (select nvl(max(d_num),0)+1 from d_day),
+		    sysdate,
+		    #{title},
+		    #{d_date},
+		    #{uuid}
+		)
+	</insert>
+	
+	<select id="read" parameterType="int" resultType="D_dayDTO">
+		select * from d_day where d_num=#{d_num}
+	</select>
+
+	<update id="update" parameterType="D_dayDTO">
+		update d_day set
+			title = #{title},
+			d_date = #{d_date}
+		where d_num = #{d_num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from d_day
+		where d_num = #{d_num}   
+	</delete>
+	
+	<select id="list" parameterType="Map" resultType="D_dayDTO">
+		select d_num, title, d_date, regdate, r
+		from (
+		    select d_num, title, d_date, regdate, rownum r
+		    from(
+		        select d_num, title, d_date, regdate
+		        from d_day
+		        <where>
+					<choose>
+						<when test="col=='title'">
+							title like '%'||#{word}||'%'		
+						</when>
+						<otherwise>
+							and uuid=#{uuid}
+						</otherwise>
+					</choose>
+				</where>
+		        order by d_date asc
+		        )
+		)
+		<![CDATA[
+		where r>=#{sno} and r<=#{eno}
+		]]>
+	</select>
+	
+	<select id="total" parameterType="int" resultType="int">
+		select
+		count(*) from d_day
+        <where>
+			<choose>
+				<when test="col=='title'">
+					title like '%'||#{word}||'%'		
+				</when>
+				<otherwise>
+					and uuid=#{uuid}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+</mapper>
