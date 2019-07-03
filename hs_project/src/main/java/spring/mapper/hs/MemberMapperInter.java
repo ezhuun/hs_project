@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
 import spring.model.member.MemberConnectDTO;
 import spring.model.member.MemberDTO;
 
@@ -38,4 +39,5 @@ public interface MemberMapperInter {
 	int changeName(Map<String, String> map);
 	MemberDTO getJoinMemberByUuid(String uuid);
 	void changeMemberDate(MemberDTO dto);
+	List<MemberDTO> mainlist(String c_code);
 }

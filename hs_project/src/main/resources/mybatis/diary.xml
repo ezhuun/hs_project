@@ -56,6 +56,8 @@
 		]]>
 	</select>
 	
+	
+	
 	<!-- total -->
 	<select id="total"  resultType="int">
 		SELECT count(*) 
@@ -89,6 +91,19 @@
 		select d.*, m.profile, m.name
 		from diary d, member m 
 		where m.uuid = d.uuid
+	</select>
+	
+	<select id="maindiary" parameterType="String" resultType="DiaryDTO">
+				<![CDATA[
+				select c_code, title, filename, regdate, rownum,diary_num
+				from(
+					select c_code, title, filename, regdate ,diary_num
+					from diary 
+					where c_code = #{c_code}
+					order by regdate desc
+    			)
+				where rownum <= 4
+				]]>
 	</select>
 	
 </mapper>

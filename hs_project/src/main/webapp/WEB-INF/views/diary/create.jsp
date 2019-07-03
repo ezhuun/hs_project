@@ -107,11 +107,11 @@
 			f.d_date1.focus();
 			return false;
 		}
-		if(f.content.value == ""){
-			alert('내용을 입력하세요');
-			f.content.focus();
-			return false;
-		}
+		if (CKEDITOR.instances['content'].getData() == '') {
+		      window.alert('내용을 입력해 주세요.');
+		      CKEDITOR.instances['content'].focus();
+		      return false;
+		    }
 		
 	}
 </script>

@@ -76,5 +76,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET viewcnt = viewcnt+1
 		WHERE a_num = #{a_num}	
 	</update>	
+	
+	<select id="mainabard1" resultType="AboardDTO">
+		
+		<![CDATA[
+			  SELECT title, to_char(regdate,'yy/mm/dd')regdate,viewcnt,rownum 
+			  FROM (
+			  		SELECT  title, to_char(regdate,'yy/mm/dd')regdate,viewcnt 
+			  		FROM a_board
+                  	order by viewcnt desc
+        	  	)
+			  WHERE rownum <= 4
+		]]>    
+		
+	</select>
+	
+		<select id="mainabard2"  resultType="AboardDTO">
+			<![CDATA[
+				  SELECT title, to_char(regdate,'yy/mm/dd')regdate,viewcnt,rownum 
+				  FROM (
+				  		SELECT title, to_char(regdate,'yy/mm/dd')regdate,viewcnt 
+				  		FROM a_board
+	                  	order by viewcnt desc
+	        	  	)
+				  WHERE 4<rownum <= 8
+			]]>    
+		
+	</select>
 </mapper>
 	

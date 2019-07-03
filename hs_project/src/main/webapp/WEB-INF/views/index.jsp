@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/ssi/ssi.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <div class="banner-overlay"></div>
 <div class="container-inner">
@@ -52,35 +53,50 @@
 		</div>
 	</div>
 
-
-
+	<br><br>
+	<span class="h2">우리의 추억</span>
+	<span class="headerLine">+</span>
 	<div class="postbox">
-		<div class="posts">
-			<div class="post-photo">
-				<img src="${pageContext.request.contextPath}/images/banner/1.jpg" />
-			</div>
-			<div class="post-title">제목제목11</div>
-		</div>
-		<div class="posts">
-			<div class="post-photo">
-				<img src="${pageContext.request.contextPath}/images/banner/2.jpg" />
-			</div>
-			<div class="post-title">제목제목22</div>
-		</div>
-		<div class="posts">
-			<div class="post-photo">
-				당신의 이야기로 채워주세요
-			</div>
-			<div class="post-title"></div>
-		</div>
-		<div class="posts">
-			<div class="post-photo">
-				<img src="${pageContext.request.contextPath}/images/banner/4.jpg" />
-			</div>
-			<div class="post-title">
-				<span>제목제목33</span>
-			</div>
-		</div>
+		
+			<!-- 메인에는 4개의 사진이 보여지도록 -->
+						<!-- list의 갯수만큼 보여줌 -->
+					<c:choose>
+						<c:when test="${not empty diarylist }">
+							<c:forEach var="dl" items="${diarylist}" >
+								<div class="posts">
+									<div class="post-photo">
+										<a href="javascript:diaryread('${dl.diary_num }')"><img src="${root}/images/diary/storage/${dl.filename}" onerror="this.src='${root}/images/diary/storage/default.jpg'" /></a> <!-- diary썸네일 가지고 오기 -->
+									</div>
+									<div class="post-title">${dl.title }</div>
+								</div>
+							</c:forEach>	
+							
+						
+						<!-- list의 갯수가 4개가 안될경우 보여줄 코드 -->
+							<c:if test="${4-(fn:length(diarylist)) > 0}">  <!-- list에 2개만 들어있음 -->
+								<c:forEach var="i" begin="1" end="${4-(fn:length(diarylist)) }" step="1" > <!-- 0부터 2까지 -->
+									<div class="posts">
+										<div class="post-photo">
+											당신의 이야기로 채워주세요
+										</div>
+										<div class="post-title"></div>
+									</div>
+								</c:forEach>
+							</c:if>	
+							
+						</c:when>
+			
+						<c:otherwise>
+							<c:forEach var="i" begin="0" end="3" step="1" > <!-- 0부터 2까지 -->
+										<div class="posts">
+											<div class="post-photo">
+												당신의 이야기로 채워주세요
+											</div>
+											<div class="post-title"></div>
+									</div>
+								</c:forEach>
+						</c:otherwise>
+			</c:choose>
 	</div>
 	
 	
@@ -93,27 +109,23 @@
 		<div class="tb-container">
 			<div class="tb-top">
 				<span class="tb-title">오늘의 고민</span>
-				<span class="more-btn">+ 더보기</span>
+				
 			</div>
 			<div class="title-line-b"></div>
 			<div class="tb-body">
 				<table>
-					<tr>
-						<td><a href="#">어려워요</a></td>
-						<td>2019.01.01</td>
-					</tr>
-					<tr>
-						<td><a href="#">어려워요</a></td>
-						<td>2019.01.01</td>
-					</tr>
-					<tr>
-						<td><a href="#">어려워요</a></td>
-						<td>2019.01.01</td>
-					</tr>
-					<tr>
-						<td><a href="#">어려워요</a></td>
-						<td>2019.01.01</td>
-					</tr>
+					<c:choose>
+						<c:when test="${not empty aboardlist }">
+							<c:forEach var="al1" items="${aboardlist }" begin="0" end="3" step="1">
+								<tr>
+									<td><a href="javascript:aboard_read('${al1.a_num }')">${al1.title }</a></td>
+									<td>${al1.regdate }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						
+					</c:choose>
+		
 				</table>
 			</div>
 		</div>
@@ -122,13 +134,23 @@
 		</div>
 		<div class="tb-container">
 			<div class="tb-top">
-				<span class="tb-title">추천 고민</span>
-				<span class="more-btn">+ 더보기</span>
+				<br>
+				<span class="more-btn" onclick="location.href='./aboard/list'">+ 더보기</span>
 			</div>
-			<div class="title-line-b"></div>
+			
 			<div class="tb-body">
 				<table>
-					<tr>
+					<c:choose>
+						<c:when test="${not empty aboardlist }">
+							<c:forEach var="al1" items="${aboardlist }" begin="4" end="7" step="1">
+								<tr>
+									<td><a href="javascript:aboard_read('${al1.a_num }')">${al1.title }</a></td>
+									<td>${al1.regdate }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+					</c:choose>
+					<!-- <tr>
 						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
 					</tr>
@@ -143,7 +165,7 @@
 					<tr>
 						<td><a href="#">어려워요</a></td>
 						<td>2019.01.01</td>
-					</tr>
+					</tr> -->
 				</table>
 			</div>
 		</div>
@@ -181,4 +203,19 @@
 			}
 		}
 	}
+	</script>
+	<script>
+		function aboard_read(a_num){
+		 	 var url = "./aboard/read"; 
+		 	url += "?a_num="+a_num;
+		 	url += "&col=${col}";
+		 	url += "&word=${word}";
+		 	url += "&nowPage=${nowPage}";
+		 	location.href=url;  
+		}
+		function diaryread(diary_num){
+			var url = "./diary/read";
+			url += "?diary_num="+diary_num;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+			location.href=url;
+		}
 	</script>

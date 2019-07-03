@@ -2,6 +2,8 @@ package spring.model.member;
 
 import java.util.List;
 
+import spring.model.diary.DiaryDTO;
+
 public class MemberDTO {
 
 	private int no;
@@ -25,6 +27,8 @@ public class MemberDTO {
 	
 	private MemberDTO lover;
 	private MemberConnectDTO connect;
+	
+	private List<DiaryDTO> mdlist;
 
 	@Override
 	public String toString() {
@@ -154,6 +158,12 @@ public class MemberDTO {
 	}
 	public void setC_code(String c_code) {
 		this.c_code = c_code;
+	}
+	public List<DiaryDTO> getMdlist() {
+		return mdlist;
+	}
+	public void setMdlist(List<DiaryDTO> mdlist) {
+		this.mdlist = mdlist;
 	}
 	
 	

@@ -16,5 +16,6 @@ public interface AboardMapperInter {
 	int total(Map map);
 	void upViewcnt(int a_num);
 	List<AboardDTO> notice_list(Map map);
-	
+	List<AboardDTO> mainaboard1();
+	List<AboardDTO> mainaboard2();
 }

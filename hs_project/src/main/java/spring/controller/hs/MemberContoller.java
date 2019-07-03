@@ -532,10 +532,7 @@ public class MemberContoller {
 		return "/auth/login";
 	}
 	
-	@GetMapping("/main")
-	public String main() {
-		return "/index";
-	}
+	
 
 	@GetMapping("/accountSetting")
 	public String accountSetting() {

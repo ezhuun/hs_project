@@ -111,7 +111,7 @@ public class AboardController {
 			return "redirect:/aboard/list";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error/error";
+			return "/aboard/create";
 		}				
 				
 	}

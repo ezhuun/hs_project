@@ -12,31 +12,31 @@ public class DiaryDTO {
     private String title      ;
     private String c_code     ;
     private String d_date	  ;
-    private String  filename; // ÆÄÀÏ¸í  
-    private int    filesize; // ÆÄÀÏ »çÀÌÁî 
+    private String  filename; // ï¿½ï¿½ï¿½Ï¸ï¿½  
+    private int    filesize; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private MultipartFile filenameMF; 
     
-    //private List memberDTOListMap; 
-    //ºÎ¸ğ´Â ÀÚ½ÄÀÇ ÄÃ·³À» ³ÖÁö ¾ÊÀ½
+//    //private List memberDTOListMap; 
+//  ìì‹ì—ëŠ” ë¶€ëª¨ì˜ ì»¬ëŸ¼ì„ ì“¸ í•„ìš”ê°€ ì—†ë‹¤(ì‚¬ì‹¤ìƒ ì—†ì–´ë„ ë¨) ë¶€ëª¨ì˜ dtoì— ìì‹ì„ ì¨ì£¼ì–´ì•¼í•¨
     private String name;
     private String profile;
-    
-    
+//    
+//    
     public String getName() {
 		return name;
 	}
-
-
+//
+//
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
+//
+//
 	public String getProfile() {
 		return profile;
 	}
-
-
+//
+//
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
@@ -95,13 +95,13 @@ public class DiaryDTO {
 
 
 
-	@Override
-	public String toString() {
-		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
-				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + ", filename=" + filename
-				+ ", filesize=" + filesize + ", filenameMF=" + filenameMF + ", name=" + name + ", profile=" + profile
-				+ "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "DiaryDTO [diary_num=" + diary_num + ", uuid=" + uuid + ", content=" + content + ", regdate=" + regdate
+//				+ ", title=" + title + ", c_code=" + c_code + ", d_date=" + d_date + ", filename=" + filename
+//				+ ", filesize=" + filesize + ", filenameMF=" + filenameMF + ", name=" + name + ", profile=" + profile
+//				+ "]";
+//	}
 
 
 	public DiaryDTO(int diary_num, String uuid, String content, String regdate, String title, String c_code,

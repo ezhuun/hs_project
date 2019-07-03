@@ -14,4 +14,5 @@ public interface DiaryMapperInter {
 	List<DiaryDTO> list(Map map);
 	int total();
 	List<DiaryDTO> mdJoinList(Map map);
+	List<DiaryDTO> maindiary(String c_code);
 }

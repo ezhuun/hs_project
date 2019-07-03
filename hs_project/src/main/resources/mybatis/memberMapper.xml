@@ -44,6 +44,7 @@
 		<result property="connect.u1" column="u1"/>
 		<result property="connect.u2" column="u2"/>
 	</resultMap>
+	
 	<select id="getJoinMemberByUuid" parameterType="string" resultMap="connectMemberMap">
 	<![CDATA[
 		select 
@@ -426,5 +427,32 @@
 		FROM member_connect
 	]]>
 	</select>
+	
+	
+	
+ 	<!-- 1:n은 list타입을 collection으로 받아야함 -->
+	<!-- <resultMap type="MemberDTO" id="MDLJoin">
+		<result property="c_code" column="c_code"/>
+			<collection property="mdlist" column="c_code" javaType="List" ofType="DiaryDTO" resultMap="MDiary"/>
+		</resultMap>
+		
+		<resultMap type="DiaryDTO" id="MDiary">
+			<result property="regdate" column="regdate_1"/>
+			<result property="title" column="title"/>
+			<result property="filename" column="filename"/>
+		</resultMap>
+		 -->
+	
+	<!-- <select id="mainlist" parameterType="String"  resultMap="MDLJoin">
+			<![CDATA[
+			select c_code,title, filename, regdate_1, rownum 
+			from(	select m.c_code,d.title, d.filename, d.regdate as regdate_1
+					from member m,diary d
+					where m.c_code = #{c_code}
+					order by d.regdate desc
+				)
+			where rownum<=4
+			]]>
+	</select> -->
 	
 </mapper>

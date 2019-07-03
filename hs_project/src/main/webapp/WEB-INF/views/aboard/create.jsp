@@ -8,7 +8,7 @@
 	<div class="container-inner sideBorder boxsing">
 		<div class="bootstrap">
 			<h3 class="talk">CREATE</h3>
-			<form class="form-horizontal" action="create" method="post" >
+			<form class="form-horizontal" action="create" method="post" onsubmit="return Check(this);">
 			<input type="hidden" name ="uuid" id="uuid" value="${member.uuid}">
 				<div class="write">
 					<label for="a_name">닉네임</label>
@@ -45,7 +45,15 @@
 		CKEDITOR.replace("content");
 	}
 	</script>
-
+	<script>
+	function Check(a){
+		if (CKEDITOR.instances['content'].getData() == '') {
+		      window.alert('내용을 입력해 주세요.');
+		      CKEDITOR.instances['content'].focus();
+		      return false;
+		  }
+	}
+	</script>
 	
 	<!-- 여기까지 -->
 	
